@@ -129,6 +129,29 @@ nav a:hover::after{transform:scaleX(1)}
 .about-img-badge{position:absolute;bottom:-1.5rem;left:-1.5rem;background:var(--red);color:var(--white);padding:1.5rem;font-family:var(--font-serif);font-size:0.8rem;line-height:1.6;letter-spacing:0.1em}
 .about-img-badge strong{display:block;font-family:var(--font-en);font-size:2rem;font-weight:300;letter-spacing:0.05em}
 
+/* Message (代表挨拶) */
+.message{background:var(--cream);padding:7rem 2rem;position:relative}
+.message-inner{max-width:1200px;margin:0 auto}
+.message .section-label::before{background:var(--gold)}
+.message .section-label span{color:var(--gold)}
+.message-body{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-top:4rem}
+.message-text-block{}
+.message-greeting{font-family:var(--font-serif);font-size:0.95rem;line-height:2.4;color:var(--gray-dark);font-weight:400}
+.message-greeting p{margin-bottom:1.6em}
+.message-greeting p:last-child{margin-bottom:0}
+.message-sign{margin-top:2.5rem;text-align:right;border-top:1px solid rgba(13,27,62,0.12);padding-top:1.5rem}
+.message-sign-title{font-size:0.75rem;letter-spacing:0.2em;color:var(--gray);margin-bottom:0.4rem}
+.message-sign-name{font-family:var(--font-serif);font-size:1.3rem;color:var(--navy);letter-spacing:0.1em}
+.message-brand-block{background:var(--navy);padding:3rem;position:relative}
+.message-brand-block::before{content:'';position:absolute;top:0;left:0;width:60px;height:3px;background:var(--gold)}
+.message-brand-en{font-family:var(--font-en);font-size:0.75rem;letter-spacing:0.35em;color:var(--gold);margin-bottom:2rem}
+.message-acronym{display:flex;flex-direction:column;gap:1.5rem;margin-bottom:2.5rem}
+.acronym-row{display:flex;align-items:baseline;gap:1.2rem}
+.acronym-letter{font-family:var(--font-en);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1;min-width:2rem}
+.acronym-word{font-family:var(--font-en);font-size:0.9rem;letter-spacing:0.15em;color:rgba(255,255,255,0.6);min-width:8rem}
+.acronym-jp{font-family:var(--font-serif);font-size:0.8rem;color:rgba(255,255,255,0.45);letter-spacing:0.05em}
+.message-brand-text{border-top:1px solid rgba(184,150,78,0.2);padding-top:1.8rem;font-size:0.8rem;line-height:2;color:rgba(255,255,255,0.55);font-weight:300}
+
 /* Area */
 .area{background:var(--cream);padding:7rem 2rem}
 .area-inner{max-width:1200px;margin:0 auto}
@@ -223,6 +246,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
   .services-grid{grid-template-columns:1fr;gap:2px}
   .about-inner{grid-template-columns:1fr;gap:4rem}
   .about-img-badge{left:1rem;bottom:1rem}
+  .message-body{grid-template-columns:1fr;gap:3rem}
   .area-grid{grid-template-columns:1fr;gap:2rem}
   .contact-tel-band{flex-direction:column;align-items:flex-start;gap:1rem}
   .form-grid{grid-template-columns:1fr}
@@ -235,7 +259,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
   .hero-stats{grid-template-columns:1fr 1fr}
   .hero-btns{flex-direction:column}
   .btn-primary,.btn-outline{width:100%;justify-content:center}
-  .services,.about,.area,.contact,.info{padding:5rem 1.5rem}
+  .services,.about,.area,.contact,.info,.message{padding:5rem 1.5rem}
   .form-submit{width:100%;justify-content:center}
 }
 </style>
@@ -251,6 +275,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
     <nav>
       <a href="#services">サービス</a>
       <a href="#about">会社案内</a>
+      <a href="#message">代表挨拶</a>
       <a href="#area">対応エリア</a>
       <a href="#info">会社情報</a>
       <a href="#contact">お問い合わせ</a>
@@ -268,6 +293,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
 <div class="mobile-menu" id="mobileMenu">
   <a href="#services" onclick="toggleMenu()">サービス</a>
   <a href="#about" onclick="toggleMenu()">会社案内</a>
+  <a href="#message" onclick="toggleMenu()">代表挨拶</a>
   <a href="#area" onclick="toggleMenu()">対応エリア</a>
   <a href="#info" onclick="toggleMenu()">会社情報</a>
   <a href="#contact" onclick="toggleMenu()">お問い合わせ</a>
@@ -320,7 +346,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
         <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
         <div style="position:relative;z-index:1">
           <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="18" width="32" height="24" rx="1"/><path d="M4 22L24 6l20 16"/><path d="M18 42V30h12v12"/></svg>
-          <div class="service-en">BUY & SELL</div>
+          <div class="service-en">BUY &amp; SELL</div>
           <div class="service-title-jp">不動産売買</div>
           <p class="service-desc">マンション・戸建て・土地の売却・購入をサポート。適正価格の査定から契約・引き渡しまで、経験豊富なスタッフが丁寧にご対応します。</p>
           <div class="service-more">詳しく見る</div>
@@ -383,6 +409,59 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
   </div>
 </section>
 
+<!-- 代表挨拶 -->
+<section class="message" id="message">
+  <div class="message-inner">
+    <div class="section-header reveal">
+      <div class="section-label"><span>MESSAGE</span></div>
+      <h2 class="section-title">代表挨拶</h2>
+    </div>
+    <div class="message-body">
+      <div class="message-text-block reveal">
+        <div class="message-greeting">
+          <p>不動産業界に25年以上携わるなかで培った経験と知識をもとに、2008年の創業以来、大阪・中崎町を拠点として収益不動産に特化した事業を展開しております。</p>
+          <p>創業当時はリーマンショックによる金融危機、その後もコロナ禍など、不動産市場を取り巻く環境は大きく変化してきました。そのような時代の変化のなかでも、私たちが一貫して大切にしてきたのは、お客様の大切な資産と真摯に向き合うことです。</p>
+          <p>収益不動産は、お客様の将来設計や資産形成を支える重要な資産です。私たちは長年培ってきた経験と専門性を活かし、一人ひとりのお客様に最適なご提案を行い、資産価値の向上と安定した運用をサポートしてまいります。</p>
+          <p>これからも誠実な姿勢を大切にし、お客様に信頼されるパートナーとして歩み続けてまいります。</p>
+        </div>
+        <div class="message-sign">
+          <div class="message-sign-title">代表取締役</div>
+          <div class="message-sign-name">原　雄二郎</div>
+        </div>
+      </div>
+      <div class="message-brand-block reveal">
+        <div class="message-brand-en">THE NAME "LAND DESIGN"</div>
+        <div class="message-acronym">
+          <div class="acronym-row">
+            <div class="acronym-letter">L</div>
+            <div class="acronym-word">Life</div>
+            <div class="acronym-jp">暮らし・人生</div>
+          </div>
+          <div class="acronym-row">
+            <div class="acronym-letter">A</div>
+            <div class="acronym-word">Assets</div>
+            <div class="acronym-jp">資産</div>
+          </div>
+          <div class="acronym-row">
+            <div class="acronym-letter">N</div>
+            <div class="acronym-word">Nexus</div>
+            <div class="acronym-jp">信頼とつながり</div>
+          </div>
+          <div class="acronym-row">
+            <div class="acronym-letter">D</div>
+            <div class="acronym-word">Development</div>
+            <div class="acronym-jp">発展・成長</div>
+          </div>
+        </div>
+        <div class="message-brand-text">
+          LAND DESIGNの「LAND」には、Life（人生）、Assets（資産）、Nexus（つながり）、Development（発展）という想いを込めています。<br><br>
+          お客様の人生と資産を大切にし、人とのつながりを育みながら、持続的な発展に貢献する企業でありたいと考えています。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="area" id="area">
   <div class="area-inner">
     <div class="section-header reveal">
@@ -411,7 +490,6 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
     <p class="contact-subtitle reveal">売却・購入・賃貸、どんなご相談もお待ちしています。</p>
 
     <div class="contact-form-wrap reveal">
-      <!-- 電話帯（フォームの上に横並び） -->
       <div class="contact-tel-band">
         <div class="contact-tel-left">
           <div class="contact-tel-icon">📞</div>
@@ -423,7 +501,6 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
         </div>
       </div>
 
-      <!-- フォーム -->
       <div class="contact-form-inner">
         <div class="contact-form-title">
           <span class="contact-form-en">INQUIRY FORM</span>
@@ -501,6 +578,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
     <div class="footer-links">
       <a href="#services">サービス</a>
       <a href="#about">会社案内</a>
+      <a href="#message">代表挨拶</a>
       <a href="#area">対応エリア</a>
       <a href="#info">会社情報</a>
       <a href="#contact">お問い合わせ</a>
