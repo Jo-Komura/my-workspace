@@ -4,69 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ▼▼▼ ここはブラウザのタブに出るページ名。会社名に直してね ▼▼▼ -->
 <title>株式会社イレブン創建 ｜ 誠実な家づくり・建築工事</title>
-<!-- ▲▲▲ -->
 
 <meta name="description" content="株式会社イレブン創建は、住宅の新築・リフォームから土木工事まで、確かな技術と誠実な対応でお応えする建築会社です。">
 
-<!-- 文字のデザイン（フォント）を読み込んでいます。ネットにつながっていれば自動で適用されます -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
-  /* =========================================================
-     色やフォントの設定（ここをいじると全体の雰囲気が変わります）
-     ========================================================= */
   :root{
-    --ink:#1b1a17;          /* 文字や濃い部分の色（炭のような黒） */
-    --paper:#f4f1ea;        /* 背景の生成り色（コンクリート風） */
-    --paper-2:#e9e4d8;      /* 少し濃い生成り */
-    --brand:#010066;        /* 会社のコーポレートカラー（濃い青） */
-    --brand-2:#1a1a8c;      /* 濃い青の少し明るい版（ホバー用） */
-    --accent:#bf5a22;       /* 差し色（温かみのあるオレンジ。あとで変えてOK） */
-    --muted:#6b665c;        /* 補助的な文字色 */
-    --line:#cfc8b8;         /* 区切り線 */
-    --display:"Shippori Mincho B1", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;      /* 見出し用フォント（ネットがないときは游明朝などに自動で切り替わり） */
-    --body:"Zen Kaku Gothic New", "Yu Gothic", "YuGothic", "Hiragino Sans", "Meiryo", sans-serif;   /* 本文用フォント（ネットがないときは游ゴシックなどに） */
+    --ink:#1b1a17;
+    --paper:#f4f1ea;
+    --paper-2:#e9e4d8;
+    --brand:#010066;
+    --brand-2:#1a1a8c;
+    --accent:#bf5a22;
+    --muted:#6b665c;
+    --line:#cfc8b8;
+    --display:"Shippori Mincho B1","Yu Mincho","YuMincho","Hiragino Mincho ProN",serif;
+    --body:"Zen Kaku Gothic New","Yu Gothic","YuGothic","Hiragino Sans","Meiryo",sans-serif;
   }
 
   *{ margin:0; padding:0; box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
-  body{
-    font-family:var(--body);
-    color:var(--ink);
-    background:var(--paper);
-    line-height:1.9;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{ font-family:var(--body); color:var(--ink); background:var(--paper); line-height:1.9; -webkit-font-smoothing:antialiased; }
   img{ max-width:100%; display:block; }
   a{ color:inherit; text-decoration:none; }
 
-  .wrap{ width:min(1100px, 90vw); margin-inline:auto; }
+  .wrap{ width:min(1100px,90vw); margin-inline:auto; }
   .accent{ color:var(--accent); }
 
-  /* セクションの小見出し（番号＋ラベル） */
-  .eyebrow{
-    font-size:.78rem; letter-spacing:.28em; color:var(--accent);
-    font-weight:700; text-transform:uppercase; margin-bottom:1rem;
-    display:flex; align-items:center; gap:.8rem;
-  }
+  .eyebrow{ font-size:.78rem; letter-spacing:.28em; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:1rem; display:flex; align-items:center; gap:.8rem; }
   .eyebrow::before{ content:""; width:34px; height:2px; background:var(--accent); display:inline-block; }
 
-  h2.section-title{
-    font-family:var(--display); font-weight:700;
-    font-size:clamp(1.8rem, 4vw, 2.9rem); line-height:1.4;
-    margin-bottom:1.4rem; letter-spacing:.02em;
-  }
+  h2.section-title{ font-family:var(--display); font-weight:700; font-size:clamp(1.8rem,4vw,2.9rem); line-height:1.4; margin-bottom:1.4rem; letter-spacing:.02em; }
 
-  /* =========================  ヘッダー  ========================= */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(244,241,234,.86); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
+  /* Header */
+  header{ position:sticky; top:0; z-index:50; background:rgba(244,241,234,.86); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
   .nav{ display:flex; align-items:center; justify-content:space-between; height:74px; }
   .logo{ font-family:var(--display); font-weight:700; font-size:1.35rem; letter-spacing:.06em; }
   .logo small{ display:block; font-family:var(--body); font-size:.6rem; letter-spacing:.3em; color:var(--muted); font-weight:500; }
@@ -74,127 +49,82 @@
   .nav-links a{ position:relative; padding:.2rem 0; }
   .nav-links a::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .3s; }
   .nav-links a:hover::after{ width:100%; }
-  .nav-cta{
-    background:var(--brand); color:var(--paper); padding:.6rem 1.3rem;
-    border-radius:2px; font-size:.85rem; font-weight:700; transition:background .25s;
-  }
+  .nav-cta{ background:var(--brand); color:var(--paper); padding:.6rem 1.3rem; border-radius:2px; font-size:.85rem; font-weight:700; transition:background .25s; }
   .nav-cta:hover{ background:var(--accent); }
   .burger{ display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; }
   .burger span{ width:26px; height:2px; background:var(--ink); transition:.3s; }
 
-  /* =========================  ヒーロー（最上部）  ========================= */
-  .hero{
-    position:relative; overflow:hidden;
-    padding:clamp(4rem,11vw,8.5rem) 0 clamp(3.5rem,8vw,6rem);
-    /* ▼ トップの背景写真。差し替えるときは、同じ「hero.png」という名前で上書き保存すればOK ▼ */
-    background:url("hero.png") center / cover no-repeat;
-  }
-  .hero::before{ /* 背景の薄い方眼（図面っぽさ） */
-    content:""; position:absolute; inset:0; z-index:0; opacity:.35;
-    background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:46px 46px; mask-image:radial-gradient(circle at 70% 30%, #000 0%, transparent 70%);
-  }
-  .hero::after{ /* 写真の上にかける薄いベール（文字を読みやすくするため） */
-    content:""; position:absolute; inset:0; z-index:0;
-    background:linear-gradient(100deg,
-      rgba(244,241,234,.94) 0%,
-      rgba(244,241,234,.88) 36%,
-      rgba(244,241,234,.58) 68%,
-      rgba(244,241,234,.34) 100%);
-  }
+  /* Hero */
+  .hero{ position:relative; overflow:hidden; padding:clamp(4rem,11vw,8.5rem) 0 clamp(3.5rem,8vw,6rem); background:url("hero.png") center / cover no-repeat; }
+  .hero::before{ content:""; position:absolute; inset:0; z-index:0; opacity:.35; background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:46px 46px; mask-image:radial-gradient(circle at 70% 30%,#000 0%,transparent 70%); }
+  .hero::after{ content:""; position:absolute; inset:0; z-index:0; background:linear-gradient(100deg,rgba(244,241,234,.94) 0%,rgba(244,241,234,.88) 36%,rgba(244,241,234,.58) 68%,rgba(244,241,234,.34) 100%); }
   .hero .wrap{ position:relative; z-index:1; }
-  .hero h1{
-    font-family:var(--display); font-weight:700;
-    font-size:clamp(2.4rem, 7vw, 5rem); line-height:1.25; letter-spacing:.02em;
-    margin-bottom:1.6rem;
-  }
+  .hero h1{ font-family:var(--display); font-weight:700; font-size:clamp(2.4rem,7vw,5rem); line-height:1.25; letter-spacing:.02em; margin-bottom:1.6rem; }
   .hero h1 .line{ display:block; overflow:hidden; }
   .hero p.lead{ font-size:clamp(1rem,1.6vw,1.18rem); color:var(--muted); max-width:34em; margin-bottom:2.4rem; }
   .hero-actions{ display:flex; gap:1rem; flex-wrap:wrap; }
-  .btn{
-    display:inline-flex; align-items:center; gap:.6rem; padding:.95rem 1.8rem; border-radius:2px;
-    font-weight:700; font-size:.95rem; transition:transform .2s, background .25s, color .25s;
-  }
+  .btn{ display:inline-flex; align-items:center; gap:.6rem; padding:.95rem 1.8rem; border-radius:2px; font-weight:700; font-size:.95rem; transition:transform .2s,background .25s,color .25s; }
   .btn-primary{ background:var(--brand); color:#fff; }
   .btn-primary:hover{ transform:translateY(-2px); }
   .btn-ghost{ border:1.5px solid var(--ink); }
   .btn-ghost:hover{ background:var(--ink); color:var(--paper); }
-
   .hero-stats{ display:flex; gap:clamp(1.5rem,5vw,4rem); margin-top:3.5rem; flex-wrap:wrap; }
   .hero-stats .num{ font-family:var(--display); font-size:clamp(1.8rem,4vw,2.6rem); font-weight:700; line-height:1; }
   .hero-stats .lbl{ font-size:.8rem; color:var(--muted); letter-spacing:.1em; margin-top:.5rem; }
 
-  /* =========================  共通：セクション余白  ========================= */
+  /* Sections */
   section{ padding:clamp(3.5rem,8vw,6.5rem) 0; }
   .section-head{ max-width:46em; margin-bottom:3rem; }
   .banner-img{ width:100%; aspect-ratio:16/7; object-fit:cover; border-radius:3px; margin-bottom:2.8rem; }
 
-  /* =========================  会社について  ========================= */
+  /* About */
   #about{ background:var(--paper-2); }
   .about-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(2rem,5vw,4rem); align-items:center; }
   .about-text p{ margin-bottom:1.2rem; }
-  .about-photo{
-    aspect-ratio:4/3; border-radius:3px; overflow:hidden;
-    /* ▼ 「会社について」の写真。差し替えるときは同じ「about.png」で上書き保存すればOK ▼ */
-    background:url("about.png") center / cover no-repeat;
-  }
+  .about-photo{ aspect-ratio:4/3; border-radius:3px; overflow:hidden; background:url("about.png") center / cover no-repeat; }
 
-  /* =========================  事業内容（サービス）  ========================= */
+  /* Services */
   .services{ display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:1.1rem; }
-  .service-card{
-    background:#fff; border:1px solid var(--line); border-radius:3px; padding:1.7rem 1.6rem;
-    transition:transform .25s, box-shadow .25s, border-color .25s;
-  }
+  .service-card{ background:#fff; border:1px solid var(--line); border-radius:3px; padding:1.7rem 1.6rem; transition:transform .25s,box-shadow .25s,border-color .25s; }
   .service-card:hover{ transform:translateY(-4px); box-shadow:0 18px 40px -24px rgba(0,0,0,.35); border-color:var(--accent); }
   .service-card .no{ font-family:var(--display); color:var(--accent); font-size:1rem; font-weight:700; letter-spacing:.1em; }
   .service-card h3{ font-family:var(--display); font-size:1.2rem; margin:.5rem 0 .6rem; }
   .service-card p{ font-size:.92rem; color:var(--muted); }
 
-  /* =========================  施工実績  ========================= */
+  /* Works */
   #works{ background:var(--brand); color:var(--paper); }
   #works .eyebrow{ color:#e6a973; }
   #works .eyebrow::before{ background:#e6a973; }
   .works-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
-  .work{
-    aspect-ratio:4/3; border-radius:3px; position:relative; overflow:hidden;
-    background:linear-gradient(135deg,#0a0a55,#01004d); border:1px solid #23237a;
-    display:flex; align-items:flex-end; padding:1.3rem;
-  }
+  .work{ aspect-ratio:4/3; border-radius:3px; position:relative; overflow:hidden; background:linear-gradient(135deg,#0a0a55,#01004d); border:1px solid #23237a; display:flex; align-items:flex-end; padding:1.3rem; }
   .work::before{ content:"PHOTO"; position:absolute; top:1.1rem; left:1.3rem; color:rgba(255,255,255,.22); letter-spacing:.3em; font-size:.66rem; }
   .work span{ font-size:.9rem; font-weight:500; }
   .work small{ display:block; color:rgba(255,255,255,.5); font-size:.74rem; letter-spacing:.08em; }
 
-  /* =========================  強み  ========================= */
+  /* Strengths */
   .strengths{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
-  .strength .icon{
-    width:54px; height:54px; border:2px solid var(--accent); border-radius:50%;
-    display:flex; align-items:center; justify-content:center; font-family:var(--display);
-    font-weight:700; color:var(--accent); font-size:1.4rem; margin-bottom:1.1rem;
-  }
+  .strength .icon{ width:54px; height:54px; border:2px solid var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; color:var(--accent); font-size:1.4rem; margin-bottom:1.1rem; }
   .strength h3{ font-family:var(--display); font-size:1.25rem; margin-bottom:.6rem; }
   .strength p{ font-size:.92rem; color:var(--muted); }
 
-  /* =========================  会社概要  ========================= */
+  /* Company */
   #company{ background:var(--paper-2); }
   .company-table{ width:100%; border-collapse:collapse; max-width:760px; }
-  .company-table th, .company-table td{ text-align:left; padding:1.1rem .4rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  .company-table th,.company-table td{ text-align:left; padding:1.1rem .4rem; border-bottom:1px solid var(--line); vertical-align:top; }
   .company-table th{ width:9em; font-weight:700; color:var(--ink); white-space:nowrap; }
   .company-table td{ color:var(--muted); }
 
-  /* =========================  お問い合わせ  ========================= */
+  /* Contact */
   .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,4rem); }
   .contact-info p{ margin-bottom:.4rem; color:var(--muted); }
   .contact-info .big{ font-family:var(--display); font-size:1.8rem; color:var(--ink); margin:.3rem 0 1.4rem; }
   .field{ margin-bottom:1.1rem; }
   .field label{ display:block; font-size:.85rem; font-weight:700; margin-bottom:.4rem; }
-  .field input, .field textarea{
-    width:100%; padding:.8rem .9rem; border:1px solid var(--line); border-radius:2px;
-    font-family:var(--body); font-size:.95rem; background:#fff;
-  }
-  .field input:focus, .field textarea:focus{ outline:2px solid var(--accent); border-color:transparent; }
+  .field input,.field textarea{ width:100%; padding:.8rem .9rem; border:1px solid var(--line); border-radius:2px; font-family:var(--body); font-size:.95rem; background:#fff; }
+  .field input:focus,.field textarea:focus{ outline:2px solid var(--accent); border-color:transparent; }
   .form-note{ font-size:.78rem; color:var(--muted); margin-top:.8rem; }
 
-  /* =========================  フッター  ========================= */
+  /* Footer */
   footer{ background:var(--brand); color:var(--paper); padding:3rem 0 2rem; }
   .foot-top{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; align-items:center; }
   .foot-logo{ font-family:var(--display); font-size:1.4rem; letter-spacing:.06em; }
@@ -203,82 +133,46 @@
   .foot-links a:hover{ color:#fff; }
   .copy{ margin-top:2rem; font-size:.78rem; color:rgba(255,255,255,.45); letter-spacing:.05em; }
 
-  /* =========================  スクロールで浮き上がる演出  ========================= */
-  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  /* Reveal */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease,transform .7s ease; }
   .reveal.in{ opacity:1; transform:none; }
 
-  /* =========================  スマホ対応  ========================= */
-  @media (max-width:820px){
-    .nav-links, .nav-cta{ display:none; }
+  /* Responsive */
+  @media(max-width:820px){
+    .nav-links,.nav-cta{ display:none; }
     .burger{ display:flex; }
-    .about-grid, .contact-grid{ grid-template-columns:1fr; }
-    .services, .strengths, .works-grid{ grid-template-columns:1fr; }
-    .nav-links.open{
-      display:flex; position:absolute; top:74px; left:0; right:0; flex-direction:column;
-      background:var(--paper); padding:1.5rem 5vw; gap:1.2rem; border-bottom:1px solid var(--line);
-    }
+    .about-grid,.contact-grid{ grid-template-columns:1fr; }
+    .services,.strengths,.works-grid{ grid-template-columns:1fr; }
+    .nav-links.open{ display:flex; position:absolute; top:74px; left:0; right:0; flex-direction:column; background:var(--paper); padding:1.5rem 5vw; gap:1.2rem; border-bottom:1px solid var(--line); }
   }
 
-  /* ============================  スマホ対応の追加調整（2026/06/08）  ============================ */
-
-  /* スクロール演出（.reveal）がスマホで効かず中身が見えなくなる不具合の対策。
-     スマホ・タブレット幅では演出を切り、必ず表示されるようにする（パソコン表示はそのまま）。 */
-  @media (max-width:820px){
+  @media(max-width:820px){
     .reveal{ opacity:1; transform:none; }
-
-    /* 画面の端に文字がくっつかないよう、左右に少し余白を */
     .wrap{ width:90vw; }
-
-    /* タブレット幅では「施工実績」「強み」を2列にしてバランス良く */
-    .strengths, .works-grid{ grid-template-columns:repeat(2,1fr); }
-
-    /* ヒーローの上のおおいを、縦長画面でも文字がはっきり読める向きに */
-    .hero::after{
-      background:linear-gradient(180deg,
-        rgba(244,241,234,.93) 0%,
-        rgba(244,241,234,.86) 55%,
-        rgba(244,241,234,.70) 100%);
-    }
+    .strengths,.works-grid{ grid-template-columns:repeat(2,1fr); }
+    .hero::after{ background:linear-gradient(180deg,rgba(244,241,234,.93) 0%,rgba(244,241,234,.86) 55%,rgba(244,241,234,.70) 100%); }
   }
 
-  /* スマホ幅（540px以下）の調整 */
-  @media (max-width:540px){
-    /* すべて1列にしてゆったり表示 */
-    .services, .strengths, .works-grid{ grid-template-columns:1fr; }
-
-    /* ボタンを縦並び・横幅いっぱいにして、指で押しやすく */
+  @media(max-width:540px){
+    .services,.strengths,.works-grid{ grid-template-columns:1fr; }
     .hero-actions{ flex-direction:column; }
     .hero-actions .btn{ width:100%; justify-content:center; }
-
-    /* トップの数字（創業・実績など）の間隔を整える */
     .hero-stats{ gap:1.6rem 2.4rem; }
-
-    /* 会社概要の表を「見出し→中身」の縦積みにして読みやすく */
     .company-table tr{ display:block; padding:.7rem 0; border-bottom:1px solid var(--line); }
-    .company-table th, .company-table td{ display:block; width:auto; padding:.15rem 0; border:none; white-space:normal; }
+    .company-table th,.company-table td{ display:block; width:auto; padding:.15rem 0; border:none; white-space:normal; }
     .company-table th{ color:var(--accent); font-size:.82rem; }
-
-    /* フッターの上段を縦積みに */
     .foot-top{ flex-direction:column; align-items:flex-start; }
     .foot-links{ flex-wrap:wrap; gap:1rem 1.4rem; }
-
-    /* バナー写真をスマホでは少し縦長にして見やすく */
     .banner-img{ aspect-ratio:16/9; }
-
-    /* 電話番号が画面からはみ出さないサイズに */
     .contact-info .big{ font-size:1.5rem; }
-
-    /* セクションの上下の余白を少し詰める */
     section{ padding:2.8rem 0; }
   }
 </style>
 </head>
 <body>
 
-<!-- =====================  ヘッダー（上部メニュー）  ===================== -->
 <header>
   <div class="wrap nav">
-    <!-- ▼ 会社名（ロゴの部分）。英語表記は消してもOK ▼ -->
     <a href="#top" class="logo">イレブン創建<small>ELEVEN SOUKEN</small></a>
     <nav class="nav-links" id="menu">
       <a href="#about">会社について</a>
@@ -294,22 +188,17 @@
   </div>
 </header>
 
-<!-- =====================  ヒーロー（一番上の見せ場）  ===================== -->
 <section class="hero" id="top">
   <div class="wrap">
-    <!-- ▼ キャッチコピー。会社の想いに合わせて自由に書き換えて ▼ -->
     <h1>
       <span class="line">確かな手で、</span>
       <span class="line">街の<span class="accent">あした</span>を建てる。</span>
     </h1>
-    <p class="lead">株式会社イレブン創建は、住宅の新築・リフォームから土木工事まで、
-       地域に根ざした誠実な仕事でお応えする建築会社です。一棟一棟、暮らす人のことを考えてつくります。</p>
+    <p class="lead">株式会社イレブン創建は、住宅の新築・リフォームから土木工事まで、地域に根ざした誠実な仕事でお応えする建築会社です。一棟一棟、暮らす人のことを考えてつくります。</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">無料で相談する →</a>
       <a href="#works" class="btn btn-ghost">施工実績を見る</a>
     </div>
-
-    <!-- ▼ 数字でアピール（創業年・実績など）。本当の数字に変えてね ▼ -->
     <div class="hero-stats">
       <div><div class="num">2026<span class="accent">-</span></div><div class="lbl">創業</div></div>
       <div><div class="num">100<span class="accent">+</span></div><div class="lbl">施工実績（件）</div></div>
@@ -318,32 +207,26 @@
   </div>
 </section>
 
-<!-- =====================  会社について  ===================== -->
 <section id="about">
   <div class="wrap about-grid">
     <div class="about-text reveal">
       <div class="eyebrow">About Us</div>
       <h2 class="section-title">小さな相談から、<br>大きな安心まで。</h2>
-      <!-- ▼ 会社の紹介文。代表のあいさつなどに置き換えるとより良いです ▼ -->
       <p>私たちイレブン創建は、新しく歩みはじめた建築会社です。「頼んでよかった」と言ってもらえる仕事を、一つずつ積み重ねていくことを大切にしています。</p>
       <p>住宅の新築やリフォーム、店舗・オフィスの工事、土木まで、暮らしと街にかかわる仕事を幅広く手がけます。打ち合わせから施工、引き渡しのあとまで、顔の見える距離でお付き合いします。</p>
     </div>
-    <!-- ▼ ここは将来、現場や代表の写真を入れる場所です ▼ -->
     <div class="about-photo reveal"></div>
   </div>
 </section>
 
-<!-- =====================  事業内容  ===================== -->
 <section id="services">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">Services</div>
       <h2 class="section-title">事業内容</h2>
     </div>
-    <!-- ▼ 事業内容の代表イメージ。差し替えは同じ service.png で上書き保存 ▼ -->
     <img class="banner-img reveal" src="service.png" alt="舗装・土木工事の現場">
     <div class="services">
-      <!-- ▼ サービス1つ＝1カード。内容は会社に合わせて書き換え・追加・削除できます ▼ -->
       <div class="service-card reveal"><div class="no">01</div><h3>土木工事</h3><p>道路・造成・河川・上下水道など、社会の基盤をつくる工事。</p></div>
       <div class="service-card reveal"><div class="no">02</div><h3>建設工事</h3><p>建物の新築・増改築など、建築全般の工事。</p></div>
       <div class="service-card reveal"><div class="no">03</div><h3>電気工事</h3><p>屋内外の配線や照明・受変電設備などの電気設備工事。</p></div>
@@ -358,7 +241,6 @@
   </div>
 </section>
 
-<!-- =====================  施工実績  ===================== -->
 <section id="works">
   <div class="wrap">
     <div class="section-head reveal">
@@ -366,7 +248,6 @@
       <h2 class="section-title">施工実績</h2>
     </div>
     <div class="works-grid">
-      <!-- ▼ 実績1件＝1枠。写真と名前を後で差し替えます ▼ -->
       <div class="work reveal"><span>○○様邸 新築工事<small>大阪府 ／ 木造2階建て</small></span></div>
       <div class="work reveal"><span>カフェ△△ 内装工事<small>店舗リノベーション</small></span></div>
       <div class="work reveal"><span>□□マンション 改修<small>外壁・防水工事</small></span></div>
@@ -377,14 +258,12 @@
   </div>
 </section>
 
-<!-- =====================  私たちの強み  ===================== -->
 <section id="strengths">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">Our Strengths</div>
       <h2 class="section-title">選ばれる理由</h2>
     </div>
-    <!-- ▼ 強みの代表イメージ。差し替えは同じ strength.png で上書き保存 ▼ -->
     <img class="banner-img reveal" src="strength.png" alt="丁寧に作業する職人">
     <div class="strengths">
       <div class="strength reveal"><div class="icon">01</div><h3>自社一貫施工</h3><p>相談から施工、アフターまで自社が責任を持って対応。「言った・聞いていない」をなくします。</p></div>
@@ -394,14 +273,12 @@
   </div>
 </section>
 
-<!-- =====================  会社概要  ===================== -->
 <section id="company">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">Company</div>
       <h2 class="section-title">会社概要</h2>
     </div>
-    <!-- ▼ ここは本当の会社情報に差し替えてください ▼ -->
     <table class="company-table reveal">
       <tr><th>会社名</th><td>株式会社イレブン創建（eleven souken）</td></tr>
       <tr><th>代表者</th><td>代表取締役　森居 遼太郎（もりい りょうたろう）</td></tr>
@@ -415,32 +292,27 @@
   </div>
 </section>
 
-<!-- =====================  お問い合わせ  ===================== -->
 <section id="contact">
   <div class="wrap contact-grid">
     <div class="contact-info reveal">
       <div class="eyebrow">Contact</div>
       <h2 class="section-title">お気軽にご相談ください</h2>
-      <p>お電話・メールでのご相談を承っております。<br>現地調査・お見積りは無料です。</p>
+      <p>お電話・フォームでのご相談を承っております。<br>現地調査・お見積りは無料です。</p>
       <p style="margin-top:1.4rem;">お電話でのお問い合わせ</p>
       <div class="big accent"><a href="tel:0668094091">06-6809-4091</a></div>
       <p>FAX　06-6809-4092</p>
       <p>受付時間　（営業時間をご記入ください）</p>
-      <p>メール　（メールアドレスをご記入ください）</p>
     </div>
     <div class="reveal">
-      <!-- ▼ この入力フォームは「見た目」だけです。実際に送信できるようにするのは、
-              ネット公開のときに一緒に設定します（今は押しても送信されません） ▼ -->
       <div class="field"><label>お名前</label><input type="text" placeholder="例：山田 太郎"></div>
       <div class="field"><label>メールアドレス</label><input type="email" placeholder="例：taro@example.com"></div>
       <div class="field"><label>お問い合わせ内容</label><textarea rows="5" placeholder="ご相談内容をご記入ください"></textarea></div>
-      <button class="btn btn-primary" type="button" onclick="alert('このフォームは見本です。実際の送信機能は、ネット公開のときに設定します。');">送信する →</button>
-      <p class="form-note">※ 現在は見本のフォームです。送信機能はネット公開時に設定します。</p>
+      <button class="btn btn-primary" type="button">送信する →</button>
+      <p class="form-note">※ 送信機能はネット公開時に設定します。</p>
     </div>
   </div>
 </section>
 
-<!-- =====================  フッター  ===================== -->
 <footer>
   <div class="wrap">
     <div class="foot-top">
@@ -457,13 +329,11 @@
 </footer>
 
 <script>
-  // スマホのメニュー開閉
   const burger = document.getElementById('burger');
   const menu = document.getElementById('menu');
   burger.addEventListener('click', () => menu.classList.toggle('open'));
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
 
-  // スクロールすると要素がふわっと浮き上がる演出
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.12 });

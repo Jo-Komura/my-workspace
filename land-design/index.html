@@ -10,329 +10,233 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho+B1:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 
 <style>
-/* ===== CSS Variables ===== */
 :root {
-  --navy: #0d1b3e;
-  --navy-mid: #162347;
-  --navy-light: #1e3060;
-  --red: #c0272d;
-  --red-dark: #9e1f24;
-  --red-light: #e03035;
-  --gold: #b8964e;
-  --gold-light: #d4af6a;
-  --white: #ffffff;
-  --off-white: #f5f3ef;
-  --cream: #ede9e0;
-  --gray-light: #f0eee9;
-  --gray: #8a8a8a;
-  --gray-dark: #444444;
-  --text: #1a1a1a;
-  --font-serif: 'Shippori Mincho B1', 'Noto Serif JP', serif;
-  --font-sans: 'Zen Kaku Gothic New', sans-serif;
-  --font-en: 'Cormorant Garamond', serif;
-  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --navy: #0d1b3e; --navy-mid: #162347; --navy-light: #1e3060;
+  --red: #c0272d; --red-dark: #9e1f24; --red-light: #e03035;
+  --gold: #b8964e; --gold-light: #d4af6a;
+  --white: #ffffff; --off-white: #f5f3ef; --cream: #ede9e0;
+  --gray-light: #f0eee9; --gray: #8a8a8a; --gray-dark: #444444; --text: #1a1a1a;
+  --font-serif: 'Shippori Mincho B1','Noto Serif JP',serif;
+  --font-sans: 'Zen Kaku Gothic New',sans-serif;
+  --font-en: 'Cormorant Garamond',serif;
+  --transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);color:var(--text);background:var(--off-white);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:112%}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
 
-/* ===== Reset & Base ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-sans);
-  color: var(--text);
-  background: var(--off-white);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  font-size: 112%;
-}
-img { max-width: 100%; display: block; }
-a { text-decoration: none; color: inherit; }
+/* Header */
+header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,78,0.25);transition:var(--transition)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;flex-direction:column;gap:1px}
+.logo-en{font-family:var(--font-en);font-size:1.35rem;font-weight:300;letter-spacing:0.2em;color:var(--white)}
+.logo-jp{font-family:var(--font-sans);font-size:0.75rem;letter-spacing:0.25em;color:var(--gold-light);font-weight:300}
+nav{display:flex;align-items:center;gap:2.5rem}
+nav a{font-family:var(--font-sans);font-size:0.75rem;letter-spacing:0.15em;color:rgba(255,255,255,0.8);font-weight:300;transition:color 0.3s;position:relative}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s}
+nav a:hover{color:var(--gold-light)}
+nav a:hover::after{transform:scaleX(1)}
+.nav-tel{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:1rem}
+.nav-tel-num{font-family:var(--font-en);font-size:1.1rem;font-weight:400;color:var(--white);letter-spacing:0.05em}
+.nav-tel-hours{font-size:0.75rem;color:rgba(255,255,255,0.5);letter-spacing:0.1em}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+.hamburger span{display:block;width:26px;height:1.5px;background:var(--white);transition:var(--transition)}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--navy);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:3rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--font-serif);font-size:1.3rem;color:var(--white);letter-spacing:0.2em;border-bottom:1px solid rgba(184,150,78,0.3);padding-bottom:1rem;width:70%;text-align:center}
+.mobile-menu .m-tel{font-family:var(--font-en);font-size:1.8rem;color:var(--gold-light);margin-top:1rem}
+.mobile-menu .m-hours{font-size:0.75rem;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-top:-2rem}
 
-/* ===== Header ===== */
-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1000;
-  background: rgba(13, 27, 62, 0.97);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(184, 150, 78, 0.25);
-  transition: var(--transition);
-}
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.logo { display: flex; flex-direction: column; gap: 1px; }
-.logo-en {
-  font-family: var(--font-en);
-  font-size: 1.35rem;
-  font-weight: 300;
-  letter-spacing: 0.2em;
-  color: var(--white);
-}
-.logo-jp {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
-  color: var(--gold-light);
-  font-weight: 300;
-}
-nav { display: flex; align-items: center; gap: 2.5rem; }
-nav a {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.8);
-  font-weight: 300;
-  transition: color 0.3s;
-  position: relative;
-}
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0; right: 0;
-  height: 1px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transition: transform 0.3s;
-}
-nav a:hover { color: var(--gold-light); }
-nav a:hover::after { transform: scaleX(1); }
-.nav-tel { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; margin-left: 1rem; }
-.nav-tel-num { font-family: var(--font-en); font-size: 1.1rem; font-weight: 400; color: var(--white); letter-spacing: 0.05em; }
-.nav-tel-hours { font-size: 0.75rem; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; }
+/* Hero */
+.hero{min-height:100vh;background:var(--navy);position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(30,48,96,0.5) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(192,39,45,0.05) 0%,transparent 60%),linear-gradient(135deg,rgba(13,27,62,0.7) 0%,rgba(22,35,71,0.6) 50%,rgba(13,27,62,0.7) 100%)}
+.hero-pattern{display:none}
+.hero-accent-line{display:none}
+.hero-content{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 2rem;padding-top:72px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:100vh}
+.hero-text{padding:2rem 0}
+.hero-label{display:inline-flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.hero-label::before{content:'';display:block;width:30px;height:1px;background:var(--gold)}
+.hero-label span{font-family:var(--font-en);font-size:0.75rem;letter-spacing:0.3em;color:var(--gold-light);font-weight:300}
+.hero-title{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:600;color:var(--white);line-height:1.6;margin-bottom:1.5rem;letter-spacing:0.05em}
+.hero-title em{font-style:normal;color:var(--gold-light)}
+.hero-sub{font-family:var(--font-sans);font-size:0.85rem;color:rgba(255,255,255,0.6);line-height:2;letter-spacing:0.1em;margin-bottom:3rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:var(--red);color:var(--white);font-family:var(--font-sans);font-size:0.8rem;letter-spacing:0.2em;font-weight:500;border:none;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;inset:0;background:var(--red-dark);transform:translateX(-100%);transition:transform 0.4s}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary span{position:relative;z-index:1}
+.btn-outline{display:inline-flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:transparent;color:var(--white);font-family:var(--font-sans);font-size:0.8rem;letter-spacing:0.2em;font-weight:300;border:1px solid rgba(255,255,255,0.3);cursor:pointer;transition:var(--transition)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold-light)}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-card{background:rgba(255,255,255,0.04);border:1px solid rgba(184,150,78,0.2);padding:3rem 2.5rem;width:100%;max-width:400px;position:relative}
+.hero-card::after{content:'';position:absolute;top:-1px;right:-1px;width:80px;height:1px;background:linear-gradient(to right,transparent,rgba(184,150,78,0.5));transform:translateX(100%)}
+.hero-card-cross{position:absolute;top:-1px;right:-1px}
+.hero-card-cross::before{content:'';position:absolute;top:0;right:0;width:80px;height:1px;background:linear-gradient(to right,transparent,rgba(184,150,78,0.45));transform:translateX(100%)}
+.hero-card-cross::after{content:'';position:absolute;top:0;right:0;width:1px;height:80px;background:linear-gradient(to bottom,transparent,rgba(184,150,78,0.45));transform:translateY(-100%)}
+.hero-card::before{content:'';position:absolute;top:-1px;left:2rem;width:60px;height:3px;background:var(--red)}
+.hero-card-title{font-family:var(--font-en);font-size:0.85rem;letter-spacing:0.3em;color:var(--gold);margin-bottom:1.5rem}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.stat-item{border-left:2px solid rgba(184,150,78,0.3);padding-left:1rem}
+.stat-num{font-family:var(--font-en);font-size:2rem;font-weight:400;color:var(--white);letter-spacing:0.05em;line-height:1}
+.stat-num span{font-size:1.1rem;color:var(--gold-light)}
+.stat-label{font-size:0.8rem;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-top:0.3rem}
+.hero-card-tel{border-top:1px solid rgba(184,150,78,0.2);padding-top:1.5rem}
+.hero-card-tel-label{font-size:0.75rem;letter-spacing:0.25em;color:rgba(255,255,255,0.4);margin-bottom:0.5rem}
+.hero-card-tel-num{font-family:var(--font-en);font-size:1.6rem;font-weight:300;color:var(--white);letter-spacing:0.05em}
+.hero-card-tel-num a{color:inherit}
+.hero-hours{font-size:0.8rem;color:rgba(255,255,255,0.4);letter-spacing:0.1em;margin-top:0.3rem}
 
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
-.hamburger span { display: block; width: 26px; height: 1.5px; background: var(--white); transition: var(--transition); }
+/* Services */
+.services{background:var(--off-white);padding:7rem 2rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:4rem}
+.section-label{display:inline-flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
+.section-label::before{content:'';display:block;width:2px;height:20px;background:var(--red)}
+.section-label span{font-family:var(--font-en);font-size:0.75rem;letter-spacing:0.35em;color:var(--red);font-weight:400}
+.section-title{font-family:var(--font-serif);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;color:var(--navy);letter-spacing:0.05em;line-height:1.5}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.service-card{background:var(--white);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:var(--transition);cursor:pointer}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);transform:scaleX(0);transition:transform 0.4s}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(13,27,62,0.1)}
+.service-card:hover::after{transform:scaleX(1)}
+.service-icon{width:48px;height:48px;margin-bottom:1.5rem;color:var(--navy)}
+.service-en{font-family:var(--font-en);font-size:0.8rem;letter-spacing:0.3em;color:var(--red);margin-bottom:0.5rem;text-shadow:0 1px 3px rgba(255,255,255,0.8)}
+.service-title-jp{font-family:var(--font-serif);font-size:1.2rem;font-weight:600;color:var(--navy);margin-bottom:1rem;letter-spacing:0.05em;text-shadow:0 1px 4px rgba(255,255,255,0.9)}
+.service-desc{font-size:0.95rem;line-height:1.9;color:var(--gray-dark);font-weight:400;text-shadow:0 1px 3px rgba(255,255,255,0.8)}
+.service-more{display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.5rem;font-size:0.75rem;letter-spacing:0.2em;color:var(--navy);font-weight:500}
+.service-more::after{content:'→';transition:transform 0.3s}
+.service-card:hover .service-more::after{transform:translateX(4px)}
 
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 72px; left: 0; right: 0; bottom: 0;
-  background: var(--navy);
-  z-index: 999;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
+/* About */
+.about{background:var(--navy);padding:7rem 2rem;position:relative;overflow:hidden}
+.about::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border:1px solid rgba(184,150,78,0.1);border-radius:50%}
+.about::after{content:'';position:absolute;bottom:-150px;left:-150px;width:600px;height:600px;border:1px solid rgba(184,150,78,0.07);border-radius:50%}
+.about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:1}
+.about .section-label span{color:var(--gold-light)}
+.about .section-label::before{background:var(--gold)}
+.about .section-title{color:var(--white)}
+.about-text{font-size:0.85rem;line-height:2.2;color:rgba(255,255,255,0.65);font-weight:300;margin-top:2rem}
+.about-points{margin-top:3rem;display:flex;flex-direction:column;gap:1.5rem}
+.about-point{display:flex;align-items:flex-start;gap:1.5rem}
+.about-point-num{font-family:var(--font-en);font-size:2.5rem;font-weight:300;color:rgba(184,150,78,0.3);line-height:1;min-width:3rem}
+.about-point-text h4{font-family:var(--font-serif);font-size:0.95rem;color:var(--white);margin-bottom:0.4rem;letter-spacing:0.05em}
+.about-point-text p{font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.8;font-weight:300}
+.about-image-block{position:relative}
+.about-img-placeholder{width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,var(--navy-light) 0%,var(--navy-mid) 100%);border:1px solid rgba(184,150,78,0.2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:url('about.png');background-size:cover;background-position:center}
+.about-img-placeholder::before{display:none}
+.about-img-badge{position:absolute;bottom:-1.5rem;left:-1.5rem;background:var(--red);color:var(--white);padding:1.5rem;font-family:var(--font-serif);font-size:0.8rem;line-height:1.6;letter-spacing:0.1em}
+.about-img-badge strong{display:block;font-family:var(--font-en);font-size:2rem;font-weight:300;letter-spacing:0.05em}
+
+/* Area */
+.area{background:var(--cream);padding:7rem 2rem}
+.area-inner{max-width:1200px;margin:0 auto}
+.area-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:4rem}
+.area-map-placeholder{aspect-ratio:1;background:var(--white);border:1px solid rgba(13,27,62,0.1);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:url('area.png');background-size:cover;background-position:center}
+.area-map-placeholder::before{display:none}
+.area-list{display:flex;flex-direction:column;gap:2rem}
+.area-item{border-left:2px solid var(--navy);padding-left:1.5rem}
+.area-item-title{font-family:var(--font-serif);font-size:1.1rem;color:var(--navy);margin-bottom:0.5rem;letter-spacing:0.05em}
+.area-item-desc{font-size:0.8rem;color:var(--gray-dark);line-height:1.8;font-weight:300}
+.area-item:first-child{border-color:var(--red)}
+.area-item:first-child .area-item-title{color:var(--red-dark)}
+
+/* Contact */
+.contact{background:var(--navy);padding:7rem 2rem;position:relative;overflow:hidden}
+.contact-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0d1b3e 0%,#1a0810 100%)}
+.contact-inner{max-width:860px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.contact .section-label{justify-content:center}
+.contact .section-label span{color:var(--gold-light)}
+.contact .section-label::before{background:var(--gold)}
+.contact .section-title{color:var(--white);text-align:center}
+.contact-subtitle{font-size:0.8rem;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-top:1.5rem;margin-bottom:3rem;font-weight:300}
+
+/* Contact: 電話帯 + フォーム縦積みレイアウト */
+.contact-form-wrap{background:rgba(255,255,255,0.05);border:1px solid rgba(184,150,78,0.2);text-align:left}
+.contact-tel-band{
+  display:flex;align-items:center;justify-content:space-between;gap:2rem;
+  padding:1.4rem 2rem;
+  border-bottom:1px solid rgba(184,150,78,0.15);
+  background:rgba(255,255,255,0.03);
 }
-.mobile-menu.open { display: flex; }
-.mobile-menu a { font-family: var(--font-serif); font-size: 1.3rem; color: var(--white); letter-spacing: 0.2em; border-bottom: 1px solid rgba(184,150,78,0.3); padding-bottom: 1rem; width: 70%; text-align: center; }
-.mobile-menu .m-tel { font-family: var(--font-en); font-size: 1.8rem; color: var(--gold-light); margin-top: 1rem; }
-.mobile-menu .m-hours { font-size: 0.75rem; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; margin-top: -2rem; }
+.contact-tel-left{display:flex;align-items:center;gap:1.2rem}
+.contact-tel-icon{font-size:1.2rem}
+.contact-tel-label{font-size:0.72rem;letter-spacing:0.2em;color:rgba(255,255,255,0.45);margin-bottom:0.2rem}
+.contact-tel-num{font-family:var(--font-en);font-size:1.6rem;font-weight:300;color:var(--white);letter-spacing:0.05em;line-height:1}
+.contact-tel-num a{color:inherit}
+.contact-tel-hours{font-size:0.72rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;margin-top:0.2rem}
 
-/* ===== Hero ===== */
-.hero { min-height: 100vh; background: var(--navy); position: relative; display: flex; align-items: center; overflow: hidden; }
-.hero-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(30, 48, 96, 0.5) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(192, 39, 45, 0.05) 0%, transparent 60%),
-    linear-gradient(135deg, rgba(13,27,62,0.7) 0%, rgba(22,35,71,0.6) 50%, rgba(13,27,62,0.7) 100%);
+/* Form */
+.contact-form-inner{padding:2rem}
+.contact-form-title{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.8rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(184,150,78,0.12)}
+.contact-form-en{font-family:var(--font-en);font-size:0.75rem;letter-spacing:0.35em;color:var(--gold)}
+.contact-form-jp{font-family:var(--font-serif);font-size:1rem;color:rgba(255,255,255,0.8);letter-spacing:0.05em}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-row{display:flex;flex-direction:column;gap:0.35rem}
+.form-label{font-size:0.72rem;letter-spacing:0.15em;color:rgba(255,255,255,0.55);font-weight:300;display:flex;align-items:center;gap:0.5rem}
+.form-required{font-size:0.62rem;background:var(--red);color:var(--white);padding:0.1rem 0.35rem;letter-spacing:0.05em}
+.form-input{background:rgba(255,255,255,0.07);border:1px solid rgba(184,150,78,0.18);padding:0.65rem 0.9rem;color:var(--white);font-family:var(--font-sans);font-size:0.83rem;font-weight:300;outline:none;transition:border-color 0.3s;width:100%}
+.form-input::placeholder{color:rgba(255,255,255,0.18)}
+.form-input:focus{border-color:rgba(184,150,78,0.5)}
+.form-textarea{background:rgba(255,255,255,0.07);border:1px solid rgba(184,150,78,0.18);padding:0.65rem 0.9rem;color:var(--white);font-family:var(--font-sans);font-size:0.83rem;font-weight:300;outline:none;transition:border-color 0.3s;width:100%;height:110px;resize:vertical}
+.form-textarea::placeholder{color:rgba(255,255,255,0.18)}
+.form-textarea:focus{border-color:rgba(184,150,78,0.5)}
+.form-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:0.3rem}
+.form-submit{padding:0.85rem 2rem;background:var(--red);color:var(--white);font-family:var(--font-sans);font-size:0.78rem;letter-spacing:0.22em;font-weight:500;border:none;cursor:pointer;transition:var(--transition);white-space:nowrap}
+.form-submit:hover{background:var(--red-dark)}
+.form-note{font-size:0.7rem;color:rgba(255,255,255,0.28);letter-spacing:0.08em}
+
+/* Info */
+.info{background:var(--off-white);padding:7rem 2rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-top:4rem}
+.info-table{width:100%;border-collapse:collapse}
+.info-table tr{border-bottom:1px solid rgba(13,27,62,0.08)}
+.info-table th{text-align:left;padding:1rem 1rem 1rem 0;font-family:var(--font-sans);font-size:0.75rem;font-weight:500;color:var(--navy);letter-spacing:0.1em;white-space:nowrap;width:8em}
+.info-table td{padding:1rem 0;font-size:0.8rem;color:var(--gray-dark);line-height:1.7;font-weight:300}
+.info-access{background:var(--navy);padding:2.5rem;color:var(--white)}
+.info-access h4{font-family:var(--font-en);font-size:0.75rem;letter-spacing:0.3em;color:var(--gold);margin-bottom:1.5rem}
+.info-access p{font-size:0.8rem;line-height:2;color:rgba(255,255,255,0.7);font-weight:300;margin-bottom:1.5rem}
+.info-map-placeholder{width:100%;aspect-ratio:16/9;background:var(--navy-light);border:1px solid rgba(184,150,78,0.2);display:flex;align-items:center;justify-content:center;margin-top:1.5rem}
+
+/* Footer */
+footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:start;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,0.06)}
+.footer-brand .logo-en{font-size:1.1rem}
+.footer-brand .logo-jp{margin-top:4px}
+.footer-addr{font-size:0.75rem;line-height:2;margin-top:1.5rem;color:rgba(255,255,255,0.35);font-weight:300}
+.footer-links{display:flex;gap:2rem;flex-wrap:wrap}
+.footer-links a{font-size:0.75rem;letter-spacing:0.1em;color:rgba(255,255,255,0.4);transition:color 0.3s}
+.footer-links a:hover{color:var(--gold-light)}
+.footer-copy{font-size:0.75rem;letter-spacing:0.15em;text-align:center;color:rgba(255,255,255,0.2)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:900px){
+  nav{display:none}.nav-tel{display:none}.hamburger{display:flex}
+  .hero-content{grid-template-columns:1fr;padding-top:120px;padding-bottom:4rem;min-height:auto}
+  .hero-visual{justify-content:stretch}.hero-card{max-width:100%}
+  .services-grid{grid-template-columns:1fr;gap:2px}
+  .about-inner{grid-template-columns:1fr;gap:4rem}
+  .about-img-badge{left:1rem;bottom:1rem}
+  .area-grid{grid-template-columns:1fr;gap:2rem}
+  .contact-tel-band{flex-direction:column;align-items:flex-start;gap:1rem}
+  .form-grid{grid-template-columns:1fr}
+  .form-footer{flex-direction:column;align-items:flex-start}
+  .info-grid{grid-template-columns:1fr;gap:3rem}
+  .footer-inner{grid-template-columns:1fr;gap:2rem}
 }
-.hero-pattern {
-  display: none;
-}
-.hero-accent-line { display: none; }
-.hero-content {
-  position: relative; z-index: 1;
-  max-width: 1200px; margin: 0 auto; padding: 0 2rem; padding-top: 72px;
-  width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; min-height: 100vh;
-}
-.hero-text { padding: 2rem 0; }
-.hero-label { display: inline-flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
-.hero-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
-.hero-label span { font-family: var(--font-en); font-size: 0.75rem; letter-spacing: 0.3em; color: var(--gold-light); font-weight: 300; }
-.hero-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 600; color: var(--white); line-height: 1.6; margin-bottom: 1.5rem; letter-spacing: 0.05em; }
-.hero-title em { font-style: normal; color: var(--gold-light); }
-.hero-sub { font-family: var(--font-sans); font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 2; letter-spacing: 0.1em; margin-bottom: 3rem; font-weight: 300; }
-.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn-primary { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; background: var(--red); color: var(--white); font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.2em; font-weight: 500; border: none; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; }
-.btn-primary::before { content: ''; position: absolute; inset: 0; background: var(--red-dark); transform: translateX(-100%); transition: transform 0.4s; }
-.btn-primary:hover::before { transform: translateX(0); }
-.btn-primary span { position: relative; z-index: 1; }
-.btn-outline { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2rem; background: transparent; color: var(--white); font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.2em; font-weight: 300; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; transition: var(--transition); }
-.btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
-.hero-visual { position: relative; display: flex; align-items: center; justify-content: center; }
-.hero-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(184,150,78,0.2); padding: 3rem 2.5rem; width: 100%; max-width: 400px; position: relative; }
-.hero-card::after {
-  content: '';
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  width: 80px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(184,150,78,0.5));
-  transform: translateX(100%);
-}
-.hero-card-cross {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-}
-.hero-card-cross::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(184,150,78,0.45));
-  transform: translateX(100%);
-}
-.hero-card-cross::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 1px;
-  height: 80px;
-  background: linear-gradient(to bottom, transparent, rgba(184,150,78,0.45));
-  transform: translateY(-100%);
-}
-.hero-card::before { content: ''; position: absolute; top: -1px; left: 2rem; width: 60px; height: 3px; background: var(--red); }
-.hero-card-title { font-family: var(--font-en); font-size: 0.85rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 1.5rem; }
-.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-.stat-item { border-left: 2px solid rgba(184,150,78,0.3); padding-left: 1rem; }
-.stat-num { font-family: var(--font-en); font-size: 2rem; font-weight: 400; color: var(--white); letter-spacing: 0.05em; line-height: 1; }
-.stat-num span { font-size: 1.1rem; color: var(--gold-light); }
-.stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; margin-top: 0.3rem; }
-.hero-card-tel { border-top: 1px solid rgba(184,150,78,0.2); padding-top: 1.5rem; }
-.hero-card-tel-label { font-size: 0.75rem; letter-spacing: 0.25em; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; }
-.hero-card-tel-num { font-family: var(--font-en); font-size: 1.6rem; font-weight: 300; color: var(--white); letter-spacing: 0.05em; }
-.hero-card-tel-num a { color: inherit; }
-.hero-hours { font-size: 0.8rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; margin-top: 0.3rem; }
-
-/* ===== Services ===== */
-.services { background: var(--off-white); padding: 7rem 2rem; }
-.section-inner { max-width: 1200px; margin: 0 auto; }
-.section-header { margin-bottom: 4rem; }
-.section-label { display: inline-flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-.section-label::before { content: ''; display: block; width: 2px; height: 20px; background: var(--red); }
-.section-label span { font-family: var(--font-en); font-size: 0.75rem; letter-spacing: 0.35em; color: var(--red); font-weight: 400; }
-.section-title { font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 600; color: var(--navy); letter-spacing: 0.05em; line-height: 1.5; }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-.service-card { background: var(--white); padding: 3rem 2.5rem; position: relative; overflow: hidden; transition: var(--transition); cursor: pointer; }
-.service-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--red); transform: scaleX(0); transition: transform 0.4s; }
-.service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(13,27,62,0.1); }
-.service-card:hover::after { transform: scaleX(1); }
-.service-icon { width: 48px; height: 48px; margin-bottom: 1.5rem; color: var(--navy); }
-.service-en { font-family: var(--font-en); font-size: 0.8rem; letter-spacing: 0.3em; color: var(--red); margin-bottom: 0.5rem; text-shadow: 0 1px 3px rgba(255,255,255,0.8); }
-.service-title-jp { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 1rem; letter-spacing: 0.05em; text-shadow: 0 1px 4px rgba(255,255,255,0.9); }
-.service-desc { font-size: 0.95rem; line-height: 1.9; color: var(--gray-dark); font-weight: 400; text-shadow: 0 1px 3px rgba(255,255,255,0.8); }
-.service-more { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--navy); font-weight: 500; }
-.service-more::after { content: '→'; transition: transform 0.3s; }
-.service-card:hover .service-more::after { transform: translateX(4px); }
-
-/* ===== About ===== */
-.about { background: var(--navy); padding: 7rem 2rem; position: relative; overflow: hidden; }
-.about::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; border: 1px solid rgba(184,150,78,0.1); border-radius: 50%; }
-.about::after { content: ''; position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px; border: 1px solid rgba(184,150,78,0.07); border-radius: 50%; }
-.about-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; position: relative; z-index: 1; }
-.about .section-label span { color: var(--gold-light); }
-.about .section-label::before { background: var(--gold); }
-.about .section-title { color: var(--white); }
-.about-text { font-size: 0.85rem; line-height: 2.2; color: rgba(255,255,255,0.65); font-weight: 300; margin-top: 2rem; }
-.about-points { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
-.about-point { display: flex; align-items: flex-start; gap: 1.5rem; }
-.about-point-num { font-family: var(--font-en); font-size: 2.5rem; font-weight: 300; color: rgba(184,150,78,0.3); line-height: 1; min-width: 3rem; }
-.about-point-text h4 { font-family: var(--font-serif); font-size: 0.95rem; color: var(--white); margin-bottom: 0.4rem; letter-spacing: 0.05em; }
-.about-point-text p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.8; font-weight: 300; }
-.about-image-block { position: relative; }
-.about-img-placeholder { width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy-mid) 100%); border: 1px solid rgba(184,150,78,0.2); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background-image: url('about.png'); background-size: cover; background-position: center; }
-.about-img-placeholder::before { display: none; }
-.about-img-badge { position: absolute; bottom: -1.5rem; left: -1.5rem; background: var(--red); color: var(--white); padding: 1.5rem; font-family: var(--font-serif); font-size: 0.8rem; line-height: 1.6; letter-spacing: 0.1em; }
-.about-img-badge strong { display: block; font-family: var(--font-en); font-size: 2rem; font-weight: 300; letter-spacing: 0.05em; }
-
-/* ===== Area ===== */
-.area { background: var(--cream); padding: 7rem 2rem; }
-.area-inner { max-width: 1200px; margin: 0 auto; }
-.area-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 4rem; }
-.area-map-placeholder { aspect-ratio: 1; background: var(--white); border: 1px solid rgba(13,27,62,0.1); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background-image: url('area.png'); background-size: cover; background-position: center; }
-.area-map-placeholder::before { display: none; }
-.area-list { display: flex; flex-direction: column; gap: 2rem; }
-.area-item { border-left: 2px solid var(--navy); padding-left: 1.5rem; }
-.area-item-title { font-family: var(--font-serif); font-size: 1.1rem; color: var(--navy); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
-.area-item-desc { font-size: 0.8rem; color: var(--gray-dark); line-height: 1.8; font-weight: 300; }
-.area-item:first-child { border-color: var(--red); }
-.area-item:first-child .area-item-title { color: var(--red-dark); }
-
-/* ===== Contact ===== */
-.contact { background: var(--navy); padding: 7rem 2rem; position: relative; overflow: hidden; }
-.contact-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0d1b3e 0%, #1a0810 100%); }
-.contact-inner { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
-.contact .section-label { justify-content: center; }
-.contact .section-label span { color: var(--gold-light); }
-.contact .section-label::before { background: var(--gold); }
-.contact .section-title { color: var(--white); text-align: center; }
-.contact-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; margin-top: 1.5rem; margin-bottom: 4rem; font-weight: 300; }
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
-.contact-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(184,150,78,0.2); padding: 2.5rem; text-align: left; transition: var(--transition); }
-.contact-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(184,150,78,0.4); }
-.contact-card-icon { font-size: 1.5rem; margin-bottom: 1rem; }
-.contact-card-title { font-family: var(--font-serif); font-size: 1rem; color: var(--white); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
-.contact-card-detail { font-family: var(--font-en); font-size: 1.6rem; color: var(--gold-light); font-weight: 300; letter-spacing: 0.05em; margin: 0.5rem 0; }
-.contact-card-detail a { color: inherit; }
-.contact-card-desc { font-size: 0.75rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
-.contact-form-link { display: inline-flex; align-items: center; gap: 1rem; padding: 1.2rem 3rem; background: var(--red); color: var(--white); font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.25em; font-weight: 500; transition: var(--transition); cursor: pointer; border: none; }
-.contact-form-link:hover { background: var(--red-dark); }
-
-/* ===== Info ===== */
-.info { background: var(--off-white); padding: 7rem 2rem; }
-.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-top: 4rem; }
-.info-table { width: 100%; border-collapse: collapse; }
-.info-table tr { border-bottom: 1px solid rgba(13,27,62,0.08); }
-.info-table th { text-align: left; padding: 1rem 1rem 1rem 0; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; color: var(--navy); letter-spacing: 0.1em; white-space: nowrap; width: 8em; }
-.info-table td { padding: 1rem 0; font-size: 0.8rem; color: var(--gray-dark); line-height: 1.7; font-weight: 300; }
-.info-access { background: var(--navy); padding: 2.5rem; color: var(--white); }
-.info-access h4 { font-family: var(--font-en); font-size: 0.75rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 1.5rem; }
-.info-access p { font-size: 0.8rem; line-height: 2; color: rgba(255,255,255,0.7); font-weight: 300; margin-bottom: 1.5rem; }
-.info-map-placeholder { width: 100%; aspect-ratio: 16/9; background: var(--navy-light); border: 1px solid rgba(184,150,78,0.2); display: flex; align-items: center; justify-content: center; margin-top: 1.5rem; }
-.info-map-placeholder span { font-family: var(--font-en); font-size: 0.75rem; letter-spacing: 0.35em; color: rgba(184,150,78,0.4); }
-
-/* ===== Footer ===== */
-footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0.5); }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: start; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.footer-brand .logo-en { font-size: 1.1rem; }
-.footer-brand .logo-jp { margin-top: 4px; }
-.footer-addr { font-size: 0.75rem; line-height: 2; margin-top: 1.5rem; color: rgba(255,255,255,0.35); font-weight: 300; }
-.footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
-.footer-links a { font-size: 0.75rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); transition: color 0.3s; }
-.footer-links a:hover { color: var(--gold-light); }
-.footer-copy { font-size: 0.75rem; letter-spacing: 0.15em; text-align: center; color: rgba(255,255,255,0.2); }
-
-/* ===== Reveal Animation ===== */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* ===== Responsive ===== */
-@media (max-width: 900px) {
-  nav { display: none; }
-  .nav-tel { display: none; }
-  .hamburger { display: flex; }
-  .hero-content { grid-template-columns: 1fr; padding-top: 120px; padding-bottom: 4rem; min-height: auto; }
-  .hero-accent-line { display: none; }
-  .hero-visual { justify-content: stretch; }
-  .hero-card { max-width: 100%; }
-  .services-grid { grid-template-columns: 1fr; gap: 2px; }
-  .about-inner { grid-template-columns: 1fr; gap: 4rem; }
-  .about-img-badge { left: 1rem; bottom: 1rem; }
-  .area-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .contact-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .info-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
-}
-
-@media (max-width: 600px) {
-  .hero-title { font-size: 1.6rem; }
-  .hero-stats { grid-template-columns: 1fr 1fr; }
-  .hero-btns { flex-direction: column; }
-  .btn-primary, .btn-outline { width: 100%; justify-content: center; }
-  .services, .about, .area, .contact, .info { padding: 5rem 1.5rem; }
+@media(max-width:600px){
+  .hero-title{font-size:1.6rem}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .hero-btns{flex-direction:column}
+  .btn-primary,.btn-outline{width:100%;justify-content:center}
+  .services,.about,.area,.contact,.info{padding:5rem 1.5rem}
+  .form-submit{width:100%;justify-content:center}
 }
 </style>
 </head>
@@ -371,7 +275,7 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
   <div class="m-hours">受付時間 10:00〜22:00</div>
 </div>
 
-<section class="hero" style="background-image: url('hero.png'); background-size: cover; background-position: center;">
+<section class="hero" style="background-image:url('hero.png');background-size:cover;background-position:center">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-accent-line"></div>
@@ -379,7 +283,7 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
     <div class="hero-text">
       <div class="hero-label"><span>NAKAZAKICHO, OSAKA</span></div>
       <h1 class="hero-title">不動産のことなら、<br><em>信頼</em>できるパートナーへ。</h1>
-      <p class="hero-sub">大阪・中崎町に根ざして15年。<br>売買・賃貸・収益物件まで、<br>あなたの大切な不動産をトータルでサポートします。</p>
+      <p class="hero-sub">大阪・中崎町に根ざして18年。<br>売買・賃貸・収益物件まで、<br>あなたの大切な不動産をトータルでサポートします。</p>
       <div class="hero-btns">
         <a href="#contact" class="btn-primary"><span>無料相談はこちら</span></a>
         <a href="#services" class="btn-outline">サービスを見る</a>
@@ -390,22 +294,10 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
         <div class="hero-card-cross"></div>
         <div class="hero-card-title">LAND DESIGN — SINCE 2008</div>
         <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-num">15<span>年</span></div>
-            <div class="stat-label">地域密着の実績</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">★<span>4.8</span></div>
-            <div class="stat-label">お客様満足度</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">─<span></span></div>
-            <div class="stat-label">取扱実績（件）</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">─<span></span></div>
-            <div class="stat-label">売買成約（件）</div>
-          </div>
+          <div class="stat-item"><div class="stat-num">18<span>年</span></div><div class="stat-label">地域密着の実績</div></div>
+          <div class="stat-item"><div class="stat-num">★<span>4.8</span></div><div class="stat-label">お客様満足度</div></div>
+          <div class="stat-item"><div class="stat-num">─</div><div class="stat-label">取扱実績（件）</div></div>
+          <div class="stat-item"><div class="stat-num">─</div><div class="stat-label">売買成約（件）</div></div>
         </div>
         <div class="hero-card-tel">
           <div class="hero-card-tel-label">TEL — お気軽にご連絡ください</div>
@@ -424,40 +316,35 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
       <h2 class="section-title">私たちにできること</h2>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal" style="background-image: url('service.png'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; inset: 0; background: rgba(255,255,255,0.75);"></div>
-        <div style="position: relative; z-index: 1;">
-        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="8" y="18" width="32" height="24" rx="1"/><path d="M4 22L24 6l20 16"/><path d="M18 42V30h12v12"/>
-        </svg>
-        <div class="service-en">BUY & SELL</div>
-        <div class="service-title-jp">不動産売買</div>
-        <p class="service-desc">マンション・戸建て・土地の売却・購入をサポート。適正価格の査定から契約・引き渡しまで、経験豊富なスタッフが丁寧にご対応します。</p>
-        <div class="service-more">詳しく見る</div>
+      <div class="service-card reveal" style="background-image:url('service.png');background-size:cover;background-position:center;position:relative">
+        <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
+        <div style="position:relative;z-index:1">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="18" width="32" height="24" rx="1"/><path d="M4 22L24 6l20 16"/><path d="M18 42V30h12v12"/></svg>
+          <div class="service-en">BUY & SELL</div>
+          <div class="service-title-jp">不動産売買</div>
+          <p class="service-desc">マンション・戸建て・土地の売却・購入をサポート。適正価格の査定から契約・引き渡しまで、経験豊富なスタッフが丁寧にご対応します。</p>
+          <div class="service-more">詳しく見る</div>
         </div>
       </div>
-      <div class="service-card reveal" style="background-image: url('rental.png'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; inset: 0; background: rgba(255,255,255,0.75);"></div>
-        <div style="position: relative; z-index: 1;">
-        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M12 8h24v32H12z"/><path d="M20 8V4h8v4"/><path d="M18 20h12M18 28h8"/>
-        </svg>
-        <div class="service-en">RENTAL</div>
-        <div class="service-title-jp">賃貸仲介</div>
-        <p class="service-desc">中崎町・大阪北区エリアを中心に、豊富な賃貸物件をご紹介。ペット可・新婚向けなど、ご要望に合わせた物件探しをお手伝いします。</p>
-        <div class="service-more">詳しく見る</div>
+      <div class="service-card reveal" style="background-image:url('rental.png');background-size:cover;background-position:center;position:relative">
+        <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
+        <div style="position:relative;z-index:1">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8h24v32H12z"/><path d="M20 8V4h8v4"/><path d="M18 20h12M18 28h8"/></svg>
+          <div class="service-en">RENTAL</div>
+          <div class="service-title-jp">賃貸仲介</div>
+          <p class="service-desc">中崎町・大阪北区エリアを中心に、豊富な賃貸物件をご紹介。ペット可・新婚向けなど、ご要望に合わせた物件探しをお手伝いします。</p>
+          <div class="service-more">詳しく見る</div>
         </div>
       </div>
-      <div class="service-card reveal" style="background-image: url('investment.png'); background-size: cover; background-position: center; position: relative;">
-        <div style="position: absolute; inset: 0; background: rgba(255,255,255,0.75);"></div>
-        <div style="position: relative; z-index: 1;">
-        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="6" y="10" width="36" height="28" rx="1"/><path d="M14 10V6h20v4"/><path d="M6 22h36"/><path d="M18 22v16M30 22v16"/>
-        </svg>
-        <div class="service-en">INVESTMENT</div>
-        <div class="service-title-jp">収益物件</div>
-        <p class="service-desc">収益マンション・アパートの売買・管理をサポート。投資物件の選定から運用まで、資産形成をトータルでご提案します。</p>
-        <div class="service-more">詳しく見る</div>
+      <div class="service-card reveal" style="background-image:url('investment.png');background-size:cover;background-position:center;position:relative">
+        <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
+        <div style="position:relative;z-index:1">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="10" width="36" height="28" rx="1"/><path d="M14 10V6h20v4"/><path d="M6 22h36"/><path d="M18 22v16M30 22v16"/></svg>
+          <div class="service-en">INVESTMENT</div>
+          <div class="service-title-jp">収益物件</div>
+          <p class="service-desc">収益マンション・アパートの売買・管理をサポート。投資物件の選定から運用まで、資産形成をトータルでご提案します。</p>
+          <div class="service-more">詳しく見る</div>
+        </div>
       </div>
     </div>
   </div>
@@ -468,7 +355,7 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
     <div>
       <div class="section-header reveal">
         <div class="section-label"><span>ABOUT US</span></div>
-        <h2 class="section-title">中崎町で15年、<br>地域に根ざした不動産会社。</h2>
+        <h2 class="section-title">中崎町で18年、<br>地域に根ざした不動産会社。</h2>
       </div>
       <p class="about-text reveal">
         株式会社ランドデザインは、大阪市北区中崎町に2008年に設立した不動産会社です。<br><br>
@@ -477,24 +364,15 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
       <div class="about-points reveal">
         <div class="about-point">
           <div class="about-point-num">01</div>
-          <div class="about-point-text">
-            <h4>地域密着15年の信頼</h4>
-            <p>中崎町・大阪北区を知り尽くしたスタッフが、最適な提案をいたします。</p>
-          </div>
+          <div class="about-point-text"><h4>地域密着18年の信頼</h4><p>中崎町・大阪北区を知り尽くしたスタッフが、最適な提案をいたします。</p></div>
         </div>
         <div class="about-point">
           <div class="about-point-num">02</div>
-          <div class="about-point-text">
-            <h4>売買のプロフェッショナル</h4>
-            <p>適正な価格査定と丁寧な交渉で、売主・買主双方にとってベストな取引を実現します。</p>
-          </div>
+          <div class="about-point-text"><h4>売買のプロフェッショナル</h4><p>適正な価格査定と丁寧な交渉で、売主・買主双方にとってベストな取引を実現します。</p></div>
         </div>
         <div class="about-point">
           <div class="about-point-num">03</div>
-          <div class="about-point-text">
-            <h4>受付時間10:00〜22:00</h4>
-            <p>仕事帰りや休日にもご相談いただけるよう、夜間まで対応しています。</p>
-          </div>
+          <div class="about-point-text"><h4>受付時間10:00〜22:00</h4><p>仕事帰りや休日にもご相談いただけるよう、夜間まで対応しています。</p></div>
         </div>
       </div>
     </div>
@@ -514,22 +392,10 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
     <div class="area-grid">
       <div class="area-map-placeholder reveal"></div>
       <div class="area-list reveal">
-        <div class="area-item">
-          <div class="area-item-title">中崎町・中崎（北区）</div>
-          <div class="area-item-desc">メインエリア。おしゃれなカフェやギャラリーが並ぶ人気エリアで、投資・居住どちらの需要も高い地域です。</div>
-        </div>
-        <div class="area-item">
-          <div class="area-item-title">大阪市北区全域</div>
-          <div class="area-item-desc">梅田・天神橋・扇町・天満など、北区全域の売買・賃貸物件に対応しています。</div>
-        </div>
-        <div class="area-item">
-          <div class="area-item-title">大阪市内全域</div>
-          <div class="area-item-desc">都島・福島・西区・中央区など、大阪市内全域の物件もお取り扱いしております。</div>
-        </div>
-        <div class="area-item">
-          <div class="area-item-title">その他エリア</div>
-          <div class="area-item-desc">大阪府内・兵庫・京都など、広域のご相談もお気軽にお問い合わせください。</div>
-        </div>
+        <div class="area-item"><div class="area-item-title">中崎町・中崎（北区）</div><div class="area-item-desc">メインエリア。おしゃれなカフェやギャラリーが並ぶ人気エリアで、投資・居住どちらの需要も高い地域です。</div></div>
+        <div class="area-item"><div class="area-item-title">大阪市北区全域</div><div class="area-item-desc">梅田・天神橋・扇町・天満など、北区全域の売買・賃貸物件に対応しています。</div></div>
+        <div class="area-item"><div class="area-item-title">大阪市内全域</div><div class="area-item-desc">都島・福島・西区・中央区など、大阪市内全域の物件もお取り扱いしております。</div></div>
+        <div class="area-item"><div class="area-item-title">その他エリア</div><div class="area-item-desc">大阪府内・兵庫・京都など、広域のご相談もお気軽にお問い合わせください。</div></div>
       </div>
     </div>
   </div>
@@ -543,21 +409,52 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
       <h2 class="section-title">まずは、お気軽に<br>ご相談ください。</h2>
     </div>
     <p class="contact-subtitle reveal">売却・購入・賃貸、どんなご相談もお待ちしています。</p>
-    <div class="contact-grid reveal">
-      <div class="contact-card">
-        <div class="contact-card-icon">📞</div>
-        <div class="contact-card-title">お電話でのご相談</div>
-        <div class="contact-card-detail"><a href="tel:0664862588">06-6486-2588</a></div>
-        <div class="contact-card-desc">受付時間 10:00〜22:00（年中無休）</div>
+
+    <div class="contact-form-wrap reveal">
+      <!-- 電話帯（フォームの上に横並び） -->
+      <div class="contact-tel-band">
+        <div class="contact-tel-left">
+          <div class="contact-tel-icon">📞</div>
+          <div>
+            <div class="contact-tel-label">お電話でのご相談</div>
+            <div class="contact-tel-num"><a href="tel:0664862588">06-6486-2588</a></div>
+            <div class="contact-tel-hours">受付時間 10:00〜22:00（年中無休）</div>
+          </div>
+        </div>
       </div>
-      <div class="contact-card">
-        <div class="contact-card-icon">✉️</div>
-        <div class="contact-card-title">メールでのご相談</div>
-        <div class="contact-card-detail" style="font-size:1rem; margin-top: 0.8rem;">info@landdesign11.co.jp</div>
-        <div class="contact-card-desc">24時間受付・翌営業日にご返信</div>
+
+      <!-- フォーム -->
+      <div class="contact-form-inner">
+        <div class="contact-form-title">
+          <span class="contact-form-en">INQUIRY FORM</span>
+          <span class="contact-form-jp">お問い合わせフォーム</span>
+        </div>
+        <div class="contact-form">
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">お名前 <span class="form-required">必須</span></label>
+              <input class="form-input" type="text" placeholder="山田 太郎">
+            </div>
+            <div class="form-row">
+              <label class="form-label">電話番号</label>
+              <input class="form-input" type="tel" placeholder="06-0000-0000">
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">メールアドレス <span class="form-required">必須</span></label>
+            <input class="form-input" type="email" placeholder="example@email.com">
+          </div>
+          <div class="form-row">
+            <label class="form-label">お問い合わせ内容 <span class="form-required">必須</span></label>
+            <textarea class="form-textarea" placeholder="ご相談内容をご記入ください。&#10;例：物件の査定をお願いしたい、収益物件について詳しく聞きたい など"></textarea>
+          </div>
+          <div class="form-footer">
+            <button class="form-submit" type="button">送信する →</button>
+            <p class="form-note">※ 送信後、翌営業日までにご返信いたします。</p>
+          </div>
+        </div>
       </div>
     </div>
-    <a href="#contact" class="contact-form-link reveal">お問い合わせフォームへ →</a>
   </div>
 </section>
 
@@ -585,7 +482,7 @@ footer { background: #080f22; padding: 4rem 2rem 2rem; color: rgba(255,255,255,0
         <h4>ACCESS</h4>
         <p>大阪メトロ谷町線・堺筋線<br>「天神橋筋六丁目駅」より徒歩約5分<br><br>阪急電鉄「中津駅」より徒歩約8分</p>
         <div class="info-map-placeholder">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3279.907102166235!2d135.50309137645183!3d34.707522982845674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e695edbb3657%3A0x76c14ba96ae6260e!2z44CSNTMwLTAwMTYg5aSn6Ziq5bqc5aSn6Ziq5biC5YyX5Yy65Lit5bSO77yT5LiB55uu77yR4oiS77yRIOaRgua0peODk-ODqw!5e0!3m2!1sja!2sjp!4v1780927494574!5m2!1sja!2sjp" width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3279.907102166235!2d135.50309137645183!3d34.707522982845674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e695edbb3657%3A0x76c14ba96ae6260e!2z44CSNTMwLTAwMTYg5aSn6Ziq5bqc5aSn6Ziq5biC5YyX5Yy65Lit5bSO77yT5LiB55uu77yR4oiS77yRIOaRgua0peODk-ODqw!5e0!3m2!1sja!2sjp!4v1780927494574!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;display:block" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </div>
