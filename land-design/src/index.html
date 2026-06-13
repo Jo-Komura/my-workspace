@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho+B1:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 :root {
@@ -124,7 +125,7 @@ nav a:hover::after{transform:scaleX(1)}
 .about-point-text h4{font-family:var(--font-serif);font-size:0.95rem;color:var(--white);margin-bottom:0.4rem;letter-spacing:0.05em}
 .about-point-text p{font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.8;font-weight:300}
 .about-image-block{position:relative}
-.about-img-placeholder{width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,var(--navy-light) 0%,var(--navy-mid) 100%);border:1px solid rgba(184,150,78,0.2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:url('about.png');background-size:cover;background-position:center}
+.about-img-placeholder{width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,var(--navy-light) 0%,var(--navy-mid) 100%);border:1px solid rgba(184,150,78,0.2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:url('images/about.png');background-size:cover;background-position:center}
 .about-img-placeholder::before{display:none}
 .about-img-badge{position:absolute;bottom:-1.5rem;left:-1.5rem;background:var(--red);color:var(--white);padding:1.5rem;font-family:var(--font-serif);font-size:0.8rem;line-height:1.6;letter-spacing:0.1em}
 .about-img-badge strong{display:block;font-family:var(--font-en);font-size:2rem;font-weight:300;letter-spacing:0.05em}
@@ -156,7 +157,7 @@ nav a:hover::after{transform:scaleX(1)}
 .area{background:var(--cream);padding:7rem 2rem}
 .area-inner{max-width:1200px;margin:0 auto}
 .area-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:4rem}
-.area-map-placeholder{aspect-ratio:1;background:var(--white);border:1px solid rgba(13,27,62,0.1);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:url('area.png');background-size:cover;background-position:center}
+.area-map-placeholder{aspect-ratio:1;background:var(--white);border:1px solid rgba(13,27,62,0.1);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:url('images/area.png');background-size:cover;background-position:center}
 .area-map-placeholder::before{display:none}
 .area-list{display:flex;flex-direction:column;gap:2rem}
 .area-item{border-left:2px solid var(--navy);padding-left:1.5rem}
@@ -174,23 +175,14 @@ nav a:hover::after{transform:scaleX(1)}
 .contact .section-label::before{background:var(--gold)}
 .contact .section-title{color:var(--white);text-align:center}
 .contact-subtitle{font-size:0.8rem;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-top:1.5rem;margin-bottom:3rem;font-weight:300}
-
-/* Contact: 電話帯 + フォーム縦積みレイアウト */
 .contact-form-wrap{background:rgba(255,255,255,0.05);border:1px solid rgba(184,150,78,0.2);text-align:left}
-.contact-tel-band{
-  display:flex;align-items:center;justify-content:space-between;gap:2rem;
-  padding:1.4rem 2rem;
-  border-bottom:1px solid rgba(184,150,78,0.15);
-  background:rgba(255,255,255,0.03);
-}
+.contact-tel-band{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:1.4rem 2rem;border-bottom:1px solid rgba(184,150,78,0.15);background:rgba(255,255,255,0.03)}
 .contact-tel-left{display:flex;align-items:center;gap:1.2rem}
 .contact-tel-icon{font-size:1.2rem}
 .contact-tel-label{font-size:0.72rem;letter-spacing:0.2em;color:rgba(255,255,255,0.45);margin-bottom:0.2rem}
 .contact-tel-num{font-family:var(--font-en);font-size:1.6rem;font-weight:300;color:var(--white);letter-spacing:0.05em;line-height:1}
 .contact-tel-num a{color:inherit}
 .contact-tel-hours{font-size:0.72rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;margin-top:0.2rem}
-
-/* Form */
 .contact-form-inner{padding:2rem}
 .contact-form-title{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.8rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(184,150,78,0.12)}
 .contact-form-en{font-family:var(--font-en);font-size:0.75rem;letter-spacing:0.35em;color:var(--gold)}
@@ -229,10 +221,22 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
 .footer-brand .logo-en{font-size:1.1rem}
 .footer-brand .logo-jp{margin-top:4px}
 .footer-addr{font-size:0.75rem;line-height:2;margin-top:1.5rem;color:rgba(255,255,255,0.35);font-weight:300}
+.footer-sns{display:flex;gap:0.75rem;margin-top:1.2rem}
+.footer-sns a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-size:1.1rem;text-decoration:none;transition:background 0.2s,color 0.2s}
+.footer-sns a:hover{background:var(--gold);color:var(--navy)}
 .footer-links{display:flex;gap:2rem;flex-wrap:wrap}
 .footer-links a{font-size:0.75rem;letter-spacing:0.1em;color:rgba(255,255,255,0.4);transition:color 0.3s}
 .footer-links a:hover{color:var(--gold-light)}
 .footer-copy{font-size:0.75rem;letter-spacing:0.15em;text-align:center;color:rgba(255,255,255,0.2)}
+
+/* SNSバナー */
+.sns-banner{background:#1a2d5a;padding:2.5rem 2rem}
+.sns-banner-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.sns-banner-item{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1.4rem 2rem;border:1px solid rgba(184,150,78,0.3);color:var(--white);text-decoration:none;font-family:var(--font-sans);font-size:0.9rem;letter-spacing:0.15em;font-weight:300;transition:background 0.25s,border-color 0.25s}
+.sns-banner-item i{font-size:1.3rem;color:var(--gold-light)}
+.sns-banner-item span{color:rgba(255,255,255,0.85)}
+.sns-banner-item:hover{background:rgba(184,150,78,0.12);border-color:var(--gold-light)}
+@media(max-width:600px){.sns-banner-inner{grid-template-columns:1fr}}
 
 /* Reveal */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
@@ -301,7 +305,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
   <div class="m-hours">受付時間 10:00〜22:00</div>
 </div>
 
-<section class="hero" style="background-image:url('hero.png');background-size:cover;background-position:center">
+<section class="hero" style="background-image:url('images/hero.png');background-size:cover;background-position:center">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-accent-line"></div>
@@ -342,7 +346,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
       <h2 class="section-title">私たちにできること</h2>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal" style="background-image:url('service.png');background-size:cover;background-position:center;position:relative">
+      <div class="service-card reveal" style="background-image:url('images/service.png');background-size:cover;background-position:center;position:relative">
         <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
         <div style="position:relative;z-index:1">
           <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="18" width="32" height="24" rx="1"/><path d="M4 22L24 6l20 16"/><path d="M18 42V30h12v12"/></svg>
@@ -352,7 +356,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
           <div class="service-more">詳しく見る</div>
         </div>
       </div>
-      <div class="service-card reveal" style="background-image:url('rental.png');background-size:cover;background-position:center;position:relative">
+      <div class="service-card reveal" style="background-image:url('images/rental.png');background-size:cover;background-position:center;position:relative">
         <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
         <div style="position:relative;z-index:1">
           <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8h24v32H12z"/><path d="M20 8V4h8v4"/><path d="M18 20h12M18 28h8"/></svg>
@@ -362,7 +366,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
           <div class="service-more">詳しく見る</div>
         </div>
       </div>
-      <div class="service-card reveal" style="background-image:url('investment.png');background-size:cover;background-position:center;position:relative">
+      <div class="service-card reveal" style="background-image:url('images/investment.png');background-size:cover;background-position:center;position:relative">
         <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
         <div style="position:relative;z-index:1">
           <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="10" width="36" height="28" rx="1"/><path d="M14 10V6h20v4"/><path d="M6 22h36"/><path d="M18 22v16M30 22v16"/></svg>
@@ -409,7 +413,6 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
   </div>
 </section>
 
-<!-- 代表挨拶 -->
 <section class="message" id="message">
   <div class="message-inner">
     <div class="section-header reveal">
@@ -432,26 +435,10 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
       <div class="message-brand-block reveal">
         <div class="message-brand-en">THE NAME "LAND DESIGN"</div>
         <div class="message-acronym">
-          <div class="acronym-row">
-            <div class="acronym-letter">L</div>
-            <div class="acronym-word">Life</div>
-            <div class="acronym-jp">暮らし・人生</div>
-          </div>
-          <div class="acronym-row">
-            <div class="acronym-letter">A</div>
-            <div class="acronym-word">Assets</div>
-            <div class="acronym-jp">資産</div>
-          </div>
-          <div class="acronym-row">
-            <div class="acronym-letter">N</div>
-            <div class="acronym-word">Nexus</div>
-            <div class="acronym-jp">信頼とつながり</div>
-          </div>
-          <div class="acronym-row">
-            <div class="acronym-letter">D</div>
-            <div class="acronym-word">Development</div>
-            <div class="acronym-jp">発展・成長</div>
-          </div>
+          <div class="acronym-row"><div class="acronym-letter">L</div><div class="acronym-word">Life</div><div class="acronym-jp">暮らし・人生</div></div>
+          <div class="acronym-row"><div class="acronym-letter">A</div><div class="acronym-word">Assets</div><div class="acronym-jp">資産</div></div>
+          <div class="acronym-row"><div class="acronym-letter">N</div><div class="acronym-word">Nexus</div><div class="acronym-jp">信頼とつながり</div></div>
+          <div class="acronym-row"><div class="acronym-letter">D</div><div class="acronym-word">Development</div><div class="acronym-jp">発展・成長</div></div>
         </div>
         <div class="message-brand-text">
           LAND DESIGNの「LAND」には、Life（人生）、Assets（資産）、Nexus（つながり）、Development（発展）という想いを込めています。<br><br>
@@ -488,7 +475,6 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
       <h2 class="section-title">まずは、お気軽に<br>ご相談ください。</h2>
     </div>
     <p class="contact-subtitle reveal">売却・購入・賃貸、どんなご相談もお待ちしています。</p>
-
     <div class="contact-form-wrap reveal">
       <div class="contact-tel-band">
         <div class="contact-tel-left">
@@ -500,7 +486,6 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
           </div>
         </div>
       </div>
-
       <div class="contact-form-inner">
         <div class="contact-form-title">
           <span class="contact-form-en">INQUIRY FORM</span>
@@ -566,6 +551,20 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
   </div>
 </section>
 
+<!-- SNSバナー -->
+<section class="sns-banner">
+  <div class="sns-banner-inner">
+    <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener" class="sns-banner-item">
+      <i class="fa-solid fa-blog"></i>
+      <span>スタッフブログ</span>
+    </a>
+    <a href="https://www.facebook.com/landdesign2008?fref=ts" target="_blank" rel="noopener" class="sns-banner-item">
+      <i class="fa-brands fa-facebook-f"></i>
+      <span>Facebook</span>
+    </a>
+  </div>
+</section>
+
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -574,6 +573,10 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
         <div class="logo-jp">株式会社ランドデザイン</div>
       </div>
       <p class="footer-addr">〒530-0016 大阪市北区中崎3丁目1-1 摂津ビル1F<br>TEL: 06-6486-2588　受付 10:00〜22:00</p>
+      <div class="footer-sns">
+        <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener" aria-label="スタッフブログ"><i class="fa-solid fa-blog"></i></a>
+        <a href="https://www.facebook.com/landdesign2008?fref=ts" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
     </div>
     <div class="footer-links">
       <a href="#services">サービス</a>
@@ -583,6 +586,8 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
       <a href="#info">会社情報</a>
       <a href="#contact">お問い合わせ</a>
       <a href="#">プライバシーポリシー</a>
+      <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener">スタッフブログ</a>
+      <a href="https://www.facebook.com/landdesign2008?fref=ts" target="_blank" rel="noopener">Facebook</a>
     </div>
   </div>
   <p class="footer-copy">Copyright &copy; Land Design Co.,Ltd. All rights reserved.</p>
