@@ -197,7 +197,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
         <div class="hero-stat-label">現在の販売物件</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-num">18<span>年</span></div>
+        <div class="hero-stat-num"><span class="js-years">18</span><span>年</span></div>
         <div class="hero-stat-label">収益物件の取扱実績</div>
       </div>
     </div>
@@ -391,6 +391,10 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
 </footer>
 
 <script>
+// 創業年から自動計算
+const yearsElapsed = new Date().getFullYear() - 2008;
+document.querySelectorAll('.js-years').forEach(el => el.textContent = yearsElapsed);
+
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
 }

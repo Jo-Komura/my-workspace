@@ -313,7 +313,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
     <div class="hero-text">
       <div class="hero-label"><span>NAKAZAKICHO, OSAKA</span></div>
       <h1 class="hero-title">不動産のことなら、<br><em>信頼</em>できるパートナーへ。</h1>
-      <p class="hero-sub">大阪・中崎町に根ざして18年。<br>売買・賃貸・収益物件まで、<br>あなたの大切な不動産をトータルでサポートします。</p>
+      <p class="hero-sub">大阪・中崎町に根ざして<span class="js-years">18</span>年。<br>売買・賃貸・収益物件まで、<br>あなたの大切な不動産をトータルでサポートします。</p>
       <div class="hero-btns">
         <a href="#contact" class="btn-primary"><span>無料相談はこちら</span></a>
         <a href="#services" class="btn-outline">サービスを見る</a>
@@ -324,7 +324,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
         <div class="hero-card-cross"></div>
         <div class="hero-card-title">LAND DESIGN — SINCE 2008</div>
         <div class="hero-stats">
-          <div class="stat-item"><div class="stat-num">18<span>年</span></div><div class="stat-label">地域密着の実績</div></div>
+          <div class="stat-item"><div class="stat-num"><span class="js-years">18</span><span>年</span></div><div class="stat-label">地域密着の実績</div></div>
           <div class="stat-item"><div class="stat-num">★<span>4.8</span></div><div class="stat-label">お客様満足度</div></div>
           <div class="stat-item"><div class="stat-num">─</div><div class="stat-label">取扱実績（件）</div></div>
           <div class="stat-item"><div class="stat-num">─</div><div class="stat-label">売買成約（件）</div></div>
@@ -385,7 +385,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
     <div>
       <div class="section-header reveal">
         <div class="section-label"><span>ABOUT US</span></div>
-        <h2 class="section-title">中崎町で18年、<br>地域に根ざした不動産会社。</h2>
+        <h2 class="section-title">中崎町で<span class="js-years">18</span>年、<br>地域に根ざした不動産会社。</h2>
       </div>
       <p class="about-text reveal">
         株式会社ランドデザインは、大阪市北区中崎町に2008年に設立した不動産会社です。<br><br>
@@ -394,7 +394,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
       <div class="about-points reveal">
         <div class="about-point">
           <div class="about-point-num">01</div>
-          <div class="about-point-text"><h4>地域密着18年の信頼</h4><p>中崎町・大阪北区を知り尽くしたスタッフが、最適な提案をいたします。</p></div>
+          <div class="about-point-text"><h4>地域密着<span class="js-years">18</span>年の信頼</h4><p>中崎町・大阪北区を知り尽くしたスタッフが、最適な提案をいたします。</p></div>
         </div>
         <div class="about-point">
           <div class="about-point-num">02</div>
@@ -594,6 +594,10 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
 </footer>
 
 <script>
+// 創業年から自動計算
+const yearsElapsed = new Date().getFullYear() - 2008;
+document.querySelectorAll('.js-years').forEach(el => el.textContent = yearsElapsed);
+
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
 }
