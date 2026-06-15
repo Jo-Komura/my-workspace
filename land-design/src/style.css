@@ -128,7 +128,7 @@ nav a:hover::after{transform:scaleX(1)}
 .message-greeting p{margin-bottom:1.6em}
 .message-greeting p:last-child{margin-bottom:0}
 .message-sign{margin-top:2.5rem;text-align:right;border-top:1px solid rgba(13,27,62,0.12);padding-top:1.5rem}
-.message-sign-title{font-size:0.75rem;letter-spacing:0.2em;color:var(--gray);margin-bottom:0.4rem}
+.message-sign-title{font-size:0.75rem;letter-spacing:0.2em;color:var(--gray);margin-bottom:0.4rem;padding-right:6em}
 .message-sign-name{font-family:var(--font-serif);font-size:1.3rem;color:var(--navy);letter-spacing:0.1em}
 .message-brand-block{background:var(--navy);padding:3rem;position:relative}
 .message-brand-block::before{content:'';position:absolute;top:0;left:0;width:60px;height:3px;background:var(--gold)}
