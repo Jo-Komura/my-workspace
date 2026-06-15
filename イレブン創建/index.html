@@ -83,6 +83,17 @@
   .about-text p{ margin-bottom:1.2rem; }
   .about-photo{ aspect-ratio:4/3; border-radius:3px; overflow:hidden; background:url("about.png") center / cover no-repeat; }
 
+  /* Message（代表挨拶） */
+  #message{ background:var(--paper); }
+  .message-grid{ display:grid; grid-template-columns:1fr 1.6fr; gap:clamp(2.5rem,6vw,5rem); align-items:start; }
+  .message-profile{ text-align:center; }
+  .message-photo{ width:180px; height:180px; border-radius:50%; margin:0 auto 1.4rem; overflow:hidden; background:url("about.png") center / cover no-repeat; border:4px solid var(--line); }
+  .message-profile .title{ font-size:.82rem; color:var(--muted); letter-spacing:.15em; margin-bottom:.3rem; }
+  .message-profile .name{ font-family:var(--display); font-size:1.4rem; font-weight:700; letter-spacing:.06em; }
+  .message-profile .name-ruby{ font-size:.75rem; color:var(--muted); letter-spacing:.2em; margin-top:.2rem; }
+  .message-body p{ margin-bottom:1.4rem; line-height:2; }
+  .message-body .signature{ font-family:var(--display); font-size:1.05rem; margin-top:2rem; color:var(--muted); text-align:right; }
+
   /* Services */
   .services{ display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:1.1rem; }
   .service-card{ background:#fff; border:1px solid var(--line); border-radius:3px; padding:1.7rem 1.6rem; transition:transform .25s,box-shadow .25s,border-color .25s; }
@@ -91,24 +102,18 @@
   .service-card h3{ font-family:var(--display); font-size:1.2rem; margin:.5rem 0 .6rem; }
   .service-card p{ font-size:.92rem; color:var(--muted); }
 
-  /* Works */
-  #works{ background:var(--brand); color:var(--paper); }
-  #works .eyebrow{ color:#e6a973; }
-  #works .eyebrow::before{ background:#e6a973; }
-  .works-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
-  .work{ aspect-ratio:4/3; border-radius:3px; position:relative; overflow:hidden; background:linear-gradient(135deg,#0a0a55,#01004d); border:1px solid #23237a; display:flex; align-items:flex-end; padding:1.3rem; }
-  .work::before{ content:"PHOTO"; position:absolute; top:1.1rem; left:1.3rem; color:rgba(255,255,255,.22); letter-spacing:.3em; font-size:.66rem; }
-  .work span{ font-size:.9rem; font-weight:500; }
-  .work small{ display:block; color:rgba(255,255,255,.5); font-size:.74rem; letter-spacing:.08em; }
+  /* Works — 非表示 */
+  #works{ display:none; }
 
   /* Strengths */
+  #strengths{ background:var(--paper-2); }
   .strengths{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
   .strength .icon{ width:54px; height:54px; border:2px solid var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; color:var(--accent); font-size:1.4rem; margin-bottom:1.1rem; }
   .strength h3{ font-family:var(--display); font-size:1.25rem; margin-bottom:.6rem; }
   .strength p{ font-size:.92rem; color:var(--muted); }
 
   /* Company */
-  #company{ background:var(--paper-2); }
+  #company{ background:var(--paper); }
   .company-table{ width:100%; border-collapse:collapse; max-width:760px; }
   .company-table th,.company-table td{ text-align:left; padding:1.1rem .4rem; border-bottom:1px solid var(--line); vertical-align:top; }
   .company-table th{ width:9em; font-weight:700; color:var(--ink); white-space:nowrap; }
@@ -141,20 +146,22 @@
   @media(max-width:820px){
     .nav-links,.nav-cta{ display:none; }
     .burger{ display:flex; }
-    .about-grid,.contact-grid{ grid-template-columns:1fr; }
-    .services,.strengths,.works-grid{ grid-template-columns:1fr; }
+    .about-grid,.contact-grid,.message-grid{ grid-template-columns:1fr; }
+    .services,.strengths{ grid-template-columns:1fr; }
     .nav-links.open{ display:flex; position:absolute; top:74px; left:0; right:0; flex-direction:column; background:var(--paper); padding:1.5rem 5vw; gap:1.2rem; border-bottom:1px solid var(--line); }
+    .message-profile{ display:flex; align-items:center; gap:1.5rem; text-align:left; }
+    .message-photo{ width:100px; height:100px; margin:0; flex-shrink:0; }
   }
 
   @media(max-width:820px){
     .reveal{ opacity:1; transform:none; }
     .wrap{ width:90vw; }
-    .strengths,.works-grid{ grid-template-columns:repeat(2,1fr); }
+    .strengths{ grid-template-columns:repeat(2,1fr); }
     .hero::after{ background:linear-gradient(180deg,rgba(244,241,234,.93) 0%,rgba(244,241,234,.86) 55%,rgba(244,241,234,.70) 100%); }
   }
 
   @media(max-width:540px){
-    .services,.strengths,.works-grid{ grid-template-columns:1fr; }
+    .services,.strengths{ grid-template-columns:1fr; }
     .hero-actions{ flex-direction:column; }
     .hero-actions .btn{ width:100%; justify-content:center; }
     .hero-stats{ gap:1.6rem 2.4rem; }
@@ -166,6 +173,8 @@
     .banner-img{ aspect-ratio:16/9; }
     .contact-info .big{ font-size:1.5rem; }
     section{ padding:2.8rem 0; }
+    .message-profile{ flex-direction:column; text-align:center; }
+    .message-photo{ width:130px; height:130px; margin:0 auto; }
   }
 </style>
 </head>
@@ -176,8 +185,8 @@
     <a href="#top" class="logo">イレブン創建<small>ELEVEN SOUKEN</small></a>
     <nav class="nav-links" id="menu">
       <a href="#about">会社について</a>
+      <a href="#message">代表挨拶</a>
       <a href="#services">事業内容</a>
-      <a href="#works">施工実績</a>
       <a href="#strengths">私たちの強み</a>
       <a href="#company">会社概要</a>
     </nav>
@@ -197,12 +206,12 @@
     <p class="lead">株式会社イレブン創建は、住宅の新築・リフォームから土木工事まで、地域に根ざした誠実な仕事でお応えする建築会社です。一棟一棟、暮らす人のことを考えてつくります。</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">無料で相談する →</a>
-      <a href="#works" class="btn btn-ghost">施工実績を見る</a>
+      <a href="#services" class="btn btn-ghost">事業内容を見る</a>
     </div>
     <div class="hero-stats">
       <div><div class="num">2026<span class="accent">-</span></div><div class="lbl">創業</div></div>
-      <div><div class="num">100<span class="accent">+</span></div><div class="lbl">施工実績（件）</div></div>
       <div><div class="num">自社<span class="accent">施工</span></div><div class="lbl">一貫した責任体制</div></div>
+      <div><div class="num">10<span class="accent">種</span></div><div class="lbl">対応工事の種類</div></div>
     </div>
   </div>
 </section>
@@ -216,6 +225,32 @@
       <p>住宅の新築やリフォーム、店舗・オフィスの工事、土木まで、暮らしと街にかかわる仕事を幅広く手がけます。打ち合わせから施工、引き渡しのあとまで、顔の見える距離でお付き合いします。</p>
     </div>
     <div class="about-photo reveal"></div>
+  </div>
+</section>
+
+<section id="message">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Message</div>
+      <h2 class="section-title">代表挨拶</h2>
+    </div>
+    <div class="message-grid">
+      <div class="message-profile reveal">
+        <div class="message-photo"></div>
+        <div>
+          <div class="title">代表取締役</div>
+          <div class="name">森居 遼太郎</div>
+          <div class="name-ruby">MOROI RYOTARO</div>
+        </div>
+      </div>
+      <div class="message-body reveal">
+        <p>このたびは、株式会社イレブン創建のホームページをご覧いただき、誠にありがとうございます。</p>
+        <p>建築の仕事は、お客様の大切な財産と、そこで営まれる暮らしに直接関わるものです。だからこそ私たちは、技術の確かさはもちろん、一つひとつの仕事に誠実に向き合うことを最も大切にしています。「この会社に頼んでよかった」と思っていただけること——それが私たちにとって、何よりの誇りです。</p>
+        <p>住宅の新築・リフォームから土木工事まで、幅広い分野に対応できる体制を整えています。小さなご相談であっても、どうか遠慮なくお声がけください。現場で培った経験と、誠実な対話で、お客様のご要望に真摯にお応えします。</p>
+        <p>地域の皆様に長く信頼していただける会社を目指して、スタッフ一同、日々精進してまいります。何卒よろしくお願い申し上げます。</p>
+        <div class="signature">代表取締役　森居 遼太郎</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -241,7 +276,8 @@
   </div>
 </section>
 
-<section id="works">
+<!-- 施工実績：非表示（実績が揃ったら display:none を外す）-->
+<section id="works" style="display:none;">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">Works</div>
@@ -319,8 +355,8 @@
       <div class="foot-logo">イレブン創建</div>
       <nav class="foot-links">
         <a href="#about">会社について</a>
+        <a href="#message">代表挨拶</a>
         <a href="#services">事業内容</a>
-        <a href="#works">施工実績</a>
         <a href="#contact">お問い合わせ</a>
       </nav>
     </div>
