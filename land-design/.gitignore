@@ -1,0 +1,4 @@
+# 作業用Pythonスクリプト
+*.py
+# 確認用パターンHTML
+src/index_pattern*.html
