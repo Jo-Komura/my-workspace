@@ -8,90 +8,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho+B1:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
-<style>
-:root {
-  --navy: #0d1b3e; --navy-mid: #162347; --navy-light: #1e3060;
-  --red: #c0272d;
-  --gold: #b8964e; --gold-light: #d4af6a;
-  --white: #ffffff; --off-white: #f5f3ef; --cream: #ede9e0;
-  --gray: #8a8a8a; --gray-dark: #444444; --text: #1a1a1a;
-  --font-serif: 'Shippori Mincho B1','Noto Serif JP',serif;
-  --font-sans: 'Zen Kaku Gothic New',sans-serif;
-  --font-en: 'Cormorant Garamond',serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font-sans);color:var(--text);background:var(--off-white);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:112%}
-a{text-decoration:none;color:inherit}
-
-/* Header */
-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,78,0.25)}
-.header-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;flex-direction:column;gap:1px}
-.logo-en{font-family:var(--font-en);font-size:1.35rem;font-weight:300;letter-spacing:0.2em;color:var(--white)}
-.logo-jp{font-family:var(--font-sans);font-size:0.75rem;letter-spacing:0.25em;color:var(--gold-light);font-weight:300}
-nav{display:flex;align-items:center;gap:2.5rem}
-nav a{font-family:var(--font-sans);font-size:0.75rem;letter-spacing:0.15em;color:rgba(255,255,255,0.8);font-weight:300;transition:color 0.3s}
-nav a:hover{color:var(--gold-light)}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
-.hamburger span{display:block;width:26px;height:1.5px;background:var(--white)}
-.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--navy);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:3rem}
-.mobile-menu.open{display:flex}
-.mobile-menu a{font-family:var(--font-serif);font-size:1.3rem;color:var(--white);letter-spacing:0.2em;border-bottom:1px solid rgba(184,150,78,0.3);padding-bottom:1rem;width:70%;text-align:center}
-
-/* Page Hero */
-.page-hero{background:var(--navy);padding-top:72px;position:relative;overflow:hidden}
-.page-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,27,62,0.9) 0%,rgba(22,35,71,0.8) 100%)}
-.page-hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:4rem 2rem 3rem}
-.page-breadcrumb{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem}
-.page-breadcrumb a,.page-breadcrumb span{font-size:0.75rem;letter-spacing:0.15em;color:rgba(255,255,255,0.4);font-weight:300}
-.page-breadcrumb a:hover{color:var(--gold-light)}
-.page-breadcrumb .sep{color:rgba(255,255,255,0.2)}
-.page-breadcrumb .current{color:var(--gold-light)}
-.page-hero-en{font-family:var(--font-en);font-size:0.8rem;letter-spacing:0.4em;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
-.page-hero-en::before{content:'';display:block;width:30px;height:1px;background:var(--gold)}
-.page-hero-title{font-family:var(--font-serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:600;color:var(--white);letter-spacing:0.05em}
-.page-hero-line{position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red) 0%,var(--red) 30%,rgba(184,150,78,0.3) 100%)}
-
-/* Content */
-.privacy-content{max-width:860px;margin:0 auto;padding:5rem 2rem 7rem}
-.privacy-intro{font-size:0.9rem;line-height:2.2;color:var(--gray-dark);margin-bottom:3rem;font-weight:300}
-.privacy-section{margin-bottom:3rem}
-.privacy-section h2{font-family:var(--font-serif);font-size:1.1rem;font-weight:600;color:var(--navy);letter-spacing:0.05em;margin-bottom:1rem;padding-left:1rem;border-left:3px solid var(--gold)}
-.privacy-section p{font-size:0.88rem;line-height:2.2;color:var(--gray-dark);font-weight:300}
-.privacy-section ul{margin-top:0.8rem;padding-left:1.5rem;display:flex;flex-direction:column;gap:0.5rem}
-.privacy-section ul li{font-size:0.88rem;line-height:1.9;color:var(--gray-dark);font-weight:300}
-.privacy-date{margin-top:4rem;text-align:right;font-size:0.8rem;color:var(--gray);letter-spacing:0.1em}
-
-/* Footer */
-footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
-.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:start;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,0.06)}
-.footer-brand .logo-en{font-size:1.1rem}
-.footer-brand .logo-jp{margin-top:4px}
-.footer-addr{font-size:0.75rem;line-height:2;margin-top:1.5rem;color:rgba(255,255,255,0.35);font-weight:300}
-.footer-links{display:flex;gap:2rem;flex-wrap:wrap}
-.footer-links a{font-size:0.75rem;letter-spacing:0.1em;color:rgba(255,255,255,0.4);transition:color 0.3s}
-.footer-links a:hover{color:var(--gold-light)}
-.footer-copy{font-size:0.75rem;letter-spacing:0.15em;text-align:center;color:rgba(255,255,255,0.2)}
-
-@media(max-width:900px){nav{display:none}.hamburger{display:flex}.footer-inner{grid-template-columns:1fr;gap:2rem}}
-@media(max-width:600px){.privacy-content{padding:3rem 1.5rem 5rem}}
-</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo">
-      <div class="logo-en">Land Design</div>
-      <div class="logo-jp">株式会社ランドデザイン</div>
+      <img src="images/logo.png" alt="LAND DESIGN">
     </a>
     <nav>
       <a href="index.html#services">サービス</a>
       <a href="index.html#about">会社案内</a>
+      <a href="index.html#message">代表挨拶</a>
       <a href="index.html#info">会社概要</a>
       <a href="index.html#contact">お問い合わせ</a>
     </nav>
+    <div class="nav-tel">
+      <div class="nav-tel-num">06-6486-2588</div>
+      <div class="nav-tel-hours">受付 9:00〜18:00</div>
+    </div>
     <div class="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
@@ -101,22 +38,25 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html#services" onclick="toggleMenu()">サービス</a>
   <a href="index.html#about" onclick="toggleMenu()">会社案内</a>
+  <a href="index.html#message" onclick="toggleMenu()">代表挨拶</a>
   <a href="index.html#info" onclick="toggleMenu()">会社概要</a>
   <a href="index.html#contact" onclick="toggleMenu()">お問い合わせ</a>
+  <div class="m-tel"><a href="tel:0664862588">06-6486-2588</a></div>
+  <div class="m-hours">受付時間 9:00〜18:00</div>
 </div>
 
 <section class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-inner">
-    <div class="page-breadcrumb">
-      <a href="index.html">TOP</a>
-      <span class="sep">›</span>
-      <span class="current">プライバシーポリシー</span>
+    <div class="breadcrumb">
+      <a href="index.html">HOME</a>
+      <span>/</span>
+      <span style="color:rgba(255,255,255,0.7)">プライバシーポリシー</span>
     </div>
-    <div class="page-hero-en">PRIVACY POLICY</div>
+    <div class="page-hero-label"><span>PRIVACY POLICY</span></div>
     <h1 class="page-hero-title">プライバシーポリシー</h1>
+    <p class="page-hero-sub">個人情報の取り扱いについて</p>
   </div>
-  <div class="page-hero-line"></div>
 </section>
 
 <div class="privacy-content">
@@ -180,21 +120,28 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="logo">
-        <div class="logo-en">Land Design</div>
-        <div class="logo-jp">株式会社ランドデザイン</div>
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="LAND DESIGN">
+      </a>
+      <p class="footer-company">株式会社ランドデザイン</p>
+      <p class="footer-addr">〒530-0016<br>大阪市北区中崎3丁目1-1 摂津ビル1F<br>TEL: 06-6486-2588　営業時間 9:00〜18:00</p>
+      <div class="footer-sns">
+        <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener" aria-label="スタッフブログ"><i class="fa-solid fa-blog"></i></a>
+        <a href="https://www.facebook.com/landdesign2008?fref=ts" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
       </div>
-      <p class="footer-addr">〒530-0016 大阪市北区中崎3丁目1-1 摂津ビル1F<br>TEL: 06-6486-2588　受付 9:00〜18:00</p>
     </div>
     <div class="footer-links">
       <a href="index.html#services">サービス</a>
       <a href="index.html#about">会社案内</a>
+      <a href="index.html#message">代表挨拶</a>
       <a href="index.html#info">会社概要</a>
       <a href="index.html#contact">お問い合わせ</a>
       <a href="privacy.html">プライバシーポリシー</a>
+      <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener">スタッフブログ</a>
+      <a href="https://www.facebook.com/landdesign2008?fref=ts" target="_blank" rel="noopener">Facebook</a>
     </div>
   </div>
-  <p class="footer-copy">Copyright &copy; Land Design Co.,Ltd. All rights reserved.</p>
+  <p class="footer-copy">Copyright &copy; 2026 Land Design Co.,Ltd. All rights reserved.</p>
 </footer>
 
 <script>

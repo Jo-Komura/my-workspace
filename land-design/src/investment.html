@@ -9,168 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho+B1:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-:root {
-  --navy: #0d1b3e; --navy-mid: #162347; --navy-light: #1e3060;
-  --red: #c0272d; --red-dark: #9e1f24;
-  --gold: #b8964e; --gold-light: #d4af6a;
-  --white: #ffffff; --off-white: #f5f3ef; --cream: #ede9e0;
-  --gray-light: #f0eee9; --gray: #8a8a8a; --gray-dark: #444444; --text: #1a1a1a;
-  --font-serif: 'Shippori Mincho B1','Noto Serif JP',serif;
-  --font-sans: 'Zen Kaku Gothic New',sans-serif;
-  --font-en: 'Cormorant Garamond',serif;
-  --transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font-sans);color:var(--text);background:var(--off-white);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:112%}
-img{max-width:100%;display:block}
-a{text-decoration:none;color:inherit}
-
-/* Header */
-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,78,0.25);transition:var(--transition)}
-.header-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between}
-.logo img{height:44px;width:auto}
-nav{display:flex;align-items:center;gap:2.5rem}
-nav a{font-family:var(--font-sans);font-size:0.85rem;letter-spacing:0.15em;color:rgba(255,255,255,0.8);font-weight:300;transition:color 0.3s;position:relative}
-nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s}
-nav a:hover{color:var(--gold-light)}
-nav a:hover::after{transform:scaleX(1)}
-.nav-tel{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:1rem}
-.nav-tel-num{font-family:var(--font-en);font-size:1.1rem;color:var(--white);letter-spacing:0.05em}
-.nav-tel-hours{font-size:0.85rem;color:rgba(255,255,255,0.5);letter-spacing:0.1em}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
-.hamburger span{display:block;width:26px;height:1.5px;background:var(--white);transition:var(--transition)}
-.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;bottom:0;background:var(--navy);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:3rem}
-.mobile-menu.open{display:flex}
-.mobile-menu a{font-family:var(--font-serif);font-size:1.3rem;color:var(--white);letter-spacing:0.2em;border-bottom:1px solid rgba(184,150,78,0.3);padding-bottom:1rem;width:70%;text-align:center}
-.mobile-menu .m-tel{font-family:var(--font-en);font-size:1.8rem;color:var(--gold-light);margin-top:1rem}
-.mobile-menu .m-hours{font-size:0.85rem;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-top:-2rem}
-
-/* Page Hero */
-.page-hero{padding-top:72px;background:var(--navy);position:relative;overflow:hidden}
-.page-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(30,48,96,0.5) 0%,transparent 70%),linear-gradient(135deg,rgba(13,27,62,0.7) 0%,rgba(22,35,71,0.6) 50%,rgba(13,27,62,0.7) 100%)}
-.page-hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:5rem 2rem 4rem}
-.breadcrumb{display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:rgba(255,255,255,0.4);letter-spacing:0.1em;margin-bottom:2rem}
-.breadcrumb a{color:rgba(255,255,255,0.5);transition:color 0.3s}
-.breadcrumb a:hover{color:var(--gold-light)}
-.breadcrumb span{color:rgba(255,255,255,0.3)}
-.page-hero-label{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
-.page-hero-label::before{content:'';display:block;width:30px;height:1px;background:var(--gold)}
-.page-hero-label span{font-family:var(--font-en);font-size:0.85rem;letter-spacing:0.3em;color:var(--gold-light);font-weight:300}
-.page-hero-title{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--white);line-height:1.5;letter-spacing:0.05em;margin-bottom:1rem}
-.page-hero-sub{font-family:var(--font-sans);font-size:0.85rem;color:rgba(255,255,255,0.55);letter-spacing:0.1em;font-weight:300}
-
-/* Section共通 */
-.section-inner{max-width:1200px;margin:0 auto;padding:0 2rem}
-.section-header{margin-bottom:4rem}
-.section-label{display:inline-flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
-.section-label::before{content:'';display:block;width:2px;height:20px;background:var(--red)}
-.section-label span{font-family:var(--font-en);font-size:0.85rem;letter-spacing:0.35em;color:var(--red);font-weight:400}
-.section-title{font-family:var(--font-serif);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;color:var(--navy);letter-spacing:0.05em;line-height:1.5}
-
-/* What セクション */
-.what{background:var(--cream);padding:7rem 2rem}
-.what-inner{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
-.what-text{font-size:0.85rem;line-height:2.2;color:var(--gray-dark);font-weight:400;margin-top:2rem}
-.what-text p{margin-bottom:1.2em}
-.what-visual{background:var(--navy);padding:3rem;position:relative}
-.what-visual::before{content:'';position:absolute;top:0;left:0;width:60px;height:3px;background:var(--gold)}
-.what-stat{display:flex;flex-direction:column;gap:2rem}
-.what-stat-item{border-left:2px solid rgba(184,150,78,0.3);padding-left:1.5rem}
-.what-stat-num{font-family:var(--font-en);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1}
-.what-stat-num span{font-size:1rem}
-.what-stat-label{font-size:0.78rem;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-top:0.3rem}
-
-/* Merits セクション */
-.merits{background:var(--off-white);padding:7rem 2rem}
-.merits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:3rem}
-.merit-card{background:var(--white);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:var(--transition)}
-.merit-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transition:transform 0.4s}
-.merit-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(13,27,62,0.1)}
-.merit-card:hover::after{transform:scaleX(1)}
-.merit-num{font-family:var(--font-en);font-size:2.5rem;font-weight:300;color:rgba(13,27,62,0.1);line-height:1;margin-bottom:1rem}
-.merit-icon{width:40px;height:40px;margin-bottom:1rem;color:var(--gold)}
-.merit-title{font-family:var(--font-serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:0.6rem;letter-spacing:0.05em}
-.merit-desc{font-size:0.8rem;line-height:1.9;color:var(--gray-dark);font-weight:400}
-
-/* Recommend セクション */
-.recommend{background:var(--navy);padding:7rem 2rem;position:relative;overflow:hidden}
-.recommend::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border:1px solid rgba(184,150,78,0.25);border-radius:50%}
-.recommend .section-label::before{background:var(--gold)}
-.recommend .section-label span{color:var(--gold-light)}
-.recommend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem;position:relative;z-index:1}
-.recommend-item{display:flex;align-items:flex-start;gap:1.2rem;padding:1.5rem;border:1px solid rgba(184,150,78,0.2);background:rgba(255,255,255,0.03)}
-.recommend-icon{color:var(--gold-light);font-size:1.1rem;flex-shrink:0;margin-top:0.1rem}
-.recommend-text{font-family:var(--font-serif);font-size:0.9rem;color:rgba(255,255,255,0.8);line-height:1.7;letter-spacing:0.03em}
-
-/* Types セクション */
-.types{background:var(--cream);padding:7rem 2rem}
-.types-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:3rem}
-.type-card{background:var(--white);padding:2.5rem;border-top:3px solid var(--navy);transition:var(--transition)}
-.type-card:hover{box-shadow:0 10px 40px rgba(13,27,62,0.08)}
-.type-card-en{font-family:var(--font-en);font-size:0.85rem;letter-spacing:0.3em;color:var(--gold);margin-bottom:0.5rem}
-.type-card-title{font-family:var(--font-serif);font-size:1.1rem;font-weight:600;color:var(--navy);margin-bottom:1rem;letter-spacing:0.05em}
-.type-card-desc{font-size:0.82rem;line-height:1.9;color:var(--gray-dark);font-weight:400}
-.type-card-tag{display:inline-block;font-size:0.7rem;letter-spacing:0.1em;padding:0.2rem 0.7rem;background:rgba(13,27,62,0.06);color:var(--navy);margin-top:1rem;margin-right:0.3rem}
-
-/* Reasons セクション */
-.reasons{background:var(--off-white);padding:7rem 2rem}
-.reasons-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
-.reason-item{border-left:2px solid var(--navy);padding:1.5rem 1.5rem 1.5rem 2rem}
-.reason-num{font-family:var(--font-en);font-size:2.5rem;font-weight:300;color:rgba(13,27,62,0.12);line-height:1;margin-bottom:0.8rem}
-.reason-title{font-family:var(--font-serif);font-size:1rem;color:var(--navy);margin-bottom:0.6rem;letter-spacing:0.05em;font-weight:600}
-.reason-desc{font-size:0.8rem;color:var(--gray-dark);line-height:1.9;font-weight:300}
-
-/* CTA */
-.cta{background:var(--navy);padding:6rem 2rem;position:relative;overflow:hidden}
-.cta-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0d1b3e 0%,#1a0810 100%)}
-.cta-inner{max-width:860px;margin:0 auto;text-align:center;position:relative;z-index:1}
-.cta-title{font-family:var(--font-serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:600;color:var(--white);letter-spacing:0.05em;margin-bottom:1rem}
-.cta-sub{font-size:0.82rem;color:rgba(255,255,255,0.5);letter-spacing:0.15em;margin-bottom:3rem;font-weight:300}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-primary{display:inline-flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:var(--red);color:var(--white);font-family:var(--font-sans);font-size:0.8rem;letter-spacing:0.2em;font-weight:500;border:none;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden;text-decoration:none}
-.btn-primary::before{content:'';position:absolute;inset:0;background:var(--red-dark);transform:translateX(-100%);transition:transform 0.4s}
-.btn-primary:hover::before{transform:translateX(0)}
-.btn-primary span{position:relative;z-index:1}
-.btn-outline{display:inline-flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:transparent;color:var(--white);font-family:var(--font-sans);font-size:0.8rem;letter-spacing:0.2em;font-weight:300;border:1px solid rgba(255,255,255,0.3);cursor:pointer;transition:var(--transition);text-decoration:none}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold-light)}
-.cta-tel{margin-top:2.5rem;border-top:1px solid rgba(184,150,78,0.2);padding-top:2rem}
-.cta-tel-label{font-size:0.85rem;letter-spacing:0.25em;color:rgba(255,255,255,0.4);margin-bottom:0.5rem}
-.cta-tel-num{font-family:var(--font-en);font-size:1.8rem;font-weight:300;color:var(--white);letter-spacing:0.05em}
-.cta-tel-num a{color:inherit}
-.cta-tel-hours{font-size:0.8rem;color:rgba(255,255,255,0.4);letter-spacing:0.1em;margin-top:0.3rem}
-
-/* Footer */
-footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
-.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:start;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,0.06)}
-.footer-brand .logo img{height:36px;width:auto}
-.footer-addr{font-size:0.85rem;line-height:2;margin-top:1.5rem;color:rgba(255,255,255,0.35);font-weight:300}
-.footer-links{display:flex;gap:2rem;flex-wrap:wrap}
-.footer-links a{font-size:0.85rem;letter-spacing:0.1em;color:rgba(255,255,255,0.4);transition:color 0.3s}
-.footer-links a:hover{color:var(--gold-light)}
-.footer-copy{font-size:0.85rem;letter-spacing:0.15em;text-align:center;color:rgba(255,255,255,0.2)}
-
-/* Reveal */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* Responsive */
-@media(max-width:900px){
-  nav{display:none}.nav-tel{display:none}.hamburger{display:flex}
-  .what-inner{grid-template-columns:1fr;gap:3rem}
-  .merits-grid{grid-template-columns:1fr}
-  .recommend-grid{grid-template-columns:1fr}
-  .types-grid{grid-template-columns:1fr}
-  .reasons-grid{grid-template-columns:1fr}
-  .footer-inner{grid-template-columns:1fr;gap:2rem}
-}
-@media(max-width:600px){
-  .what,.merits,.recommend,.types,.reasons,.cta{padding:5rem 1.5rem}
-  .cta-btns{flex-direction:column;align-items:center}
-  .btn-primary,.btn-outline{width:100%;justify-content:center}
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -390,7 +229,7 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
 </section>
 
 <!-- Reasons -->
-<section class="reasons">
+<section class="inv-reasons">
   <div class="section-inner">
     <div class="section-header reveal">
       <div class="section-label"><span>WHY CHOOSE US</span></div>
@@ -444,19 +283,25 @@ footer{background:#080f22;padding:4rem 2rem 2rem;color:rgba(255,255,255,0.5)}
       <a href="index.html" class="logo">
         <img src="images/logo.png" alt="LAND DESIGN">
       </a>
-      <div class="footer-addr">
-        〒530-0016 大阪市北区中崎3丁目1-1 摂津ビル1F<br>
-        TEL: 06-6486-2588 ／ FAX: 06-6486-2388<br>
-        受付時間 9:00〜18:00
+      <p class="footer-company">株式会社ランドデザイン</p>
+      <p class="footer-addr">〒530-0016<br>大阪市北区中崎3丁目1-1 摂津ビル1F<br>TEL: 06-6486-2588　営業時間 9:00〜18:00</p>
+      <div class="footer-sns">
+        <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener" aria-label="スタッフブログ"><i class="fa-solid fa-blog"></i></a>
+        <a href="https://www.facebook.com/landdesign2008?fref=ts" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
       </div>
     </div>
     <div class="footer-links">
       <a href="index.html#services">サービス</a>
       <a href="index.html#about">会社案内</a>
+      <a href="index.html#message">代表挨拶</a>
+      <a href="index.html#info">会社概要</a>
       <a href="index.html#contact">お問い合わせ</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener">スタッフブログ</a>
+      <a href="https://www.facebook.com/landdesign2008?fref=ts" target="_blank" rel="noopener">Facebook</a>
     </div>
   </div>
-  <div class="footer-copy">© 2026 LAND DESIGN Co., Ltd. All Rights Reserved.</div>
+  <p class="footer-copy">Copyright &copy; 2026 Land Design Co.,Ltd. All rights reserved.</p>
 </footer>
 
 <script>
