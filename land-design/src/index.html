@@ -23,8 +23,7 @@
       <a href="#services">サービス</a>
       <a href="#about">会社案内</a>
       <a href="#message">代表挨拶</a>
-      <a href="#area">対応エリア</a>
-      <a href="#info">会社情報</a>
+      <a href="#info">会社概要</a>
       <a href="#contact">お問い合わせ</a>
     </nav>
     <div class="nav-tel">
@@ -41,8 +40,7 @@
   <a href="#services" onclick="toggleMenu()">サービス</a>
   <a href="#about" onclick="toggleMenu()">会社案内</a>
   <a href="#message" onclick="toggleMenu()">代表挨拶</a>
-  <a href="#area" onclick="toggleMenu()">対応エリア</a>
-  <a href="#info" onclick="toggleMenu()">会社情報</a>
+  <a href="#info" onclick="toggleMenu()">会社概要</a>
   <a href="#contact" onclick="toggleMenu()">お問い合わせ</a>
   <div class="m-tel"><a href="tel:0664862588">06-6486-2588</a></div>
   <div class="m-hours">受付時間 9:00〜18:00</div>
@@ -90,36 +88,36 @@
       <p style="font-family:var(--font-serif);font-size:0.95rem;line-height:2;color:var(--gray-dark);margin-top:1.5rem;letter-spacing:0.05em;">弊社では、ご購入からリフォーム・入居者募集・賃貸管理・売却まで<br>ワンストップでサポート致します。</p>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal" style="background-image:url('images/service.png');background-size:cover;background-position:center;position:relative">
+      <a href="buy-sell.html" class="service-card reveal" style="background-image:url('images/service.png');background-size:cover;background-position:center;position:relative">
         <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
         <div style="position:relative;z-index:1">
           <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="18" width="32" height="24" rx="1"/><path d="M4 22L24 6l20 16"/><path d="M18 42V30h12v12"/></svg>
           <div class="service-en">BUY &amp; SELL</div>
           <div class="service-title-jp">不動産売買</div>
           <p class="service-desc">マンション・戸建て・土地の売却・購入をサポート。適正価格の査定から契約・引き渡しまで、経験豊富なスタッフが丁寧にご対応します。</p>
-          <a href="buy-sell.html" class="service-more">詳しく見る</a>
+          <span class="service-more">詳しく見る</span>
         </div>
-      </div>
-      <div class="service-card reveal" style="background-image:url('images/investment.png');background-size:cover;background-position:center;position:relative">
+      </a>
+      <a href="investment.html" class="service-card reveal" style="background-image:url('images/investment.png');background-size:cover;background-position:center;position:relative">
         <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
         <div style="position:relative;z-index:1">
           <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="10" width="36" height="28" rx="1"/><path d="M14 10V6h20v4"/><path d="M6 22h36"/><path d="M18 22v16M30 22v16"/></svg>
           <div class="service-en">INVESTMENT</div>
           <div class="service-title-jp">収益物件</div>
           <p class="service-desc">収益マンション・アパートの売買・管理をサポート。投資物件の選定から運用まで、資産形成をトータルでご提案します。</p>
-          <a href="investment.html" class="service-more">詳しく見る</a>
+          <span class="service-more">詳しく見る</span>
         </div>
-      </div>
-      <div class="service-card reveal" style="background-image:url('images/rental.png');background-size:cover;background-position:center;position:relative">
+      </a>
+      <a href="management.html" class="service-card reveal" style="background-image:url('images/rental.png');background-size:cover;background-position:center;position:relative">
         <div style="position:absolute;inset:0;background:rgba(255,255,255,0.75)"></div>
         <div style="position:relative;z-index:1">
           <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 12h32v28H8z"/><path d="M16 12V8h16v4"/><path d="M14 22h20M14 30h12M14 38h8"/><circle cx="36" cy="34" r="6"/><path d="M36 31v3l2 2"/></svg>
           <div class="service-en">MANAGEMENT</div>
           <div class="service-title-jp">賃貸管理</div>
           <p class="service-desc">オーナー様に代わり、入居者対応・家賃管理・建物メンテナンスなど、賃貸物件の日常管理業務を一括してお引き受けします。空室対策や契約更新・解約手続きまで、安定した賃貸経営をサポートします。</p>
-          <a href="management.html" class="service-more">詳しく見る</a>
+          <span class="service-more">詳しく見る</span>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -146,13 +144,20 @@
         </div>
         <div class="about-point">
           <div class="about-point-num">03</div>
+          <div class="about-point-text"><h4>全国対応可能</h4><p>大阪を拠点に、北海道から沖縄まで全国の物件に対応しております。</p></div>
+        </div>
+        <div class="about-point">
+          <div class="about-point-num">04</div>
           <div class="about-point-text"><h4>受付時間9:00〜18:00</h4><p>お電話・メールにてお気軽にご相談いただけるよう、丁寧に対応しています。</p></div>
         </div>
       </div>
     </div>
     <div class="about-image-block reveal">
-      <div class="about-img-placeholder">
-        <img src="images/about.jpg" alt="ランドデザイン オフィス">
+      <div class="about-img-main">
+        <img src="images/about.jpg" alt="ランドデザイン 受付カウンター">
+      </div>
+      <div class="about-img-sub">
+        <img src="images/about_2.jpg" alt="ランドデザイン 応接室">
       </div>
       <div class="about-img-badge"><strong>2008</strong>創業年</div>
     </div>
@@ -190,24 +195,6 @@
           LAND DESIGNの「LAND」には、Life（人生）、Assets（資産）、Nexus（つながり）、Development（発展）という想いを込めています。<br><br>
           お客様の人生と資産を大切にし、人とのつながりを育みながら、持続的な発展に貢献する企業でありたいと考えています。
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="area" id="area">
-  <div class="area-inner">
-    <div class="section-header reveal">
-      <div class="section-label"><span>SERVICE AREA</span></div>
-      <h2 class="section-title">対応エリア</h2>
-    </div>
-    <div class="area-grid">
-      <div class="area-map-placeholder reveal"></div>
-      <div class="area-list reveal">
-        <div class="area-item"><div class="area-item-title">中崎町・中崎（北区）</div><div class="area-item-desc">メインエリア。おしゃれなカフェやギャラリーが並ぶ人気エリアで、投資・居住どちらの需要も高い地域です。</div></div>
-        <div class="area-item"><div class="area-item-title">大阪市北区全域</div><div class="area-item-desc">梅田・天神橋・扇町・天満など、北区全域の売買・賃貸物件に対応しています。</div></div>
-        <div class="area-item"><div class="area-item-title">大阪市内全域</div><div class="area-item-desc">都島・福島・西区・中央区など、大阪市内全域の物件もお取り扱いしております。</div></div>
-        <div class="area-item"><div class="area-item-title">全国対応</div><div class="area-item-desc">全国の物件に対応。大阪を拠点に、北海道から沖縄まで幅広くサポートします。</div></div>
       </div>
     </div>
   </div>
@@ -268,20 +255,24 @@
   <div class="section-inner">
     <div class="section-header reveal">
       <div class="section-label"><span>COMPANY INFO</span></div>
-      <h2 class="section-title">会社情報</h2>
+      <h2 class="section-title">会社概要</h2>
     </div>
     <div class="info-grid">
       <div class="reveal">
         <table class="info-table">
-          <tr><th>会社名</th><td>株式会社ランドデザイン</td></tr>
+          <tr><th>商号</th><td>株式会社ランドデザイン</td></tr>
+          <tr><th>英名</th><td>LAND DESIGN INC.</td></tr>
           <tr><th>代表者</th><td>代表取締役　原　雄二郎</td></tr>
           <tr><th>設立</th><td>平成20年11月（2008年）</td></tr>
-          <tr><th>所在地</th><td>〒530-0016<br>大阪市北区中崎3丁目1-1 摂津ビル1F</td></tr>
-          <tr><th>TEL</th><td><a href="tel:0664862588" style="color:var(--navy)">06-6486-2588</a></td></tr>
+          <tr><th>本社所在地</th><td>〒530-0016<br>大阪市北区中崎3丁目1-1 摂津ビル1F</td></tr>
+          <tr><th>電話番号</th><td><a href="tel:0664862588" style="color:var(--navy)">06-6486-2588</a>（代）</td></tr>
           <tr><th>FAX</th><td>06-6486-2388</td></tr>
           <tr><th>営業時間</th><td>9:00〜18:00</td></tr>
+          <tr><th>事業内容</th><td>不動産売買・仲介業<br>不動産賃貸管理業<br>不動産コンサルタント事業<br>収益不動産プロジェクト</td></tr>
           <tr><th>免許番号</th><td>大阪府知事（4）第54370号</td></tr>
           <tr><th>加盟団体</th><td>公益社団法人 全国宅地建物取引業保証協会<br>社団法人 大阪府宅地建物取引業協会<br>公益社団法人 近畿圏不動産流通機構</td></tr>
+          <tr><th>取引銀行</th><td>大阪信用金庫<br>三井住友銀行<br>りそな銀行</td></tr>
+          <tr><th>顧問</th><td>堂本会計事務所<br>和田眞実司法書士・土地家屋調査士事務所</td></tr>
         </table>
       </div>
       <div class="info-access reveal">
@@ -325,8 +316,7 @@
       <a href="#services">サービス</a>
       <a href="#about">会社案内</a>
       <a href="#message">代表挨拶</a>
-      <a href="#area">対応エリア</a>
-      <a href="#info">会社情報</a>
+      <a href="#info">会社概要</a>
       <a href="#contact">お問い合わせ</a>
       <a href="privacy.html">プライバシーポリシー</a>
       <a href="https://ameblo.jp/land-design/" target="_blank" rel="noopener">スタッフブログ</a>
