@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ランドデザイン｜ロゴ比較プレビュー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b3e;--gold:#b8964e;--gold-light:#d4af6a;--font-serif:'Shippori Mincho B1',serif;--font-sans:'Zen Kaku Gothic New',sans-serif;--font-en:'Cormorant Garamond',serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:#ece9e2;color:#1a1a1a;padding:2.5rem 1rem;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto}
+.page-label{font-family:var(--font-en);font-size:.8rem;letter-spacing:.3em;color:var(--gold);margin-bottom:.6rem}
+h1{font-family:var(--font-serif);font-size:1.5rem;color:var(--navy);font-weight:600;margin-bottom:.6rem;letter-spacing:.05em}
+.lead{font-size:.9rem;color:#555;line-height:1.9;margin-bottom:2.2rem}
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.9rem;align-items:center}
+.controls .cap{font-size:.8rem;color:#666;margin-right:.4rem;letter-spacing:.05em}
+.logo-btn{cursor:pointer;border:1px solid rgba(13,27,62,.25);background:#fff;color:var(--navy);border-radius:6px;padding:.5rem .85rem;font-size:.85rem;font-family:var(--font-en);letter-spacing:.05em;transition:.15s}
+.logo-btn:hover{border-color:var(--navy)}
+.logo-btn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.bg-btn{cursor:pointer;border:1px solid rgba(13,27,62,.25);background:#fff;color:var(--navy);border-radius:6px;padding:.5rem .9rem;font-size:.8rem;transition:.15s}
+.bg-btn.on{background:var(--gold);color:#fff;border-color:var(--gold)}
+.preview{border:1px solid rgba(0,0,0,.1);border-radius:10px;overflow:hidden;box-shadow:0 10px 36px rgba(13,27,62,.12);margin-bottom:.8rem;margin-top:.4rem}
+.demo-header{padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.demo-logo{display:flex;align-items:center;min-width:120px}
+.demo-logo img{height:44px;width:auto;display:block}
+.demo-nav{display:flex;align-items:center;gap:2rem;flex-shrink:0}
+.demo-nav span{font-size:.85rem;letter-spacing:.12em;font-weight:300}
+.demo-tel{text-align:right;flex-shrink:0}
+.demo-tel .num{font-family:var(--font-en);font-size:1.15rem;letter-spacing:.05em}
+.demo-tel .hrs{font-size:.7rem;margin-top:2px}
+.demo-hero{height:110px;display:flex;align-items:center;padding:0 2rem}
+.demo-hero .t{font-family:var(--font-serif);font-size:1.2rem;letter-spacing:.04em}
+.demo-hero .s{font-family:var(--font-en);font-size:.72rem;letter-spacing:.25em;margin-top:6px}
+.preview.navy .demo-header{background:rgba(13,27,62,.97);border-bottom:1px solid rgba(184,150,78,.25)}
+.preview.navy .demo-nav span{color:rgba(255,255,255,.8)}
+.preview.navy .demo-tel .num{color:#fff}
+.preview.navy .demo-tel .hrs{color:rgba(255,255,255,.5)}
+.preview.navy .demo-hero{background:#0d1b3e}
+.preview.navy .demo-hero .t{color:#fff}
+.preview.navy .demo-hero .t em{font-style:normal;color:var(--gold-light)}
+.preview.navy .demo-hero .s{color:var(--gold-light)}
+.preview.white .demo-header{background:#fff;border-bottom:1px solid rgba(0,0,0,.1)}
+.preview.white .demo-nav span{color:#444}
+.preview.white .demo-tel .num{color:var(--navy)}
+.preview.white .demo-tel .hrs{color:#888}
+.preview.white .demo-hero{background:#f5f3ef}
+.preview.white .demo-hero .t{color:var(--navy)}
+.preview.white .demo-hero .t em{font-style:normal;color:var(--gold)}
+.preview.white .demo-hero .s{color:var(--gold)}
+.now{font-size:.8rem;color:#888;margin-bottom:3rem;letter-spacing:.05em}
+.now b{color:var(--navy);font-weight:500;font-family:var(--font-en)}
+.section-t{font-family:var(--font-serif);font-size:1.15rem;color:var(--navy);font-weight:600;margin-bottom:.4rem;letter-spacing:.05em}
+.section-d{font-size:.82rem;color:#666;line-height:1.8;margin-bottom:1.4rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:3rem}
+.cell{border:1px solid rgba(0,0,0,.1);border-radius:8px;overflow:hidden}
+.cell .bar{background:rgba(13,27,62,.97);height:64px;display:flex;align-items:center;justify-content:center;padding:0 1rem}
+.cell .bar img{height:38px;width:auto}
+.cell .cap{font-size:.78rem;color:#555;text-align:center;padding:.5rem;background:#fff;letter-spacing:.05em}
+.icon-row{display:flex;gap:14px;flex-wrap:wrap}
+.icon-box{border:1px solid rgba(0,0,0,.1);border-radius:8px;width:150px;text-align:center;overflow:hidden}
+.icon-box .pad{height:120px;display:flex;align-items:center;justify-content:center}
+.icon-box .pad img{max-height:84px;max-width:84px}
+.icon-box .pad.navy{background:rgba(13,27,62,.97)}
+.icon-box .pad.light{background:#f5f3ef}
+.icon-box .cap{font-size:.74rem;color:#555;padding:.45rem;background:#fff}
+.foot{font-size:.78rem;color:#999;margin-top:2.5rem;line-height:1.8;border-top:1px solid rgba(0,0,0,.1);padding-top:1.2rem}
+@media(max-width:760px){
+  .demo-nav{display:none}
+  .demo-header{padding:0 1.2rem}
+  .demo-hero{padding:0 1.2rem;height:90px}
+  .demo-hero .t{font-size:1rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="page-label">LOGO PREVIEW</div>
+<h1>ロゴ比較プレビュー｜株式会社ランドデザイン</h1>
+<p class="lead">実際のサイトのヘッダーに、ロゴ候補を乗せた状態です。下のボタンでロゴを切り替えて見比べられます。背景は「ネイビー（本番の色）」と「白」を切り替えられます。<br>全11案（No.00〜No.10）を掲載しています。</p>
+
+<div class="controls">
+  <span class="cap">ロゴを切り替え（番号は Land_◯◯ に対応）</span>
+  <span id="logobtns" style="display:flex;flex-wrap:wrap;gap:.5rem"></span>
+</div>
+<div class="controls">
+  <span class="cap">背景</span>
+  <button class="bg-btn" data-bg="navy">ネイビー背景</button>
+  <button class="bg-btn" data-bg="white">白背景</button>
+</div>
+
+<div class="preview navy" id="preview">
+  <div class="demo-header">
+    <div class="demo-logo"><img id="mainlogo" src="originals/logo/Land_00_01.png" alt="ロゴ候補"></div>
+    <nav class="demo-nav">
+      <span>サービス</span><span>会社案内</span><span>代表挨拶</span><span>会社概要</span><span>お問い合わせ</span>
+    </nav>
+    <div class="demo-tel">
+      <div class="num">06-6486-2588</div>
+      <div class="hrs">受付 9:00〜18:00</div>
+    </div>
+  </div>
+  <div class="demo-hero">
+    <div>
+      <div class="t">不動産のことなら、<em>信頼</em>できるパートナーへ。</div>
+      <div class="s">NAKAZAKICHO, OSAKA — SINCE 2008</div>
+    </div>
+  </div>
+</div>
+<p class="now">現在表示中：<b id="nowlabel">No.00（Land_00_01.png）</b></p>
+
+<div class="section-t">11案を一覧で見比べる</div>
+<p class="section-d">本番のヘッダー背景（ネイビー）に、全案を並べました。全体の雰囲気をぱっと見比べるときにどうぞ。</p>
+<div class="grid" id="grid"></div>
+
+<div class="section-t">アイコン版（Land_icon）</div>
+<p class="section-d">こちらは正方形に近いマーク版です。ヘッダーの横長ロゴとは役割が違い、ファビコン（ブラウザのタブの小さなマーク）やSNSのアイコンなどに向いています。背景の濃淡それぞれで確認できます。</p>
+<div class="icon-row">
+  <div class="icon-box"><div class="pad navy"><img src="originals/logo/Land_icon.png" alt="アイコン版（濃い背景）"></div><div class="cap">濃い背景</div></div>
+  <div class="icon-box"><div class="pad light"><img src="originals/logo/Land_icon.png" alt="アイコン版（明るい背景）"></div><div class="cap">明るい背景</div></div>
+</div>
+
+<p class="foot">このページは社内確認・原さんへの提示用です（GitHubには未公開）。<br>ロゴファイル：land-design/originals/logo/ 内の Land_00_01.png 〜 Land_10_01.png ／ Land_icon.png</p>
+
+</div>
+
+<script>
+const nums=['00','01','02','03','04','05','06','07','08','09','10'];
+const mainlogo=document.getElementById('mainlogo');
+const nowlabel=document.getElementById('nowlabel');
+const logobtns=document.getElementById('logobtns');
+const bgBtns=[...document.querySelectorAll('.bg-btn')];
+const preview=document.getElementById('preview');
+
+function pickLogo(i){
+  const n=nums[i];
+  mainlogo.src='originals/logo/Land_'+n+'_01.png';
+  nowlabel.textContent='No.'+n+'（Land_'+n+'_01.png）';
+  [...logobtns.children].forEach((b,k)=>b.classList.toggle('on',k===i));
+}
+function pickBg(mode){
+  preview.classList.toggle('navy',mode==='navy');
+  preview.classList.toggle('white',mode==='white');
+  bgBtns.forEach(b=>b.classList.toggle('on',b.dataset.bg===mode));
+}
+nums.forEach((n,i)=>{
+  const b=document.createElement('button');
+  b.className='logo-btn';b.textContent=n;
+  b.setAttribute('aria-label','ロゴ No.'+n+' を表示');
+  b.addEventListener('click',()=>pickLogo(i));
+  logobtns.appendChild(b);
+});
+bgBtns.forEach(b=>b.addEventListener('click',()=>pickBg(b.dataset.bg)));
+
+const grid=document.getElementById('grid');
+nums.forEach((n,i)=>{
+  const cell=document.createElement('div');
+  cell.className='cell';
+  cell.innerHTML='<div class="bar"><img src="originals/logo/Land_'+n+'_01.png" alt="No.'+n+'"></div><div class="cap">No.'+n+'（Land_'+n+'_01）</div>';
+  grid.appendChild(cell);
+});
+
+pickLogo(0);
+pickBg('navy');
+</script>
+</body>
+</html>
