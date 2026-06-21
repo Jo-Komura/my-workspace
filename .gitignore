@@ -1,0 +1,36 @@
+# Googleドライブのショートカットファイル
+*.gdoc
+*.gsheet
+*.gslides
+
+# その他の不要ファイル
+*.pdf
+Thumbs.db
+.DS_Store
+
+# 作業用スクリプト
+*.py
+*.sh
+
+# 重い原本（Photoshop / Illustrator）は公開リポジトリに入れない
+*.psd
+*.ai
+
+# 個人の作業メモ・引き継ぎノート・下書き（公開しない）
+引き継ぎノート*
+申し送り*
+はじめてのファイル.txt
+インスタ戦略.txt
+サブPC接続テスト.txt
+note/
+index_new_2.html
+
+# ミーティング資料（作業用・公開しない）
+*ミーティング資料*
+ミーティングで決めること.txt
+
+# サイト未使用の重い原本ロゴ（Googleドライブに保管・公開リポジトリからは外す）
+land-design/originals/LAND_DESIGN_logo.png
+land-design/originals/LAND_DESIGN_logo2.png
+land-design/originals/LAND DESIGN_logo (1).jpg
+land-design/originals/logo/LAND DESIGN_logo (1).jpg
