@@ -7,3 +7,9 @@ src/index_pattern*.html
 打ち合わせメモ.txt
 ランドデザイン_文言一覧.xlsx
 ランドデザイン_格子修正指示.md
+HP改善ノート_8つの視点.md
+
+# originals は丸ごと非公開（机の中）。原本・未使用画像・ロゴ案はGoogleドライブに保管し公開しない。
+originals/
+# ロゴ比較ページ（原さんへの一時公開用・ロゴ確定で役目終了）
+logo-preview.html
