@@ -150,7 +150,7 @@ nav a:hover::after{transform:scaleX(1)}
 .area{background:var(--cream);padding:7rem 2rem}
 .area-inner{max-width:1200px;margin:0 auto}
 .area-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:4rem}
-.area-map-placeholder{aspect-ratio:1;background:var(--white);border:1px solid rgba(13,27,62,0.1);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:url('images/area.png');background-size:cover;background-position:center}
+.area-map-placeholder{aspect-ratio:1;background:var(--white);border:1px solid rgba(13,27,62,0.1);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .area-map-placeholder::before{display:none}
 .area-list{display:flex;flex-direction:column;gap:2rem}
 .area-item{border-left:2px solid var(--navy);padding-left:1.5rem}
