@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jo-komura.github.io/my-workspace/land-design/src/sitemap.xml
