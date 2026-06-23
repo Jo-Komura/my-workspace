@@ -196,7 +196,7 @@
     <div class="message-body">
       <div class="message-text-block reveal">
         <div class="message-greeting">
-          <p>不動産業界に25年以上携わるなかで培った経験と知識をもとに、2008年の創業以来、大阪・中崎町を拠点として収益不動産に特化した事業を展開しております。</p>
+          <p>不動産業界に<span class="js-career">25</span>年以上携わるなかで培った経験と知識をもとに、2008年の創業以来、大阪・中崎町を拠点として収益不動産に特化した事業を展開しております。</p>
           <p>創業当時はリーマンショックによる金融危機、その後もコロナ禍など、不動産市場を取り巻く環境は大きく変化してきました。そのような時代の変化のなかでも、私たちが一貫して大切にしてきたのは、お客様の大切な資産と真摯に向き合うことです。</p>
           <p>収益不動産は、お客様の将来設計や資産形成を支える重要な資産です。私たちは長年培ってきた経験と専門性を活かし、一人ひとりのお客様に最適なご提案を行い、資産価値の向上と安定した運用をサポートしてまいります。</p>
           <p>これからも誠実な姿勢を大切にし、お客様に信頼されるパートナーとして歩み続けてまいります。</p>
@@ -293,14 +293,14 @@
           <tr><th>営業時間</th><td>9:00〜18:00</td></tr>
           <tr><th>事業内容</th><td>不動産売買・仲介業<br>不動産賃貸管理業<br>不動産コンサルタント事業<br>収益不動産プロジェクト</td></tr>
           <tr><th>免許番号</th><td>大阪府知事（4）第54370号</td></tr>
-          <tr><th>加盟団体</th><td>公益社団法人 全国宅地建物取引業保証協会<br>社団法人 大阪府宅地建物取引業協会<br>公益社団法人 近畿圏不動産流通機構</td></tr>
+          <tr><th>加盟団体</th><td>公益社団法人 全国宅地建物取引業保証協会<br>一般社団法人 大阪府宅地建物取引業協会<br>公益社団法人 近畿圏不動産流通機構</td></tr>
           <tr><th>取引銀行</th><td>大阪信用金庫<br>三井住友銀行<br>りそな銀行</td></tr>
           <tr><th>顧問</th><td>堂本会計事務所<br>和田眞実司法書士・土地家屋調査士事務所</td></tr>
         </table>
       </div>
       <div class="info-access reveal">
         <h4>ACCESS</h4>
-        <p>Osaka Metro谷町線「中崎町」駅　②番出口より徒歩１０秒<br>各線「梅田」駅・JR大阪駅　徒歩12分</p>
+        <p>Osaka Metro谷町線「中崎町」駅　②番出口より徒歩10秒<br>各線「梅田」駅・JR大阪駅　徒歩12分</p>
         <div class="info-map-placeholder">
           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3279.907102166235!2d135.50309137645183!3d34.707522982845674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e695edbb3657%3A0x76c14ba96ae6260e!2z44CSNTMwLTAwMTYg5aSn6Ziq5bqc5aSn6Ziq5biC5YyX5Yy65Lit5bSO77yT5LiB55uu77yR4oiS77yRIOaRgua0peODk-ODqw!5e0!3m2!1sja!2sjp!4v1780927494574!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;display:block" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
@@ -353,6 +353,10 @@
 <script>
 const yearsElapsed = new Date().getFullYear() - 2008;
 document.querySelectorAll('.js-years').forEach(el => el.textContent = yearsElapsed);
+
+// 代表の業界歴：2001年スタート（創業2008年の7年前）を5年区切りで切り捨て表示（盛らないようfloor）
+const careerYears = Math.floor((new Date().getFullYear() - 2001) / 5) * 5;
+document.querySelectorAll('.js-career').forEach(el => el.textContent = careerYears);
 
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');

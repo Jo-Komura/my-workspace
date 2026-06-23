@@ -258,8 +258,8 @@
       </div>
       <div class="reason-item reveal">
         <div class="reason-num">02</div>
-        <div class="reason-title">地域密着18年の目利き力</div>
-        <p class="reason-desc">大阪・中崎町を拠点に18年。地域の相場・需要・将来性を熟知したスタッフが、収益性の高い物件選びをサポートします。</p>
+        <div class="reason-title">地域密着<span class="js-years">18</span>年の目利き力</div>
+        <p class="reason-desc">大阪・中崎町を拠点に<span class="js-years">18</span>年。地域の相場・需要・将来性を熟知したスタッフが、収益性の高い物件選びをサポートします。</p>
       </div>
       <div class="reason-item reveal">
         <div class="reason-num">03</div>
@@ -327,6 +327,9 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
 }, {threshold: 0.1});
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const yearsElapsed = new Date().getFullYear() - 2008;
+document.querySelectorAll('.js-years').forEach(el => el.textContent = yearsElapsed);
 </script>
 </body>
 </html>

@@ -216,7 +216,7 @@
     <div class="reasons-grid">
       <div class="reason-item reveal">
         <div class="reason-num">01</div>
-        <div class="reason-title">地域密着18年の信頼</div>
+        <div class="reason-title">地域密着<span class="js-years">18</span>年の信頼</div>
         <p class="reason-desc">地域の相場・動向をもとに最適なご提案をします。</p>
       </div>
       <div class="reason-item reveal">
@@ -369,6 +369,9 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
 }, {threshold: 0.1});
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const yearsElapsed = new Date().getFullYear() - 2008;
+document.querySelectorAll('.js-years').forEach(el => el.textContent = yearsElapsed);
 </script>
 </body>
 </html>
