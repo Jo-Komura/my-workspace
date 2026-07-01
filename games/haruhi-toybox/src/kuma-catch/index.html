@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>クマさんキャッチ</title>
+<link rel="stylesheet" href="style.css">
+<script src="../shared/settings.js"></script>
+</head>
+<body>
+
+<div id="stage">
+  <img id="bg" src="images/bg.jpg" alt="">
+
+  <!-- ケーキ（テーブルの上）。スロット20個はJSで作る -->
+  <div id="cakeWrap"><img id="cakeImg" src="images/cake.png" alt=""></div>
+
+  <!-- クマさん（主役） -->
+  <img id="bear" src="images/chara.png" alt="">
+
+  <!-- 落下・飛行フルーツはJSで生成 -->
+
+  <div id="score">🍰 0 / 20</div>
+  <a id="back" href="../index.html"><img src="../shared/images/btn-back.png" alt="もどる"></a>
+  <button id="gear" aria-label="ちょうせつ"><img src="../shared/images/btn-settei.png" alt="設定"></button>
+
+  <!-- タッチ操作：押した列へクマが向かう（目的地方式） -->
+  <div id="touchpad"></div>
+
+  <!-- 親用パネル -->
+  <div id="panel">
+    <div class="sheet">
+      <h2>おやごさん せってい</h2>
+      <div class="row"><span>フルーツの りょう</span><div class="seg" id="seg-amount"></div></div>
+      <div class="row"><span>おちる はやさ</span><div class="seg" id="seg-speed"></div></div>
+      <button class="close" id="panel-close">とじる</button>
+    </div>
+  </div>
+
+  <!-- 完成演出（できたー！画像が動きながら出る） -->
+  <div id="clear"><img class="clear-img" src="../shared/images/dekita.png" alt="できたー！"></div>
+
+  <!-- タイトル画面（ゲーム開始前のオーバーレイ） -->
+  <div id="title">
+    <img id="titlebg" src="images/title-bg.jpg" alt="くまさんのケーキ作り">
+    <a id="t-back" href="../index.html"><img src="../shared/images/btn-back.png" alt="もどる"></a>
+    <button id="t-gear" aria-label="ちょうせつ"><img src="../shared/images/btn-settei.png" alt="設定"></button>
+    <div id="start-hint">タップで スタート</div>
+  </div>
+</div>
+
+<script>
+/* =======================================================================
+   クマさんキャッチ（画像版）
+   - はるひ基準：罰なし・ゲームオーバー無し。落としても何も起きない。
+   - 新ルール：拾ったフルーツがケーキに盛り付けられ、20個で完成（クリア）。
+       完成したら数秒お祝い → ケーキを空にしてまた作れる（エンドレス）。
+   - 位置の微調整は下の CONFIG をいじるだけ。
+   ======================================================================= */
+
+/* ---- CONFIG（％は舞台に対する割合。動かしながら調整する） -------------- */
+var GOAL = 20;                 // 何個でケーキ完成か
+
+var BEAR = {
+  w: 22,                       // クマの横幅（％）
+  minX: 11, maxX: 45,          // 左右に動ける中心の範囲（左の床。minXを下げるほど左へ行ける。11=左端ぴったり／10で1%だけ見切れる）
+  startX: 30,
+  speed: 0.9,                  // 1フレームの移動量（％）
+  catchY: 78,                  // キャッチ判定の高さ（ボウルのあたり・％）
+  catchHalf: 11,               // 中心からこの幅に入ればキャッチ（％）
+  flipPivot: 28                // 反転の軸＝クマの“見た目の中心”（要素幅の%）。ここに合わせると向き変更でワープしない（クマ反転中心ツールで調整。頭で合わせ少し足側に寄せた値）
+};
+
+var FALL = {
+  minX: 11, maxX: 45,          // フルーツが降る左右範囲（左側だけ）
+  w: 9,                        // フルーツの大きさ（％）
+  topY: -8                     // 出てくる高さ
+};
+
+/* ケーキの箱（テーブルの上）。left/top/幅 を％で。高さは画像比で自動 */
+var CAKE = { left: 60, top: 36, w: 34 };
+
+/* 盛り付け20か所（ケーキ画像の中の％）。下→上の順で埋まる */
+var SLOTS = [
+  /* お皿       */ {x:12,y:78},{x:43,y:78},{x:80,y:75},
+  /* 下段の前面 */ {x:22,y:60},{x:94,y:72},{x:53,y:49},{x:62,y:67},{x:74,y:62},{x:37,y:66},
+  /* 段の境目   */ {x:17,y:42},{x:35,y:47},{x:71,y:49},{x:88,y:43},
+  /* 上段の前面 */ {x:39,y:27},{x:57,y:26},{x:25,y:26},{x:74,y:29},
+  /* てっぺん   */ {x:34,y:8},{x:65,y:11},{x:49,y:0}
+];
+var SLOT_W = 21;               // スロットのフルーツ大きさ（ケーキ箱幅の％）
+
+var ITEMS = ['item-01.png','item-02.png','item-03.png','item-04.png','item-05.png','item-06.png'];
+/* ---------------------------------------------------------------------- */
+
+var stage = document.getElementById('stage');
+var bgImg = document.getElementById('bg');
+var bear  = document.getElementById('bear');
+var cakeWrap = document.getElementById('cakeWrap');
+var scoreEl = document.getElementById('score');
+
+var ASPECT = 870 / 1400;       // bg読込で実寸比に更新
+var stageW = 0, stageH = 0;
+var bearX = BEAR.startX;       // クマの中心X（％）
+var targetX = null;            // 目的地（％）。nullなら止まる（目的地方式）
+var filled = 0;                // 盛り付け済み個数
+var falling = [];              // 落下中フルーツ
+var slotEls = [];              // スロットDOM
+var playing = true;            // 完成演出中はfalse
+var started = false;           // はじめるを押したらゲーム開始
+var setting = { amount: 2, speed: 2 };
+
+/* ---- 舞台寸法（aspect-ratio非対応でもOK） --------------------------- */
+function layout() {
+  var vw = window.innerWidth, vh = window.innerHeight;
+  var w = vw, h = w * ASPECT;
+  if (h > vh) { h = vh; w = h / ASPECT; }
+  if (w > 1200) { w = 1200; h = w * ASPECT; }
+  stageW = w; stageH = h;
+  stage.style.width = w + 'px';
+  stage.style.height = h + 'px';
+  stage.style.left = ((vw - w) / 2) + 'px';
+  stage.style.top  = ((vh - h) / 2) + 'px';
+
+  // クマの大きさ＆中心合わせ（marginで中心。transformは向き反転専用）
+  bear.style.width = BEAR.w + '%';
+  bear.style.marginLeft = (-BEAR.w / 2) + '%';
+  placeBear();
+
+  // ケーキの箱
+  cakeWrap.style.left = CAKE.left + '%';
+  cakeWrap.style.top  = CAKE.top + '%';
+  cakeWrap.style.width = CAKE.w + '%';
+}
+window.addEventListener('resize', layout);
+
+function placeBear() { bear.style.left = bearX + '%'; }
+
+/* 進行方向の向き：クマはボウルを抱えた非対称な絵なので、横反転(scaleX)すると
+   体が反対側へ飛んで「ワープ」して見える。→ 反転はせず、常に同じ向きで左右にスライドする。
+   （向きを変えたくなったら“中身を左右中央に置き直した別絵”が必要。今は反転しないのが正解） */
+var facing = 1;
+function faceDir(d) {
+  if (d !== 0 && d !== facing) {
+    facing = d;
+    // 反転の軸を“クマの見た目の中心(BEAR.flipPivot%)”に置く＝反転しても体はその場で振り向く（ワープしない）
+    bear.style.transformOrigin = BEAR.flipPivot + '% center';
+    bear.style.transform = 'scaleX(' + (d < 0 ? -1 : 1) + ')';
+  }
+}
+
+/* ---- スロット（盛り付け位置）を作る --------------------------------- */
+function buildSlots() {
+  for (var i = 0; i < SLOTS.length; i++) {
+    var s = document.createElement('div');
+    s.className = 'slot';
+    s.style.left = SLOTS[i].x + '%';
+    s.style.top  = SLOTS[i].y + '%';
+    s.style.width = SLOT_W + '%';
+    s.style.height = SLOT_W + '%';
+    cakeWrap.appendChild(s);
+    slotEls.push(s);
+  }
+}
+
+/* ---- フルーツを1個降らせる ------------------------------------------ */
+function spawnFruit() {
+  if (!playing) return;
+  var img = document.createElement('img');
+  img.className = 'fruit';
+  img.src = 'images/' + ITEMS[Math.floor(Math.random() * ITEMS.length)];
+  img.style.width = FALL.w + '%';
+  var x = FALL.minX + Math.random() * (FALL.maxX - FALL.minX);
+  var fr = { el: img, x: x, y: FALL.topY, vy: fallSpeed(), sway: Math.random() * Math.PI * 2 };
+  img.style.left = x + '%';
+  img.style.top = FALL.topY + '%';
+  stage.appendChild(img);
+  falling.push(fr);
+}
+function fallSpeed() { return 0.28 + (setting.speed - 1) * 0.12; } // ％/フレーム
+
+/* ---- メインループ --------------------------------------------------- */
+var lastSpawn = 0;
+function spawnGap() { return 1500 - (setting.amount - 1) * 230; } // ms
+
+function loop(t) {
+  // クマ移動（目的地方式：targetXへ向かって進み、着いたら止まる）
+  if (targetX !== null) {
+    var dx = targetX - bearX;
+    if (Math.abs(dx) <= BEAR.speed) {
+      bearX = targetX; targetX = null;        // 到着
+    } else {
+      var dir = dx > 0 ? 1 : -1;
+      faceDir(dir);                            // 進む向きに反転
+      bearX += dir * BEAR.speed;
+    }
+    if (bearX < BEAR.minX) bearX = BEAR.minX;
+    if (bearX > BEAR.maxX) bearX = BEAR.maxX;
+    placeBear();
+  }
+
+  // フルーツ落下＆キャッチ
+  for (var i = falling.length - 1; i >= 0; i--) {
+    var f = falling[i];
+    f.y += f.vy;
+    f.sway += 0.05;
+    var drawX = f.x + Math.sin(f.sway) * 1.2;   // ゆらゆら
+    f.el.style.left = drawX + '%';
+    f.el.style.top = f.y + '%';
+
+    // キャッチ判定（クマのボウルの高さに来て、横が合えば）
+    if (playing && f.y >= BEAR.catchY && f.y <= BEAR.catchY + 8 &&
+        Math.abs(drawX - bearX) <= BEAR.catchHalf) {
+      doCatch(f, drawX);
+      falling.splice(i, 1);
+      continue;
+    }
+    // 拾えず下まで → ただ消える（罰なし）
+    if (f.y > 108) { removeEl(f.el); falling.splice(i, 1); }
+  }
+
+  // 出現タイミング
+  if (playing && t - lastSpawn > spawnGap()) { spawnFruit(); lastSpawn = t; }
+
+  requestAnimationFrame(loop);
+}
+
+/* ---- キャッチ＝ケーキへ飛ばす --------------------------------------- */
+function doCatch(f, atX) {
+  se('pon');                          // フルーツ獲得の音（pon.mp3）
+  sparkle(bearX, BEAR.catchY);
+
+  // 飛んでいくフルーツ（今の位置 → スロットへ）
+  var fly = f.el;
+  var target = slotEls[filled];
+  var idx = filled;
+  filled++;
+  updateScore();
+
+  // 目標スロットの画面内ピクセル座標を求める
+  var sr = stage.getBoundingClientRect();
+  var tr = target.getBoundingClientRect();
+  var tx = (tr.left + tr.width / 2 - sr.left) / sr.width * 100;
+  var ty = (tr.top + tr.height / 2 - sr.top) / sr.height * 100;
+
+  fly.style.left = atX + '%';
+  fly.style.top = f.y + '%';
+  // CSSトランジションでスッと移動
+  fly.style.transition = 'left .45s ease-in, top .45s ease-in, width .45s ease-in';
+  // 次フレームで目標へ
+  requestAnimationFrame(function () {
+    fly.style.left = tx + '%';
+    fly.style.top = ty + '%';
+    fly.style.width = (FALL.w * 0.7) + '%';
+  });
+  setTimeout(function () {
+    removeEl(fly);
+    placeInSlot(idx, fly.src);
+    if (filled >= GOAL) doClear();
+  }, 470);
+}
+
+/* ---- スロットに盛り付ける ------------------------------------------- */
+function placeInSlot(idx, src) {
+  var img = document.createElement('img');
+  img.src = src;
+  slotEls[idx].appendChild(img);
+}
+
+function updateScore() { scoreEl.textContent = '🍰 ' + filled + ' / ' + GOAL; }
+
+/* ---- 完成！＝お祝いして「タイトルに戻る」（＝ここで終わり） ---------
+   子どもは終わりが無いと止まれない。20個でケーキ完成→お祝い→タイトルへ戻り、
+   「あと1回ね」が言える区切りを作る。次は「タップでスタート」からまた最初。 */
+function doClear() {
+  playing = false;
+  se('gameclear_cute');               // クリアの豪華音（ポケットサウンド様）
+  document.getElementById('clear').classList.add('show');
+  // ケーキの上で大きくキラキラ
+  var burst = setInterval(function () {
+    sparkle(CAKE.left + CAKE.w / 2, CAKE.top + 20);
+  }, 180);
+
+  setTimeout(function () {
+    clearInterval(burst);
+    document.getElementById('clear').classList.remove('show');
+    resetBoard();                                       // 盤面を片付ける
+    document.getElementById('title').classList.remove('hidden');   // タイトルへ戻る
+  }, 3200);
+}
+
+/* ---- 盤面を最初の状態に戻す（タイトルへ戻る時／始める時の共通） ------ */
+function resetBoard() {
+  for (var i = 0; i < slotEls.length; i++) slotEls[i].innerHTML = '';   // ケーキを空に
+  for (var j = falling.length - 1; j >= 0; j--) removeEl(falling[j].el); // 落下中フルーツを消す
+  falling.length = 0;
+  filled = 0;
+  updateScore();
+  bearX = BEAR.startX; placeBear();
+  lastSpawn = 0;
+}
+
+/* ---- 演出：キラキラ（％座標で） ------------------------------------- */
+var SPARK_COLORS = ['#ffd24d','#ff7eb6','#7ed0ff','#9cff9c','#fff2a8'];
+function sparkle(px, py) {
+  var n = 10;
+  for (var i = 0; i < n; i++) {
+    var s = document.createElement('div');
+    s.className = 'spark';
+    var sz = 8 + Math.random() * 8;
+    s.style.width = sz + 'px'; s.style.height = sz + 'px';
+    s.style.background = SPARK_COLORS[i % SPARK_COLORS.length];
+    s.style.left = px + '%'; s.style.top = py + '%';
+    stage.appendChild(s);
+    var ang = (Math.PI * 2 * i) / n;
+    var dist = 30 + Math.random() * 40;
+    (function (node, dx, dy) {
+      node.style.transition = 'transform .5s ease-out, opacity .5s ease-out';
+      requestAnimationFrame(function () {
+        node.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+        node.style.opacity = '0';
+      });
+      setTimeout(function () { removeEl(node); }, 540);
+    })(s, Math.cos(ang) * dist, Math.sin(ang) * dist);
+  }
+}
+
+function removeEl(el) { if (el && el.parentNode) el.parentNode.removeChild(el); }
+
+/* ---- 「ポンッ」はファイル化（shared/se/pon.mp3）。下の se('pon') で鳴らす ---- */
+
+/* ---- 効果音ファイル（shared/se/ の mp3。全ゲーム共通の作法） ----------
+   - finish.mp3（ケーキ完成）／pon.mp3（フルーツ獲得）／click.mp3（ボタン）。
+   - 1音1要素を使い回す／最初のタッチで自動再生制限を解除／鳴らせなくても継続。 */
+var SE_DIR = '../shared/se/';
+var SE_USED = ['gameclear_cute', 'pon', 'click'];   // このゲームで使う音（クリア／フルーツ獲得／ボタン）
+var seBank = {};
+function getSE(n) {
+  if (!seBank[n]) { var a = new Audio(SE_DIR + n + '.mp3'); a.preload = 'auto'; seBank[n] = a; }
+  return seBank[n];
+}
+function se(n) {
+  try { var a = getSE(n); a.volume = (window.HTBSettings ? HTBSettings.seVolume() : 1);
+        a.currentTime = 0; var p = a.play(); if (p && p.catch) p.catch(function(){}); }
+  catch (e) { /* 音が出なくてもゲームは続く */ }
+}
+var seUnlocked = false;
+function unlockSE() {
+  if (seUnlocked) return; seUnlocked = true;
+  for (var i = 0; i < SE_USED.length; i++) (function (a) {
+    try {
+      a.muted = true;
+      var p = a.play();
+      var done = function () { try { a.pause(); a.currentTime = 0; } catch (e) {} a.muted = false; };
+      if (p && p.then) p.then(done).catch(done); else done();
+    } catch (e) {}
+  })(getSE(SE_USED[i]));
+}
+document.addEventListener('touchstart', unlockSE, { once: true });
+document.addEventListener('mousedown', unlockSE, { once: true });
+
+/* ---- BGM（shared/bgm/ の mp3 をループ再生。全ゲーム共通の作法） --------
+   - 1曲を loop 再生。最初のタッチで自動再生制限を解除して鳴らす。
+   - 効果音より音量は控えめ（背景）。鳴らせない端末でもゲームは続く。 */
+var BGM_DIR = '../shared/bgm/';
+var BGM_NAME = 'kuma';        // このページのBGM（shared/bgm/kuma.mp3）
+var BGM_VOL = 0.23;          // 効果音より控えめな背景（実機で調整した値）
+var bgmAudio = null, bgmOn = false;
+function startBGM() {
+  if (bgmOn) return;
+  try {
+    if (!bgmAudio) {
+      bgmAudio = new Audio(BGM_DIR + BGM_NAME + '.mp3');
+      bgmAudio.loop = true; bgmAudio.preload = 'auto';
+      bgmAudio.volume = (window.HTBSettings ? HTBSettings.bgmVolume() : BGM_VOL);
+    }
+    var p = bgmAudio.play();
+    if (p && p.then) p.then(function(){ bgmOn = true; }).catch(function(){});
+    else bgmOn = true;
+  } catch (e) { /* BGMが鳴らなくてもゲームは続く */ }
+}
+document.addEventListener('touchstart', startBGM, { once: true });
+document.addEventListener('mousedown', startBGM, { once: true });
+startBGM();   // 読み込み時にまず再生を試す（ブラウザが許せば即・ダメなら最初のタップで）
+
+/* ---- ボタンのクリック音（共通ボタン。効果音の音量・ミュートに従う）。
+   もどる等“画面が変わる”ボタンは、音を聞かせてから少し遅らせて遷移する（音が切れない）。 ---- */
+var NAV_DELAY = 140;                 // クリック音を鳴らしてから画面を変えるまでの待ち（ms）
+document.addEventListener('click', function (e) {
+  var nav = e.target.closest('#back, #t-back');
+  if (nav && nav.getAttribute('href')) {                 // もどる＝別ページへ
+    e.preventDefault();
+    se('click');
+    var href = nav.getAttribute('href');
+    setTimeout(function () { window.location.href = href; }, NAV_DELAY);
+    return;
+  }
+  if (e.target.closest('#gear, #title, #t-gear, #panel-close')) se('click');   // 画面はそのまま＝すぐ鳴らす
+});
+
+/* ---- 操作（目的地方式：押した列へ向かう／PCは矢印キー） ------------- */
+function bindControls() {
+  var pad = document.getElementById('touchpad');
+  var mouseDown = false;
+
+  // 押した位置のX（％）を目的地に。クマの動ける範囲に丸める
+  // → 行けない右側（テーブル）を押したら一番右を目指す
+  function aimAt(clientX) {
+    var sr = stage.getBoundingClientRect();
+    var px = (clientX - sr.left) / sr.width * 100;
+    targetX = Math.max(BEAR.minX, Math.min(BEAR.maxX, px));
+  }
+  function fromTouch(e) { e.preventDefault(); if (e.touches[0]) aimAt(e.touches[0].clientX); }
+
+  pad.addEventListener('touchstart', fromTouch, {passive:false});
+  pad.addEventListener('touchmove', fromTouch, {passive:false});   // 指を滑らせると追従
+  pad.addEventListener('mousedown', function(e){ mouseDown = true; aimAt(e.clientX); });
+  pad.addEventListener('mousemove', function(e){ if (mouseDown) aimAt(e.clientX); });
+  document.addEventListener('mouseup', function(){ mouseDown = false; });
+
+  // PC確認用：矢印は端まで向かう／離したらその場で止まる
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft') targetX = BEAR.minX;
+    else if (e.key === 'ArrowRight') targetX = BEAR.maxX;
+  });
+  document.addEventListener('keyup', function(e){
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') targetX = bearX;
+  });
+}
+
+/* ---- 親用パネル ----------------------------------------------------- */
+function buildPanel() {
+  makeSeg('seg-amount', 'amount');
+  makeSeg('seg-speed', 'speed');
+  document.getElementById('gear').addEventListener('click', function(){
+    document.getElementById('panel').classList.add('open');
+  });
+  document.getElementById('panel-close').addEventListener('click', function(){
+    document.getElementById('panel').classList.remove('open');
+  });
+}
+function makeSeg(id, key) {
+  var box = document.getElementById(id); box.innerHTML = '';
+  for (var n = 1; n <= 5; n++) (function(val){
+    var b = document.createElement('button'); b.textContent = val;
+    if (setting[key] === val) b.className = 'on';
+    b.addEventListener('click', function(){
+      setting[key] = val;
+      var bs = box.getElementsByTagName('button');
+      for (var k = 0; k < bs.length; k++) bs[k].className = '';
+      b.className = 'on';
+    });
+    box.appendChild(b);
+  })(n);
+}
+
+/* ---- タイトル → はじめるで開始 -------------------------------------- */
+function startGame() {
+  document.getElementById('title').classList.add('hidden');
+  resetBoard();                 // 毎回まっさらから（初回も2回目以降も）
+  playing = true;
+  if (!started) { started = true; requestAnimationFrame(loop); }
+}
+// タイトルのどこを押してもスタート（もどる・設定だけ除外）
+document.getElementById('title').addEventListener('click', function (e) {
+  if (e.target.closest('#t-back, #t-gear')) return;
+  startGame();
+});
+document.getElementById('t-gear').addEventListener('click', function(){
+  document.getElementById('panel').classList.add('open');
+});
+
+/* ---- 起動（ゲームは待機。タイトルのはじめるで動き出す） -------------- */
+bgImg.onload = function(){ ASPECT = bgImg.naturalHeight / bgImg.naturalWidth; layout(); };
+buildSlots();
+buildPanel();
+bindControls();
+layout();
+updateScore();
+</script>
+</body>
+</html>

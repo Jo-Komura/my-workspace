@@ -1,0 +1,277 @@
+/* アライグマの拭き拭き ― style.css（骨組み v0.1）
+   方針：Android 7.0 / Chromium 51 でも崩れないこと（くまさん・アザラシと同じ作法）。
+   - clamp(), aspect-ratio, gap などの新しめCSSは使わない（JSで寸法を制御）。
+   - 2018年以降の絵文字を使わない（スコアの✨は2010年＝古い端末でも安全）。
+   - 拭き拭きの本体は <canvas> の destination-out（＝Flashの消しゴム）。 */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #f3d9d2;            /* 画面外の余白＝やわらかいお部屋の色 */
+  overflow: hidden;
+  font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 遊ぶ舞台。背景画像が来るまでは画面いっぱい。来たら layout() が縦横比で中央に収める。 */
+#stage {
+  position: absolute;
+  top: 0; left: 0;
+  overflow: hidden;
+}
+
+/* 背景レイヤー（お掃除のお部屋）。
+   画像がまだ無いときは、やさしいお部屋のグラデーションで代用。 */
+#bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(#fff3f1 0%, #ffe8ef 55%, #ffe6d8 100%);
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+/* お掃除屋さん（アライグマ）＝舞台の左に立つ。背景より前・拭きカードより後ろ。
+   横幅基準で置く（モップ・しっぽ込みで少し横長）。飾りなのでタップは透過。 */
+#cleaner {
+  position: absolute;
+  left: 1%; bottom: 0;
+  width: 37.8%; height: auto;          /* 42%の90%でFIX（2026-06-29 ジョー確定） */
+  z-index: 5;
+  pointer-events: none;
+  -webkit-user-select: none; user-select: none;
+}
+
+/* ===== 拭き拭きカード（曇った窓／ほこりのついた額）＝舞台の真ん中 ===== */
+/* JSで cardSide を計算して #card の幅・高さを実寸指定する。 */
+#card {
+  position: absolute;
+  left: 65%; top: 50%;                 /* 右側に寄せる（左はお掃除屋さんのスペース） */
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: #ffd59e;                 /* 額のフチ（あたたかい色） */
+  border-radius: 26px;
+  padding: 10px;                       /* このpaddingぶんがフチの太さ */
+  box-shadow: 0 12px 30px rgba(0,0,0,.20);
+  transition: opacity .4s ease, transform .4s ease;
+}
+/* 中の白い面（ここに動物が現れる）。canvas はこの面にぴったり重ねる。 */
+#plate {
+  position: relative;
+  width: 100%; height: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+}
+/* 下にいる動物（拭くと現れる）。白背景の絵なので白い面にきれいに馴染む。 */
+#animal {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* よごれ／くもりのレイヤー（canvas）。指でこすった所だけ destination-out で消える。 */
+#dirt {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: block;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* ピカピカ完成の瞬間：カードがふわっと弾む。 */
+#card.clean { animation: pop .5s ease-out; }
+@keyframes pop {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  40%  { transform: translate(-50%, -50%) scale(1.06); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+/* 次の動物に入れ替わる時のふわっと消える／現れる。 */
+#card.swap { opacity: 0; transform: translate(-50%, -50%) scale(.94); }
+
+/* スコア・もどる・設定は、カード(z10)より前に出す。 */
+#score, #back, #gear { z-index: 20; }
+
+/* スコア表示（上・中央）。✨は2010年の絵文字＝古い端末でも安全。 */
+#score {
+  display: none;                   /* スコア表示は無し（クリア条件を検討中。復活時はこの行を消す） */
+  position: absolute;
+  top: 2%; left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 18px;
+  background: rgba(255,255,255,.85);
+  border-radius: 999px;
+  color: #c8657f;
+  font-weight: 700;
+  font-size: 6vw;                  /* 新端末でも崩れない素直な指定 */
+  line-height: 1.1;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+
+/* もどる／設定（ゲーム中・上隅）。タイトル画面と同じ shared 画像アイコンで統一。 */
+#back, #gear {
+  position: absolute;
+  top: 2%;
+  width: 10%; max-width: 84px;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+#back { left: 2%; display: block; }      /* 左上＝もどる */
+#gear { right: 2%; }                      /* 右上＝設定 */
+#back img, #gear img { width: 100%; height: auto; display: block; }
+#back:active, #gear:active { transform: translateY(2px); }
+
+/* ===== タイトル画面（ゲーム開始前のオーバーレイ。各ゲーム共通仕様） ===== */
+#title { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 50; }
+#title.hidden { display: none; }
+#titlebg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+/* もどる・設定（くまさん・アザラシに準拠：top2%・幅10%・max84px） */
+#t-back, #t-gear { position: absolute; top: 2%; z-index: 55; width: 10%; max-width: 84px; }
+#t-back { left: 2%; display: block; }
+#t-gear { right: 2%; border: none; background: transparent; padding: 0; }
+#t-back img, #t-gear img { width: 100%; height: auto; display: block; }
+#t-back:active, #t-gear:active { transform: translateY(2px); }
+/* はじめる：画面下部の「タップで スタート」文字（ふわっと上下に弾む）。タイトルのどこを押しても開始 */
+#start-hint { position: absolute; left: 50%; bottom: 6%;
+  z-index: 55; pointer-events: none; white-space: nowrap;
+  font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", sans-serif;
+  font-weight: 800; color: #fff; letter-spacing: 0.04em;
+  font-size: 7vw;                          /* 古いWebView(Android7)用フォールバック */
+  font-size: clamp(20px, 7vw, 40px);
+  text-shadow: 0 0 6px rgba(0,0,0,.55), 0 3px 0 rgba(0,0,0,.3);
+  transform: translateX(-50%);
+  animation: tap-bounce 1.1s ease-in-out infinite; }
+@keyframes tap-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-10px); }
+}
+
+/* ===== 調節パネル（親用。漢字表記・固定px＝端末で巨大化しない“普通サイズ”） ===== */
+#panel {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.45);
+  display: none;
+  z-index: 60;
+}
+#panel.open { display: block; }
+#panel .sheet {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%; max-width: 320px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  color: #c8657f;
+}
+#panel h2 { font-size: 20px; margin-bottom: 8px; white-space: nowrap; }
+#panel .row { margin: 8px 0; }
+#panel .row span { display: block; margin-bottom: 5px; font-weight: 700; font-size: 16px; }
+#panel .seg { display: block; width: 100%; }
+#panel .seg button {
+  width: 18%;
+  margin-right: 2%;
+  padding: 7px 0;
+  border: 2px solid #f3c9d4;
+  background: #fdeef2;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 18px;
+}
+#panel .seg button.on { background: #e87f9b; color: #fff; border-color: #e87f9b; }
+#panel .close {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 9px 0;
+  border: none;
+  background: #ffd45e;
+  color: #6b4e00;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+/* キラキラ（ピカピカ完成の演出）。図形で描くので絵文字依存なし。 */
+.spark {
+  position: absolute;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* 星トレイ（集めた星。5個でクリア）。上・中央に並ぶ。
+   ※aspect-ratioは古い端末(Android7)で未対応なので使わず、画像のheight:autoで高さを決める。 */
+/* 星トレイ＝お掃除屋さんの頭の上に集まる（3個＋2個の2段）。星は大きめ。
+   ※頭の中心 x≈20%・てっぺん y≈49% の上に置く。位置はここの left/bottom で微調整。 */
+#startray {
+  position: absolute;
+  left: 21%;                     /* お掃除屋さんの頭の中心の真上（少し右へ＝もどるを避ける） */
+  bottom: 50%;                   /* 頭のてっぺん(≈y49%)のすぐ上 */
+  transform: translateX(-50%);
+  width: 33%;                    /* この幅の中で 3個→2個 に折り返す（星を少し小さく） */
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  pointer-events: none;          /* 飾り＝操作の邪魔をしない */
+}
+.sslot {
+  width: 31%;                    /* 31%×3でほぼ1段＝上3個／残り2個は下段中央へ */
+  box-sizing: border-box;
+  padding: 3px;
+}
+.sslot img {
+  width: 100%; height: auto; display: block;
+  opacity: .18;                  /* 未取得＝うっすらゴースト（ゴールの数が見える） */
+  transform: scale(.85);
+  transition: opacity .2s, transform .2s;
+}
+.sslot.got img {
+  opacity: 1; transform: scale(1);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.28));
+}
+
+/* カード→頭の上のトレイへ飛ぶ星（演出。操作の邪魔はしない） */
+.star-fly {
+  position: absolute;
+  width: 10.5%; max-width: 120px;
+  margin: 0; padding: 0;
+  pointer-events: none;
+  z-index: 42;
+  transform: translate(-50%,-50%);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+}
+
+/* 完成演出（星5個でクリア）。「できたー！」画像が動きながら出る（全ゲーム共通の作り）。 */
+#clear { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 58;
+  display: none; pointer-events: none; }
+#clear.show { display: flex; align-items: center; justify-content: center; }
+.clear-img {
+  width: 62%; max-width: 560px; height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
+}
+#clear.show .clear-img {
+  animation: clear-in .55s cubic-bezier(.2,1.5,.4,1) both,
+             clear-bob 1.5s ease-in-out .55s infinite;
+}
+@keyframes clear-in {
+  0%   { transform: scale(.2) rotate(-8deg); opacity: 0; }
+  60%  { transform: scale(1.12) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes clear-bob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-12px) scale(1); }
+}

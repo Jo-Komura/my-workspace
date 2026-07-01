@@ -1,0 +1,145 @@
+/* クマさんキャッチ（画像版）― style.css
+   方針：Android 7.0 / Chromium 51 でも崩れない。
+   - clamp()/aspect-ratio/gap は使わず、舞台寸法はJSで実寸指定。
+   - 2018年以降の絵文字は使わない（フルーツは画像。スコアの🍰・⚙は古い端末でも安全）。 */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: #cfe7ef;
+  overflow: hidden;
+  font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", sans-serif;
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#stage { position: absolute; top: 0; left: 0; overflow: hidden; }
+
+#bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
+
+/* 落ちてくるフルーツ・飛んでいくフルーツ */
+.fruit {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: transform, left, top;
+}
+
+/* クマさん（主役）。横中心（margin）・足元基準で配置。
+   中心合わせをmarginにして、transformは向き反転(scaleX)専用にする。 */
+#bear {
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+  will-change: left, transform;
+  transform: scaleX(1);
+}
+
+/* ケーキ（テーブルの上） */
+#cakeWrap { position: absolute; }
+#cakeImg { width: 100%; height: auto; display: block; }
+.slot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.slot img { width: 100%; height: 100%; display: block; }
+
+/* キャッチ演出のキラキラ */
+.spark { position: absolute; border-radius: 50%; pointer-events: none; z-index: 30; }
+
+/* スコア（あとなんこ） */
+#score {
+  display: none;                 /* スコア表示は無し（クリア条件を検討中。復活時はこの行を消す） */
+  position: absolute; top: 2%; left: 50%; transform: translateX(-50%);
+  padding: 5px 16px; background: rgba(255,255,255,.85); border-radius: 999px;
+  color: #b5651d; font-weight: 700; font-size: 4.5vw; line-height: 1.15;
+  white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,.15); z-index: 25;
+}
+
+/* もどる（左上・大きめ＝画像ボタン。sharedの共通パーツ） */
+#back {
+  position: absolute; top: 2%; left: 2%; z-index: 25;
+  display: block; width: 10%; max-width: 84px;
+}
+#back img { width: 100%; height: auto; display: block; }
+#back:active { transform: translateY(2px); }
+
+/* 調節（設定＝親用・画像ボタン。sharedの共通パーツ） */
+#gear {
+  position: absolute; top: 2%; right: 2%; z-index: 25;
+  width: 10%; max-width: 84px;
+  border: none; background: transparent; padding: 0;
+}
+#gear img { width: 100%; height: auto; display: block; }
+#gear:active { transform: translateY(2px); }
+
+/* タッチ操作：画面ぜんぶが対象。押した列へクマが向かう（目的地方式） */
+#touchpad { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 20; background: transparent; }
+
+/* タイトル画面（ゲーム開始前のオーバーレイ） */
+#title { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 50; }
+#title.hidden { display: none; }
+#titlebg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
+/* もどる・設定（本体と同じ大きさ・位置に準拠） */
+#t-back, #t-gear { position: absolute; top: 2%; z-index: 55; width: 10%; max-width: 84px; }
+#t-back { left: 2%; display: block; }
+#t-gear { right: 2%; border: none; background: transparent; padding: 0; }
+#t-back img, #t-gear img { width: 100%; height: auto; display: block; }
+#t-back:active, #t-gear:active { transform: translateY(2px); }
+/* はじめる：画面下部の「タップで スタート」文字（ふわっと上下に弾む）。タイトルのどこを押しても開始 */
+#start-hint { position: absolute; left: 50%; bottom: 6%;
+  z-index: 55; pointer-events: none; white-space: nowrap;
+  font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", sans-serif;
+  font-weight: 800; color: #fff; letter-spacing: 0.04em;
+  font-size: 7vw;                          /* 古いWebView(Android7)用フォールバック */
+  font-size: clamp(20px, 7vw, 40px);
+  text-shadow: 0 0 6px rgba(0,0,0,.55), 0 3px 0 rgba(0,0,0,.3);
+  transform: translateX(-50%);
+  animation: tap-bounce 1.1s ease-in-out infinite; }
+@keyframes tap-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-10px); }
+}
+
+/* 調節パネル（タイトルより前面に＝z-index 60） */
+#panel { position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.45); display: none; z-index: 60; }
+#panel.open { display: block; }
+/* 文字は vmin（画面の短い辺基準）でサイズ指定＝横長でも大きくなりすぎない。
+   さらに高さ上限＋スクロールで、絶対にはみ出さない保険。 */
+#panel .sheet { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  width: 84%; max-width: 400px; max-height: 90%; overflow-y: auto;
+  background: #fff; border-radius: 18px; padding: 2.8vmin 3.4vmin; color: #b5651d; }
+#panel h2 { font-size: 3.6vmin; margin-bottom: 1.6vmin; }
+#panel .row { margin: 1.8vmin 0; }
+#panel .row span { display: block; margin-bottom: 1vmin; font-weight: 700; font-size: 3vmin; }
+#panel .seg button { width: 18%; margin-right: 2%; padding: 1.2vmin 0;
+  border: 2px solid #ffe0a3; background: #fff6e6; border-radius: 10px; font-weight: 700; font-size: 3.1vmin; }
+#panel .seg button.on { background: #ffb74d; color: #fff; border-color: #ffb74d; }
+#panel .close { display: block; width: 100%; margin-top: 2vmin; padding: 1.5vmin 0; border: none;
+  background: #ffd45e; color: #6b4e00; font-weight: 700; font-size: 3.3vmin; border-radius: 12px; }
+
+/* 完成！の演出 */
+/* 完成演出：「できたー！」画像が動きながら出る（全ゲーム共通の作り）。 */
+#clear { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 45;
+  display: none; pointer-events: none; }
+#clear.show { display: flex; align-items: center; justify-content: center; }
+.clear-img {
+  width: 62%; max-width: 560px; height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
+}
+/* ポンッと弾けて出る → そのあとふわふわ揺れる */
+#clear.show .clear-img {
+  animation: clear-in .55s cubic-bezier(.2,1.5,.4,1) both,
+             clear-bob 1.5s ease-in-out .55s infinite;
+}
+@keyframes clear-in {
+  0%   { transform: scale(.2) rotate(-8deg); opacity: 0; }
+  60%  { transform: scale(1.12) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes clear-bob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-12px) scale(1); }
+}

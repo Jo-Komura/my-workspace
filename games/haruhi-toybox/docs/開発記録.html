@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>はるひのおもちゃ箱 ― 開発記録（v1.0への道のり）</title>
+<style>
+  :root{
+    --cream:#fff9f0; --paper:#ffffff; --ink:#3f3733; --sub:#7a6f68;
+    --pink:#ef7d97; --pink-soft:#fbe3e9; --blue:#5aa9d1; --blue-soft:#e2f0f8;
+    --gold:#cf9f4e; --line:#efe4d6; --shadow:0 6px 22px rgba(120,90,60,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Segoe UI",Meiryo,system-ui,sans-serif;
+    line-height:1.85; font-size:16px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 20px 80px}
+
+  /* ---- hero ---- */
+  header.hero{
+    text-align:center; padding:64px 20px 40px;
+    background:
+      radial-gradient(1200px 300px at 50% -80px, #ffe9d6 0%, transparent 70%),
+      linear-gradient(180deg,#fff5ea 0%, var(--cream) 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .hero .eyebrow{letter-spacing:.24em; font-size:.72rem; color:var(--pink); font-weight:700; margin-bottom:14px}
+  .hero h1{font-size:2.05rem; margin:0 0 10px; letter-spacing:.02em}
+  .hero .sub{color:var(--sub); font-size:1.02rem; margin:0 auto; max-width:560px}
+  .hero .meta{margin-top:22px; font-size:.82rem; color:var(--sub)}
+  .hero .meta b{color:var(--ink)}
+  .badge{display:inline-block; background:var(--pink); color:#fff; border-radius:999px;
+    padding:4px 14px; font-size:.76rem; font-weight:700; margin-top:20px; box-shadow:var(--shadow)}
+
+  /* ---- intro card ---- */
+  .card{background:var(--paper); border:1px solid var(--line); border-radius:18px;
+    padding:26px 28px; box-shadow:var(--shadow); margin:30px 0}
+  .card h2{margin:0 0 12px; font-size:1.16rem}
+  .lead{font-size:1.02rem}
+  .cast{display:flex; gap:14px; flex-wrap:wrap; margin-top:18px}
+  .cast .who{flex:1 1 240px; background:var(--cream); border:1px solid var(--line);
+    border-radius:14px; padding:14px 16px}
+  .cast .who b{display:block; color:var(--pink); margin-bottom:2px}
+  .cast .who.n b{color:var(--blue)}
+
+  /* ---- section headings ---- */
+  h2.sec{font-size:1.4rem; margin:56px 0 6px; text-align:center}
+  .sec-note{text-align:center; color:var(--sub); font-size:.9rem; margin-bottom:8px}
+
+  /* ---- timeline ---- */
+  .timeline{position:relative; margin-top:34px; padding-left:34px}
+  .timeline::before{content:""; position:absolute; left:9px; top:6px; bottom:6px; width:3px;
+    background:linear-gradient(180deg,var(--pink),var(--blue)); border-radius:3px; opacity:.5}
+  .step{position:relative; margin:0 0 30px}
+  .step::before{content:""; position:absolute; left:-33px; top:4px; width:19px; height:19px;
+    background:#fff; border:4px solid var(--pink); border-radius:50%; box-shadow:0 0 0 4px var(--cream)}
+  .step.blue::before{border-color:var(--blue)}
+  .step .day{font-size:.74rem; letter-spacing:.08em; color:var(--sub); font-weight:700}
+  .step h3{margin:2px 0 8px; font-size:1.14rem}
+  .step h3 .em{font-size:1.2em; margin-right:6px}
+  .step p{margin:0 0 10px}
+  .step .body{background:var(--paper); border:1px solid var(--line); border-radius:16px;
+    padding:18px 20px; box-shadow:var(--shadow)}
+
+  figure{margin:14px 0 4px; text-align:center}
+  figure img{max-width:100%; border-radius:12px; border:1px solid var(--line);
+    box-shadow:0 4px 14px rgba(120,90,60,.12)}
+  figure figcaption{font-size:.8rem; color:var(--sub); margin-top:8px}
+  .imgrow{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:14px 0 4px}
+  .imrow figure{flex:1 1 240px; margin:6px}
+
+  .callout{border-radius:14px; padding:14px 18px; margin:14px 0 2px; font-size:.95rem}
+  .callout .tag{font-weight:700; font-size:.8rem; letter-spacing:.06em; display:block; margin-bottom:4px}
+  .learn{background:#fff6e6; border:1px solid #f2dfb4}
+  .learn .tag{color:#c58a1e}
+  .rule{background:var(--blue-soft); border:1px solid #cfe6f2}
+  .rule .tag{color:var(--blue)}
+  .heart{background:var(--pink-soft); border:1px solid #f5cdd6}
+  .heart .tag{color:var(--pink)}
+
+  code{background:#f4ece1; padding:2px 7px; border-radius:6px; font-size:.86em;
+    font-family:"SFMono-Regular",Consolas,"Courier New",monospace}
+
+  /* ---- principles ---- */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px}
+  .grid .p{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 18px}
+  .grid .p b{display:block; margin-bottom:4px}
+  .grid .p .ic{font-size:1.4rem}
+
+  footer{text-align:center; margin-top:60px; color:var(--sub); font-size:.9rem}
+  .next{background:linear-gradient(180deg,#fff5ea,#fff); border:1px solid var(--line);
+    border-radius:18px; padding:24px 26px; box-shadow:var(--shadow); text-align:center; margin-top:36px}
+  .next h2{margin:0 0 8px}
+  .next a{color:var(--pink); font-weight:700; text-decoration:none}
+
+  @media(max-width:560px){
+    .hero h1{font-size:1.55rem}
+    .grid{grid-template-columns:1fr}
+    .wrap{padding:0 14px 60px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">MAKING&nbsp;OF</div>
+  <h1>はるひのおもちゃ箱　開発記録</h1>
+  <p class="sub">3歳の娘のための、ミニゲーム集アプリ。<br>アイデアが生まれてから、最初のアプリ（v1.0）が形になるまでの道のり。</p>
+  <div class="meta"><b>作者</b>：NEROandJOE（ジョー＋AI相棒のネロ）　／　<b>期間</b>：2026年6月26日 〜 6月29日</div>
+  <div class="badge">v1.0 への道のり ― サルベージ記録</div>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>この記録は何か（なぜ残すのか）</h2>
+    <p class="lead">
+      この時期の制作は、Git（変更履歴を自動で残す仕組み）を使わずに進めていました。
+      そのため「どんな順で、何を考えて作ったか」という<strong>過程</strong>が、記録として残っていません。
+    </p>
+    <p>
+      そこでこの開発記録では、当時の作業メモ（ネロとジョーの引き継ぎノート）と記憶を頼りに、
+      <strong>アイデアが生まれた日から、最初のアプリ（v1.0）が完成するまで</strong>を、判断の理由つきで書き起こしました。
+      ここで作り上げた「動くHTMLプロトタイプ」を、Androidアプリ（APK）に包む続きの物語は、姉妹編
+      <code>制作記録.md</code> に続きます。この記録は、その<strong>前日譚</strong>です。
+    </p>
+    <div class="cast">
+      <div class="who"><b>ジョー ― 方向と判断</b>何を作るか・どこを大事にするか・絵を描く。娘を見て「今、何が要るか」を決める人。</div>
+      <div class="who n"><b>ネロ（AI）― 手を動かす</b>コードを書く・素材を整える・検証する。繰り返しの作業を引き受ける相棒。</div>
+    </div>
+    <p style="margin:16px 0 0; color:var(--sub); font-size:.92rem">
+      「全部AIにやらせる」のではなく、<strong>判断は人間が握り、手数をAIに預ける</strong>形で進めました。
+    </p>
+  </div>
+
+  <h2 class="sec">道のり</h2>
+  <p class="sec-note">アイデア → 3つのゲーム → 音 → 「おわり」の設計 → 最初のアプリ</p>
+
+  <div class="timeline">
+
+    <!-- 0 -->
+    <div class="step">
+      <div class="day">2026.06.26　― はじまり</div>
+      <h3><span class="em">🧸</span>古いタブレットと、1本のゲームから</h3>
+      <div class="body">
+        <p>
+          発端は、はるひに渡していた<strong>14年前のAndroidタブレットでHTMLゲームを動かしたい</strong>という相談でした。
+          手元にあった1本のゲーム「くまさんキャッチ」（落ちてくるフルーツを籠で受けるだけ・罰なし・終わりなし）を、
+          この古い端末（<strong>Android 7.0</strong>）で崩れず動かすところから始まりました。
+        </p>
+        <p>
+          古い端末では新しい絵文字が「豆腐（□）」に化けたり、文字が極端に小さくなったりします。そこで
+          <strong>ゲーム性は一切変えず</strong>、保険のコードだけを足しました（新しい絵文字を古い定番に置き換える、
+          文字サイズに古い端末用の指定を併記する、など）。
+        </p>
+        <p>
+          そして相談は「1本のゲーム」から「<strong>複数のミニゲームを1つのアプリにまとめたい</strong>」へ広がり、
+          プロジェクト名が決まりました ―― <strong>「はるひのおもちゃ箱」</strong>。
+          表紙（箱）を開くと、中からゲームを選んで遊べる。ここから“箱づくり”が始まります。
+        </p>
+        <figure>
+          <img src="assets/box-title.jpg" alt="はるひのおもちゃ箱 タイトル画面">
+          <figcaption>ジョーがAI（Gemini）で描き上げた表紙。「はるひのおもちゃ箱 / HARUHI」の文字まで綺麗に。</figcaption>
+        </figure>
+        <p>
+          方針は「<strong>ホームページ制作で身につけた作法を、ゲームにも当てはめる</strong>」。
+          原本と製品を分ける・画像は軽量化してファイルで持つ・HTMLとCSSを分ける・共通部品は1か所に。
+          遊びでも“1段上の品質”を目指す、というジョーの構えです。
+        </p>
+        <div class="callout learn">
+          <span class="tag">💡 この日の学び ― AIの「ニセ透明」</span>
+          表紙の一部（市松模様の背景がついたボタン）を見て、ネロが「透明化が必要だ」と早とちりしました。
+          実際にファイルを開くと、それは<strong>全画面のタイトル絵そのもの</strong>。AIは本物の透明を出せず、
+          <strong>市松模様を“絵として描く”</strong>ことがある（見た目は透明でも中身は全部塗りつぶし）と分かりました。
+          教訓：<strong>貼られた一部で判断せず、必ず実ファイル全体と用途を確かめる。</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <div class="step blue">
+      <div class="day">2026.06.27　― 2本目</div>
+      <h3><span class="em">🦭</span>アザラシ叩き ―― 手描きの絵と、奥行きの工夫</h3>
+      <div class="body">
+        <p>
+          2つ目のゲームは「アザラシ叩き」。仮の図形から<strong>本物の手描きの絵</strong>に差し替えました。
+          穴からアザラシがせり上がり、タップするとハンマーがポコッ。叩かれると笑顔の顔に切り替わります（罰はなし）。
+        </p>
+        <figure>
+          <img src="assets/azarashi-title.jpg" alt="アザラシ叩き タイトル">
+          <figcaption>氷の海からひょっこり。叩いても「痛い」ではなく、うれしそうな顔になる。</figcaption>
+        </figure>
+        <p>
+          ここで効いたのが<strong>ジョー発案の「5層構造」</strong>。ただ絵を重ねるのではなく、
+          背景・穴の前ふち・アザラシ…と層を分けて重ね、<strong>アザラシが穴の“中から”出てくる奥行き</strong>を作りました。
+          穴4つの位置は、実機のタブレットで見ながら一発で決定。
+        </p>
+        <p>
+          設定パネルも「親がサッと調整して閉じる」前提で1項目だけに絞り込み。機能を足すより、
+          <strong>3歳児が触っても迷わないよう“削る”</strong>方向で整えました。
+        </p>
+        <div class="callout learn">
+          <span class="tag">💡 再確認 ― ニセ透明はここにも</span>
+          全ゲーム共通の「設定ボタン」も、同じ<strong>ニセ透明</strong>（市松模様を絵で描いたもの）でした。
+          原本から背景成分だけを本物の透明にし直すと、この1枚は共通部品なので<strong>全ゲーム・全画面が一括で直りました</strong>。
+          共通化しておくと、直すのも1回で済む。
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="step">
+      <div class="day">2026.06.27　― 3本目 ＋ 音の土台</div>
+      <h3><span class="em">🦝</span>アライグマ拭き拭き ―― 指でこすって、ピカピカに</h3>
+      <div class="body">
+        <p>
+          3つ目は「アライグマ拭き拭き」。曇った窓を指でこすると、下からどうぶつがピカッと現れる遊びです。
+          仕組みは<strong>Canvasの“消しゴム”機能（destination-out）</strong> ―― ジョーが昔さわったFlashの消しゴムと同じ発想で、
+          こすった場所のよごれだけを消していきます。
+        </p>
+        <figure>
+          <img src="assets/araiguma-title.jpg" alt="アライグマの拭き拭きお掃除 タイトル">
+          <figcaption>モップを持ったお掃除屋さんのアライグマ。こすってきれいにする、それだけ。</figcaption>
+        </figure>
+        <p>
+          この日、もうひとつ土台ができました。<strong>全ゲーム共通の効果音システム</strong>です。
+          音のファイルは<code>shared/se/</code>という1か所にまとめ、各ゲームは同じ小さな呼び出し（<code>se('名前')</code>）で鳴らす。
+          置き場を共通にしておけば、<strong>音の追加も差し替えも1か所で済む</strong>。ホームページ作りと同じ「共通部品は1か所」の考え方です。
+        </p>
+        <div class="callout rule">
+          <span class="tag">🧩 省力化の設計 ― 「足すだけ」で増える</span>
+          どうぶつは、コードの<strong>1行を足すだけ</strong>で増やせる作り（<code>ANIMALS</code>という並びに名前を1つ追加）。
+          ゲームを“作り込む”だけでなく、<strong>あとで楽に育てられる形</strong>にしておく。これがこのプロジェクト全体のテーマ＝<strong>省力化</strong>です。
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="step blue">
+      <div class="day">2026.06.28　― 音を本格的に</div>
+      <h3><span class="em">🎵</span>BGMと効果音、そして「親のための音量設定」</h3>
+      <div class="body">
+        <p>
+          ジョーが集めた音源を使って、音を本格導入しました。<strong>BGM 4曲＋効果音 6種</strong>。
+          さらに大切なのが、<strong>親のための音量設定パネル</strong>です。BGMと効果音をそれぞれ1〜5段階＋ミュートで調整でき、
+          その設定は<strong>端末に保存されて次回も引き継がれます</strong>（共通モジュールが記録し、各ゲームが読む）。
+        </p>
+        <p>
+          画面を切り替えるボタンは、<strong>クリック音を鳴らしてから“ほんの一瞬”置いて遷移</strong>するように。
+          音がプツッと切れないための、小さな気づかいです。箱のアイコンの見た目もこの日に整えました。
+        </p>
+        <div class="callout heart">
+          <span class="tag">🤝 二人で作るということ</span>
+          音は「魂＝ジョーが集める・選ぶ」「配線＝ネロが仕込む」の分担で進みました。素材の出どころ（BGM・効果音サイト）も
+          きちんと<code>credits.txt</code>に記録。作る楽しさは人が持ち、面倒な繰り返しはAIが引き受ける ―― この形が心地よく回り始めた頃です。
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="step">
+      <div class="day">2026.06.29　― タイトルの作り直し</div>
+      <h3><span class="em">👆</span>「どこを押してもスタート」へ</h3>
+      <div class="body">
+        <p>
+          最初、タイトル画面の真ん中には「はじめる」ボタン（ピンクのキャンディ）を置いていました。
+          でも、これが<strong>背景イラストの一番いい所を隠していた</strong>のです。
+        </p>
+        <p>
+          そこで発想を変え、ボタンをなくして<strong>「タイトルのどこを押してもスタート」</strong>に。
+          画面の下に「タップで スタート」の文字がふわふわ弾むだけ。
+          おかげで<strong>3つのゲームとも、タイトル絵が全部きれいに見える</strong>ようになりました。役目を終えたキャンディは削除。
+        </p>
+        <div class="callout rule">
+          <span class="tag">🧒 3歳児の指のために</span>
+          「小さなボタンを正確に押す」は、3歳にはむずかしい。<strong>画面のどこでもいい</strong>なら、まず失敗しません。
+          機能を足すのではなく、<strong>ねらいを大きくする</strong>設計です。
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="step blue">
+      <div class="day">2026.06.29　― アライグマ、完成形へ</div>
+      <h3><span class="em">🐘</span>どうぶつ10匹と、お掃除屋さん</h3>
+      <div class="body">
+        <p>
+          仮のグラデーション背景だったアライグマ拭き拭きに、<strong>本物の素材</strong>が揃いました。
+          こすると現れるどうぶつは<strong>全10匹</strong>（キリン・ゾウ・ウマ・ネコ・イヌ・ウサギ・トリ・サカナ…に、
+          他ゲームからの“借り物”でクマとアザラシも特別出演）。お部屋の背景と、左でモップを持つお掃除屋さんも配置しました。
+        </p>
+        <div class="callout rule">
+          <span class="tag">🎲 「シャッフルの袋」でぜんぶ出す</span>
+          そのまま作ると「最初の5匹しか出ない」問題が起きました。そこで<strong>10枚のカードを袋に入れてよく混ぜ、
+          1枚ずつ引く</strong>方式に（引き切ったらまた袋を満タンに）。テストで60回引いて、各どうぶつがきっちり均等に登場するのを確認。
+          <strong>どの子も、ちゃんと出てくる。</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="step" style="--dot:var(--pink)">
+      <div class="day">2026.06.29　― いちばん大事な設計</div>
+      <h3><span class="em">🎉</span>「おわり」を作る ―― 娘を見て気づいたこと</h3>
+      <div class="body">
+        <p>
+          この日の中心は、ジョーが<strong>はるひと一緒に遊んで気づいたこと</strong>から始まりました。
+        </p>
+        <p style="font-size:1.05rem; font-weight:600; color:var(--pink); text-align:center; margin:8px 0 14px">
+          「子どもは、終わりが無いと一生遊んでしまう。<br>“あと1回ね”が言える<u>区切り</u>が要る。」
+        </p>
+        <p>
+          そこで3つのゲームすべてに<strong>「クリア（＝おわり）」</strong>を入れました。
+          くまさんはフルーツ20個でケーキ完成、アザラシは飴を20個、アライグマは星を5個 ―― 集め終わると、
+          お祝いの演出が出て<strong>タイトル画面に戻ります</strong>。ここが自然な“区切り”になります。
+        </p>
+        <p>
+          集めたものは<strong>ピコッと飛んでトレイに収まる</strong>気持ちいい演出に。そして完成の瞬間、
+          画面いっぱいに<strong>「できたー！」</strong>がポンッと弾けて、ふわふわ揺れる ―― お祝いの音も、うんと華やかにしました。
+        </p>
+        <figure>
+          <img src="assets/dekita.png" alt="できたー！のお祝い画像">
+          <figcaption>クリアの瞬間に出る「できたー！」。弾けて登場し、ふわふわ揺れ続ける。</figcaption>
+        </figure>
+        <div class="callout heart">
+          <span class="tag">💗 いちばんの芯</span>
+          このゲーム集の設計を決めたのは、仕様書ではなく<strong>“実際に娘が遊ぶ姿”</strong>でした。
+          「終わりが要る」という気づきひとつで、3つのゲームすべての形が決まった。
+          <strong>作りたいものではなく、その子に要るものを作る。</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="step blue">
+      <div class="day">2026.06.29　― 実機で詰める</div>
+      <h3><span class="em">🔧</span>最後のひと詰めと、そのための“道具づくり”</h3>
+      <div class="body">
+        <p>
+          ジョーが実機で通しチェックしながら、気になった点を1つずつ直していきました。中でも面白かったのが
+          <strong>「くまさんが向きを変えると体が横にワープする」</strong>不具合。
+        </p>
+        <p>
+          原因は、くまさんの絵が「ボウルを片手で抱えた左右非対称の絵」で、片側に透明な余白が寄っていたこと。
+          左右反転すると、絵の中心を軸に回るので体が飛んでしまう。<strong>絵は一切いじらず</strong>、
+          反転の“軸”を見た目の中心に置き直すことで解決しました（＝道具のクセを、絵ではなく設定で吸収）。
+        </p>
+        <div class="callout rule">
+          <span class="tag">🛠️ 数字合わせは“道具”を作って渡す</span>
+          位置や軸の微調整は、勘で数字をいじるとキリがありません。そこで<strong>「ドラッグして合わせると数値を吐き出す小さなツール」</strong>
+          （フルーツの盛り付け位置ツール、反転の軸合わせツール）を作ってジョーに渡しました。
+          <strong>手作業を、仕組みに置き換える。</strong>ここでも省力化のテーマが生きています。
+        </div>
+        <div class="imrow imgrow">
+          <figure><img src="assets/kuma-title.jpg" alt="くまさんのケーキ作り"><figcaption>くまさんキャッチ ― フルーツを集めてケーキを完成させる</figcaption></figure>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <div class="next" id="v10">
+    <h2>🎁 そして、v1.0 へ</h2>
+    <p>
+      箱ができ、3つのゲームが揃い、音が鳴り、「おわり」の区切りが入った ――
+      ここまでで<strong>「動くHTMLプロトタイプ」が完成</strong>しました。<br>
+      この土台を Androidアプリ（APK）に包んで、はるひのタブレットに届けたのが <strong>v1.0</strong> です。
+    </p>
+    <p style="margin-top:14px">
+      その“包む”物語（つまずいた <code>_shared</code> 事件、実機テスト、v1.3までの仕上げ、そして
+      <strong>はるひに届いて喜んでもらえた日</strong>）は、姉妹編 <a href="../制作記録.md">制作記録.md</a> に続きます。
+    </p>
+  </div>
+
+  <h2 class="sec">この道のりを貫いていた4つの考え</h2>
+  <div class="grid">
+    <div class="p"><span class="ic">🧒</span><b>はるひ基準</b>罰なし・増えるだけ・触るだけ。失敗しても嫌な思いをしない。3歳児が一人で触っても困らないことを、いつも最優先に。</div>
+    <div class="p"><span class="ic">📴</span><b>完全オフライン</b>通信も広告もなし。電波の無い子ども用タブレットでも、いつでも安心して開ける。</div>
+    <div class="p"><span class="ic">🧱</span><b>Webの作法をゲームに</b>原本と製品を分ける・共通部品は1か所・軽量化。ホームページ作りで身につけた規律を、そのまま持ち込む。</div>
+    <div class="p"><span class="ic">🛠️</span><b>省力化＝仕組みで肩代わり</b>「足すだけで増える」「道具を作って渡す」。作品そのものと同じくらい、“楽に育てられる形”を大事にする。</div>
+  </div>
+
+  <footer>
+    <p>この記録は、完成品そのものと同じくらい大切な「考えた跡」です。<br>
+    作るたびに、判断の理由を書き残していきます。 ― NEROandJOE</p>
+    <p style="margin-top:10px; font-size:.8rem">サルベージ記録（2026-07-01 作成）／ 対象期間 2026-06-26 〜 06-29 ／ 続き＝制作記録.md</p>
+  </footer>
+
+</div>
+</body>
+</html>
