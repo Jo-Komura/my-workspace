@@ -1,0 +1,12 @@
+# salon-lp：公開する（git add する）のは src/ だけ。
+# 原本・道具・実験・内部設計メモは机（Googleドライブ）に残し、公開リポジトリには出さない。
+# ※docs/設計メモ.md は手本(goal-recruit)の分析や制作費の内訳を含む内部資料なので非公開。
+
+originals/
+tools/
+docs/
+
+# OS・一時ファイル
+.DS_Store
+Thumbs.db
+*.tmp

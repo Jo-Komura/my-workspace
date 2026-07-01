@@ -1,0 +1,244 @@
+/* ===== salon-lp 縦型スワイプLP ===== */
+:root{
+  --ink:#2b2b2b;
+  --ink-soft:#5c554c;
+  --gold:#c8a86b;
+  --pink:#e0b7bb;
+  --cream:#fbf7f2;
+  --serif:"Shippori Mincho B1", serif;
+  --gothic:"Zen Kaku Gothic New", sans-serif;
+  --col:460px;               /* スマホ幅の縦カラム＝これ以上は横に広がらないライン */
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; }
+body{
+  font-family:var(--gothic); color:var(--ink);
+  background:linear-gradient(155deg, #efe7dc 0%, #e6ddce 55%, #ddd2c0 100%); /* PCで列の外側を埋める温かい地色 */
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== 縦スナップの土台（PCでは中央のスマホ幅カラムに固定） ===== */
+.feed{
+  height:100dvh;
+  max-width:var(--col);
+  margin-inline:auto;                 /* 中央寄せ＝両脇は body の地色 */
+  box-shadow:0 0 70px rgba(70,54,38,.28);  /* 列を地色から浮かせる */
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.feed::-webkit-scrollbar{ display:none; }
+
+.panel{
+  position:relative;
+  height:100dvh;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  overflow:hidden;
+  display:flex;
+  padding:max(28px, env(safe-area-inset-top)) 28px max(28px, env(safe-area-inset-bottom));
+}
+
+/* ===== メディアパネル（写真・動画 共通） ===== */
+.bg-media{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; z-index:0;
+}
+
+/* ===== ケンバーンズ（静止画にゆっくり動きを＝goal-recruitの"ちょっと動く"再現）
+   静止画パネル(②③④)だけ。到達した瞬間(.in)から、各ビートで違う向きに。
+   ※baseは少し拡大しておき、pan時に黒フチが出ないようにする */
+.panel.media img.bg-media{ transform:scale(1.08); will-change:transform; }
+.panel.media.in img.bg-media{ animation:kb-in 18s ease-out forwards; }
+.panel[data-beat="3"].in img.bg-media{ animation-name:kb-pan; }
+.panel[data-beat="4"].in img.bg-media{ animation-name:kb-out; }
+
+@keyframes kb-in{   /* ②ゆっくりズームイン */
+  from{ transform:scale(1.06); }
+  to{   transform:scale(1.18); }
+}
+@keyframes kb-pan{  /* ③右下→左上へパン（わずかにズーム） */
+  from{ transform:scale(1.12) translate(1.4%, 0.8%); }
+  to{   transform:scale(1.16) translate(-1.4%, -0.8%); }
+}
+@keyframes kb-out{  /* ④そっとズームアウト＋斜めパン */
+  from{ transform:scale(1.18) translate(-1%, 0.8%); }
+  to{   transform:scale(1.08) translate(1%, -0.8%); }
+}
+.scrim{
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg, rgba(20,18,16,0) 0%, rgba(20,18,16,0) 34%, rgba(20,18,16,.50) 60%, rgba(20,18,16,.88) 100%);
+}
+.scrim-strong{
+  background:linear-gradient(180deg, rgba(20,18,16,0) 0%, rgba(20,18,16,.05) 26%, rgba(20,18,16,.58) 56%, rgba(20,18,16,.94) 100%);
+}
+.panel.media .copy{ position:relative; z-index:2; color:#fff; }
+.panel.media .line{ text-shadow:0 1px 3px rgba(0,0,0,.6), 0 2px 20px rgba(0,0,0,.5); }
+
+/* ===== コピー配置 ===== */
+.copy{ width:100%; max-width:640px; margin:0 auto; }
+.copy-bottom{ align-self:flex-end; margin-bottom:2.6rem; }  /* 下に寄せる（スワイプ促しと重ならない余白） */
+.panel.media{ align-items:flex-end; }
+
+/* ===== 文字 ===== */
+.serif{ font-family:var(--serif); }
+.gothic{ font-family:var(--gothic); }
+.line{
+  font-size:clamp(1.5rem, 6.8vw, 1.8rem);  /* 上限は460px列に長め一文が収まる大きさ */
+  font-weight:600; line-height:1.85; letter-spacing:.04em;
+  margin-bottom:.5em;
+}
+.line:last-child{ margin-bottom:0; }
+.accent{ color:var(--gold); }
+
+/* 前置きの一文＝控えめ・必ず1行（多少小さくなってもOK） */
+.line.sub{ font-size:clamp(1.2rem, 5vw, 1.68rem); font-weight:500; white-space:nowrap; }
+/* 主文＝上より大きく（改行は明示の<br>だけ＝各行は折り返さないサイズに） */
+.line.hero{ font-size:clamp(1.6rem, 7.4vw, 2.3rem); font-weight:700; line-height:1.5; letter-spacing:.02em; }
+
+/* 強調ワード＝少し大きめ・太字で常に目立つ＋出た瞬間に1回だけグッと拡大して金色に発光→少し大きいまま収まる（ループしない＝うるさくない） */
+.emph{ display:inline-block; font-size:1.15em; font-weight:700; margin:0 .16em; }
+.panel.in .emph{ animation:emph 1.1s ease both; animation-delay:calc(var(--d,0s) + .5s); }
+@keyframes emph{
+  0%{   transform:scale(1);    text-shadow:0 0 0 rgba(200,168,107,0); }
+  30%{  transform:scale(1.4);  text-shadow:0 0 30px rgba(200,168,107,.95); }
+  62%{  transform:scale(1.12); text-shadow:0 0 15px rgba(200,168,107,.55); }
+  100%{ transform:scale(1);    text-shadow:0 1px 10px rgba(0,0,0,.45); }  /* 拡大は残さず＝隣の「で」に被らない。存在感はfont-size/太字/金色で保つ */
+}
+.lead{
+  font-size:clamp(.98rem, 4.4vw, 1.15rem);
+  font-weight:500; line-height:2; letter-spacing:.03em;
+  color:#f3efe9; margin-top:1.4em; text-shadow:0 1px 10px rgba(0,0,0,.4);
+}
+/* 感情の山＝leadの中で一句だけ大きく金色に（弾ませず、しっとり効かせる） */
+.lead .accent.payoff{ display:inline-block; font-size:1.5em; font-weight:700; line-height:1.4; margin-top:.1em; }
+/* 続きのlead行＝上の余白を消して1つの段落のように繋げる（別要素にして出現を少しずらす用） */
+.lead.lead-cont{ margin-top:0; }
+
+/* スワイプ促し */
+.cue{
+  position:absolute; left:0; right:0; bottom:14px; z-index:2;
+  text-align:center; color:#fff; font-size:.8rem; letter-spacing:.14em; opacity:.9;
+}
+.cue .arw{ display:block; margin-top:4px; animation:bob 1.6s ease-in-out infinite; }
+@keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
+
+/* プレースホルダー印 */
+.ph-tag{
+  position:absolute; top:12px; left:12px; z-index:3;
+  font-size:.66rem; letter-spacing:.08em; color:#a99;
+  background:rgba(255,255,255,.5); padding:3px 8px; border-radius:6px;
+}
+
+/* CTA */
+.cta{
+  margin-top:2em; font-family:var(--gothic); font-size:1.05rem; font-weight:700;
+  color:#fff; background:var(--gold); border:none; border-radius:999px;
+  padding:16px 34px; letter-spacing:.06em; cursor:pointer;
+  box-shadow:0 10px 26px rgba(200,168,107,.4); transition:transform .2s, box-shadow .2s;
+}
+.cta:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(200,168,107,.5); }
+.cta:active{ transform:translateY(0); }
+.cta-note{ margin-top:1.1em; font-size:.78rem; line-height:1.8; color:rgba(255,255,255,.88); text-shadow:0 1px 8px rgba(0,0,0,.45); }
+.cta-note small{ color:rgba(255,255,255,.62); }
+
+/* ===== ⑤ 資料請求フォーム（明るい安心ゾーン） ===== */
+.form-panel{
+  background:
+    radial-gradient(120% 80% at 50% 0%, #fff 0%, var(--cream) 60%, #f3ebe1 100%);
+  align-items:center;
+  overflow-y:auto;                 /* 入力でキーボードが出ても中がスクロールできる */
+}
+.form-wrap{
+  width:100%; max-width:440px; margin:auto;
+  color:var(--ink);
+}
+.form-eyebrow{
+  font-family:var(--gothic); font-size:.78rem; font-weight:700;
+  letter-spacing:.18em; color:var(--gold); text-align:center; margin-bottom:.7em;
+}
+.form-title{
+  font-family:var(--serif); font-weight:700; text-align:center;
+  font-size:clamp(1.7rem, 7vw, 2.1rem); line-height:1.4; letter-spacing:.03em;
+  color:var(--ink);
+}
+.accent-ink{ color:var(--gold); }
+.form-sub{
+  font-family:var(--gothic); text-align:center; color:var(--ink-soft);
+  font-size:.95rem; line-height:1.9; margin:1em 0 1.8em;
+}
+
+/* 入力フィールド */
+.field{ display:block; margin-bottom:1.05rem; }
+.field-label{
+  display:block; font-size:.82rem; font-weight:700; color:var(--ink);
+  letter-spacing:.04em; margin-bottom:.45em;
+}
+.field-label em{
+  font-style:normal; font-size:.66rem; font-weight:700; color:#fff;
+  background:var(--gold); padding:2px 7px; border-radius:4px;
+  margin-left:.6em; letter-spacing:.06em; vertical-align:1px;
+}
+.field-label em.opt{ background:#c7bdae; }
+.field input, .field select, .field textarea{
+  width:100%; font-family:var(--gothic); font-size:1rem; color:var(--ink);
+  background:#fff; border:1.5px solid #e3d9cb; border-radius:12px;
+  padding:13px 15px; letter-spacing:.02em;
+  transition:border-color .2s, box-shadow .2s;
+  -webkit-appearance:none; appearance:none;
+}
+.field textarea{ resize:none; line-height:1.7; }
+.field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a99' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 16px center; padding-right:38px;
+}
+.field input::placeholder, .field textarea::placeholder{ color:#b9ad9c; }
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:none; border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(200,168,107,.18);
+}
+.field input:invalid:not(:placeholder-shown){ border-color:#d8a0a0; }
+
+.form-submit{ width:100%; margin-top:.6rem; }
+.form-privacy{
+  font-family:var(--gothic); font-size:.74rem; line-height:1.75;
+  color:var(--ink-soft); text-align:center; margin-top:1.1em;
+}
+
+/* 送信後のお礼 */
+.thanks{ text-align:center; padding:1rem 0; }
+.thanks-mark{
+  width:64px; height:64px; margin:0 auto 1.2rem;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.9rem; color:#fff; background:var(--gold); border-radius:50%;
+  box-shadow:0 10px 26px rgba(200,168,107,.4);
+  animation:pop .5s cubic-bezier(.2,.8,.3,1.3) both;
+}
+@keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
+.thanks .form-sub{ margin-bottom:0; }
+
+/* ===== 出現アニメ（フレームイン） ===== */
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0s); }
+.panel.in .reveal{ opacity:1; transform:none; }
+
+/* ===== ドットナビ ===== */
+.dots{
+  position:fixed; top:50%; transform:translateY(-50%); z-index:20;
+  right:max(14px, calc(50% - var(--col)/2 - 22px));  /* PCでは中央カラムの右端に追従 */
+  display:flex; flex-direction:column; gap:11px;
+}
+.dot{
+  width:8px; height:8px; border-radius:50%; border:none; padding:0; cursor:pointer;
+  background:rgba(130,124,116,.5); box-shadow:0 0 6px rgba(0,0,0,.18);
+  transition:transform .3s, background .3s;
+}
+.dot.on{ background:var(--gold); transform:scale(1.55); }
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{ transition:none; opacity:1; transform:none; }
+  .panel.light::before, .cue .arw{ animation:none; }
+  .panel.media.in img.bg-media{ animation:none; transform:scale(1.02); }
+  .panel.in .emph{ animation:none; }
+}
