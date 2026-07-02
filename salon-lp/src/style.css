@@ -113,7 +113,7 @@ body{
   color:#f3efe9; margin-top:1.4em; text-shadow:0 1px 10px rgba(0,0,0,.4);
 }
 /* 感情の山＝leadの中で一句だけ大きく金色に（弾ませず、しっとり効かせる） */
-.lead .accent.payoff{ display:inline-block; font-size:1.5em; font-weight:700; line-height:1.4; margin-top:.1em; }
+.lead .accent.payoff{ display:inline-block; font-size:1.75em; font-weight:700; line-height:1.4; margin-top:.1em; }
 /* 続きのlead行＝上の余白を消して1つの段落のように繋げる（別要素にして出現を少しずらす用） */
 .lead.lead-cont{ margin-top:0; }
 
@@ -143,6 +143,9 @@ body{
 .cta:active{ transform:translateY(0); }
 .cta-note{ margin-top:1.1em; font-size:.78rem; line-height:1.8; color:rgba(255,255,255,.88); text-shadow:0 1px 8px rgba(0,0,0,.45); }
 .cta-note small{ color:rgba(255,255,255,.62); }
+/* ④ メディアパネルのCTAボタン・補足だけ中央寄せ（本文コピーは左のまま／フォームの送信ボタンは対象外） */
+.panel.media .cta{ display:block; width:fit-content; max-width:100%; margin-inline:auto; }
+.panel.media .cta-note{ text-align:center; }
 
 /* ===== ⑤ 資料請求フォーム（明るい安心ゾーン） ===== */
 .form-panel{
@@ -219,9 +222,27 @@ body{
 @keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
 .thanks .form-sub{ margin-bottom:0; }
 
+/* 控えめフッター（⑤の明るい地に馴染む小さい字＝会社名・住所・プライバシー・©） */
+.site-footer{
+  margin-top:2.4rem; padding-top:1.4rem;
+  border-top:1px solid rgba(200,168,107,.28);
+  text-align:center; font-family:var(--gothic); color:var(--ink-soft); line-height:1.7;
+}
+.foot-company{ font-size:.86rem; font-weight:700; color:var(--ink); letter-spacing:.04em; }
+.foot-addr{ font-size:.72rem; margin-top:.3em; }
+.foot-links{ font-size:.75rem; margin-top:.7em; }
+.foot-links a{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(200,168,107,.5); padding-bottom:1px; }
+.foot-copy{ font-size:.64rem; color:#b3a894; margin-top:1em; letter-spacing:.06em; }
+
 /* ===== 出現アニメ（フレームイン） ===== */
 .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0s); }
 .panel.in .reveal{ opacity:1; transform:none; }
+
+/* ③グループA（問題提起）＝表示から約5秒でそっと上へ消える（4～6行は残す） */
+.panel.in .fade5{ animation:fadeaway 1s ease forwards; animation-delay:calc(var(--d,0s) + 5s); }
+@keyframes fadeaway{ from{ opacity:1; transform:translateY(0); } to{ opacity:0; transform:translateY(-16px); } }
+/* グループAの最後の行＝下に1行分あけて帰結（グループB）と分ける＝1～3行が少し上に上がって見える */
+.groupA-end{ margin-bottom:3rem; }
 
 /* ===== ドットナビ ===== */
 .dots{
@@ -241,4 +262,5 @@ body{
   .panel.light::before, .cue .arw{ animation:none; }
   .panel.media.in img.bg-media{ animation:none; transform:scale(1.02); }
   .panel.in .emph{ animation:none; }
+  .panel.in .fade5{ animation:none; }
 }

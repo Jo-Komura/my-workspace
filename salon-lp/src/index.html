@@ -43,11 +43,16 @@
     <img class="bg-media" src="images/beat3.jpg" alt="">
     <div class="scrim"></div>
     <div class="copy copy-bottom">
-      <p class="line serif sub reveal" style="--d:.1s">ひとりのサロンほど、</p>
-      <p class="line serif reveal" style="--d:.8s">"また来たくなる仕組み"に<br>手が回らない。</p>
-      <p class="lead gothic reveal" style="--d:2.6s">目の前の施術に、全力だから。<br>だから、いいお客様ほど、<br><span class="accent payoff">静かに離れていく。</span></p>
+      <!-- グループA：問題提起（少し上に置き、表示から約5秒でそっと消える＝fade5） -->
+      <p class="line serif sub reveal fade5" style="--d:1s">ひとりのサロンほど、</p>       <!-- 間1.0s -->
+      <p class="line serif reveal fade5" style="--d:2.5s">"また来たくなる仕組み"に</p>      <!-- 間1.5s -->
+      <p class="line serif reveal fade5 groupA-end" style="--d:4.5s">手が回らない。</p>        <!-- 間2.0s -->
+      <!-- グループB：帰結（残る） -->
+      <p class="lead gothic reveal" style="--d:6s">目の前の施術に、全力だから。</p>          <!-- 間1.5s -->
+      <p class="lead gothic reveal" style="--d:8s">だから、いいお客様ほど、</p>              <!-- 間2.0s -->
+      <p class="lead gothic lead-cont reveal" style="--d:9.5s"><span class="accent payoff">静かに離れていく。</span></p> <!-- 溜め1.5s -->
     </div>
-    <div class="cue reveal" style="--d:3.4s">スワイプ<span class="arw">↓</span></div>
+    <div class="cue reveal" style="--d:10.5s">スワイプ<span class="arw">↓</span></div>
   </section>
 
   <!-- ④ 解決＋CTA（資料請求） -->
@@ -55,12 +60,12 @@
     <img class="bg-media" src="images/beat4.jpg" alt="">
     <div class="scrim scrim-strong"></div>
     <div class="copy copy-bottom">
-      <p class="line serif hero reveal" style="--d:.1s">その<span class="accent">"仕組み"</span>、<br>一緒に作りませんか。</p>
-      <p class="lead gothic reveal" style="--d:1.2s">まずは、リピート率が上がる<br><span class="accent">"3つの型"</span>をまとめた資料を<br>どうぞ。（無料）</p>
-      <button class="cta reveal" id="cta" style="--d:2.2s">無料で資料を受け取る</button>
-      <p class="cta-note reveal" style="--d:2.7s">請求だけでもOK。しつこい売り込みはしません。</p>
+      <p class="line serif hero reveal" style="--d:.5s">その<span class="accent">"仕組み"</span>、<br>一緒に作りませんか。</p>
+      <p class="lead gothic reveal" style="--d:2.5s">まずは、リピート率が上がる<br><span class="accent">"3つの型"</span>をまとめた資料を<br>どうぞ。（無料）</p>
+      <button class="cta reveal" id="cta" style="--d:3.5s">無料で資料を受け取る</button>
+      <p class="cta-note reveal" style="--d:4s">請求だけでもOK。しつこい売り込みはしません。</p>
     </div>
-    <div class="cue reveal" style="--d:3.4s">スワイプ<span class="arw">↓</span></div>
+    <div class="cue reveal" style="--d:4.8s">スワイプ<span class="arw">↓</span></div>
   </section>
 
   <!-- ⑤ 資料請求フォーム（明るい安心ゾーン） -->
@@ -110,6 +115,14 @@
         <h2 class="form-title">ありがとうございます。</h2>
         <p class="form-sub">ご記入のメールアドレスに、<br>資料をお送りします。<br>少しだけお待ちください。</p>
       </div>
+
+      <!-- 控えめフッター（会社名・住所・プライバシー＝信頼と法令） -->
+      <footer class="site-footer">
+        <p class="foot-company">株式会社GEKIATS</p>
+        <p class="foot-addr">〇〇市〇〇町〇〇ビル〇階</p>
+        <p class="foot-links"><a href="privacy.html">プライバシーポリシー</a></p>
+        <p class="foot-copy">© 2026 株式会社GEKIATS</p>
+      </footer>
 
     </div>
   </section>
