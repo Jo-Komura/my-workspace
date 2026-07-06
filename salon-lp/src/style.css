@@ -153,7 +153,8 @@ body{
    下端固定のコピーが、低い画面ほど上へせり上がって人物の顔に被る問題への対処。
    高い画面（PC・今どきの縦長スマホ）では発動しない＝そちらの見た目は不変。 */
 @media (max-height:720px){
-  .copy-bottom{ margin-bottom:1.4rem; }
+  .copy-bottom{ margin-bottom:2.8rem; }              /* スワイプ促しと最終行のすき間を確保（近すぎ対策） */
+  .cue{ bottom:8px; font-size:.72rem; }              /* 低い画面では促しを小さく＆下げてすき間を稼ぐ */
   .panel.media .line.hero{ line-height:1.32; font-size:clamp(1.45rem, 6.6vw, 1.9rem); }
   .panel.media .line{ line-height:1.5; margin-bottom:.35em; }
   .panel.media .line.sub{ font-size:clamp(1.12rem, 4.6vw, 1.5rem); }

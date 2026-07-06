@@ -38,8 +38,8 @@ const io = new IntersectionObserver((entries) => {
       enterAt[i] = performance.now();
       track('beat_view', { beat });                  // 到達（ファネル用）
     } else {
-      e.target.classList.add('seen');                // 一度見て離れた印＝次に戻った時は消える文字を"出たまま"に
-      if (enterAt[i] != null) {
+      if (enterAt[i] != null) {                      // 実際に入って(見て)いた時だけ処理＝初期の画面外発火では何もしない
+        e.target.classList.add('seen');              // 一度見て離れた印＝次に戻った時は消える文字を"出たまま"に（初回は順番に表示のまま）
         const sec = +((performance.now() - enterAt[i]) / 1000).toFixed(1);
         track('beat_dwell', { beat, seconds: sec }); // 滞在時間
         enterAt[i] = null;
