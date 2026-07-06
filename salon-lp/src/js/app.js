@@ -51,6 +51,30 @@ const io = new IntersectionObserver((entries) => {
 
 panels.forEach((p) => io.observe(p));
 
+/* --- 折り返し自動フィット（ジョー案：画面幅から1行に収める） ---
+   意図した行数（<br>の数+1）を超えて折り返した行だけ、収まるまで少しずつ縮める。
+   まずCSS本来のサイズに戻してから測るので、画面を広げれば元サイズに戻る。
+   文言を変えても自動で追従。狭い実機（最低スペック機）でも1行を保つ。 */
+function fitLines() {
+  const lines = document.querySelectorAll('.copy .line, .copy .lead');
+  lines.forEach((el) => { el.style.fontSize = ''; });          // いったんCSS指定のサイズに戻す
+  lines.forEach((el) => {
+    const intended = el.querySelectorAll('br').length + 1;     // 本来の行数
+    let size = parseFloat(getComputedStyle(el).fontSize);
+    let lh   = parseFloat(getComputedStyle(el).lineHeight);
+    let guard = 0;
+    while (Math.round(el.clientHeight / lh) > intended && size > 13 && guard < 40) {
+      size -= 0.5;
+      el.style.fontSize = size + 'px';
+      lh = parseFloat(getComputedStyle(el).lineHeight);        // line-heightは倍率指定なので取り直す
+      guard++;
+    }
+  });
+}
+window.addEventListener('load', fitLines);
+window.addEventListener('resize', fitLines);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitLines);  // 日本語フォント確定後に再計算
+
 /* --- CTA：④の解決ビートから⑤フォームへ滑らかに送る --- */
 const formPanel = document.querySelector('.form-panel');
 document.getElementById('cta').addEventListener('click', () => {

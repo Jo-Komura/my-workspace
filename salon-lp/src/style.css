@@ -116,6 +116,8 @@ body{
 .lead .accent.payoff{ display:inline-block; font-size:1.75em; font-weight:700; line-height:1.4; margin-top:.1em; }
 /* 続きのlead行＝上の余白を消して1つの段落のように繋げる（別要素にして出現を少しずらす用） */
 .lead.lead-cont{ margin-top:0; }
+/* beat2の締め「"仕組み"で決まるから。」＝hero級に大きく（ゴシックのまま・白）。低い画面の詰めルールより優先させる高い指定 */
+.panel.media .lead.payoff-hero{ font-size:clamp(1.6rem, 7.4vw, 2.3rem); line-height:1.45; font-weight:700; color:#fff; letter-spacing:.02em; margin-top:.15em; }
 
 /* スワイプ促し */
 .cue{
