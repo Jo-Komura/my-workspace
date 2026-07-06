@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#2b2b2b; --ink-soft:#5c554c; --gold:#c8a86b; --cream:#fbf7f2;
+    --ink:#2b2b2b; --ink-soft:#5c554c; --gold:#c8a86b; --gold-rgb:200,168,107; --cream:#fbf7f2;
     --serif:"Shippori Mincho B1", serif; --gothic:"Zen Kaku Gothic New", sans-serif;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -58,12 +58,12 @@
   }
   .info-table th, .info-table td{
     text-align:left; vertical-align:top; padding:.7em .6em;
-    border-bottom:1px solid rgba(200,168,107,.25);
+    border-bottom:1px solid rgba(var(--gold-rgb),.25);
   }
   .info-table th{ width:8em; font-weight:700; color:var(--ink); white-space:nowrap; }
-  a.inline{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(200,168,107,.5); }
+  a.inline{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(var(--gold-rgb),.5); }
   .updated{
-    margin-top:2.6em; padding-top:1.4em; border-top:1px solid rgba(200,168,107,.28);
+    margin-top:2.6em; padding-top:1.4em; border-top:1px solid rgba(var(--gold-rgb),.28);
     font-size:.82rem; color:var(--ink-soft); text-align:right; line-height:1.8;
   }
   .foot{
@@ -144,7 +144,7 @@
     <table class="info-table">
       <tr><th>会社名</th><td>株式会社GEKIATSU</td></tr>
       <tr><th>所在地</th><td>〇〇市〇〇町〇〇ビル〇階</td></tr>
-      <tr><th>メール</th><td>〇〇@gekiats.co.jp</td></tr>
+      <tr><th>メール</th><td>〇〇@gekiatsu.co.jp</td></tr>
     </table>
 
     <h2>9. 本ポリシーの変更</h2>

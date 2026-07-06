@@ -3,6 +3,7 @@
   --ink:#2b2b2b;
   --ink-soft:#5c554c;
   --gold:#c8a86b;
+  --gold-rgb:200,168,107;    /* --gold のRGB生値＝rgba()で透明度を足す時はこれを使う（色の一元管理） */
   --pink:#e0b7bb;
   --cream:#fbf7f2;
   --serif:"Shippori Mincho B1", serif;
@@ -102,9 +103,9 @@ body{
 .emph{ display:inline-block; font-size:1.15em; font-weight:700; margin:0 .16em; }
 .panel.in .emph{ animation:emph 1.1s ease both; animation-delay:calc(var(--d,0s) + .5s); }
 @keyframes emph{
-  0%{   transform:scale(1);    text-shadow:0 0 0 rgba(200,168,107,0); }
-  30%{  transform:scale(1.4);  text-shadow:0 0 30px rgba(200,168,107,.95); }
-  62%{  transform:scale(1.12); text-shadow:0 0 15px rgba(200,168,107,.55); }
+  0%{   transform:scale(1);    text-shadow:0 0 0 rgba(var(--gold-rgb),0); }
+  30%{  transform:scale(1.4);  text-shadow:0 0 30px rgba(var(--gold-rgb),.95); }
+  62%{  transform:scale(1.12); text-shadow:0 0 15px rgba(var(--gold-rgb),.55); }
   100%{ transform:scale(1);    text-shadow:0 1px 10px rgba(0,0,0,.45); }  /* 拡大は残さず＝隣の「で」に被らない。存在感はfont-size/太字/金色で保つ */
 }
 .lead{
@@ -127,24 +128,16 @@ body{
 .cue .arw{ display:block; margin-top:4px; animation:bob 1.6s ease-in-out infinite; }
 @keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
 
-/* プレースホルダー印 */
-.ph-tag{
-  position:absolute; top:12px; left:12px; z-index:3;
-  font-size:.66rem; letter-spacing:.08em; color:#a99;
-  background:rgba(255,255,255,.5); padding:3px 8px; border-radius:6px;
-}
-
 /* CTA */
 .cta{
   margin-top:2em; font-family:var(--gothic); font-size:1.05rem; font-weight:700;
   color:#fff; background:var(--gold); border:none; border-radius:999px;
   padding:16px 34px; letter-spacing:.06em; cursor:pointer;
-  box-shadow:0 10px 26px rgba(200,168,107,.4); transition:transform .2s, box-shadow .2s;
+  box-shadow:0 10px 26px rgba(var(--gold-rgb),.4); transition:transform .2s, box-shadow .2s;
 }
-.cta:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(200,168,107,.5); }
+.cta:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(var(--gold-rgb),.5); }
 .cta:active{ transform:translateY(0); }
 .cta-note{ margin-top:1.1em; font-size:.78rem; line-height:1.8; color:rgba(255,255,255,.88); text-shadow:0 1px 8px rgba(0,0,0,.45); }
-.cta-note small{ color:rgba(255,255,255,.62); }
 /* ④ メディアパネルのCTAボタン・補足だけ中央寄せ（本文コピーは左のまま／フォームの送信ボタンは対象外） */
 .panel.media .cta{ display:block; width:fit-content; max-width:100%; margin-inline:auto; }
 .panel.media .cta-note{ text-align:center; }
@@ -224,7 +217,7 @@ body{
 .field input::placeholder, .field textarea::placeholder{ color:#b9ad9c; }
 .field input:focus, .field select:focus, .field textarea:focus{
   outline:none; border-color:var(--gold);
-  box-shadow:0 0 0 3px rgba(200,168,107,.18);
+  box-shadow:0 0 0 3px rgba(var(--gold-rgb),.18);
 }
 .field input:invalid:not(:placeholder-shown){ border-color:#d8a0a0; }
 
@@ -240,7 +233,7 @@ body{
   width:64px; height:64px; margin:0 auto 1.2rem;
   display:flex; align-items:center; justify-content:center;
   font-size:1.9rem; color:#fff; background:var(--gold); border-radius:50%;
-  box-shadow:0 10px 26px rgba(200,168,107,.4);
+  box-shadow:0 10px 26px rgba(var(--gold-rgb),.4);
   animation:pop .5s cubic-bezier(.2,.8,.3,1.3) both;
 }
 @keyframes pop{ from{ transform:scale(.4); opacity:0; } to{ transform:scale(1); opacity:1; } }
@@ -249,13 +242,13 @@ body{
 /* 控えめフッター（⑤の明るい地に馴染む小さい字＝会社名・住所・プライバシー・©） */
 .site-footer{
   margin-top:2.4rem; padding-top:1.4rem;
-  border-top:1px solid rgba(200,168,107,.28);
+  border-top:1px solid rgba(var(--gold-rgb),.28);
   text-align:center; font-family:var(--gothic); color:var(--ink-soft); line-height:1.7;
 }
 .foot-company{ font-size:.86rem; font-weight:700; color:var(--ink); letter-spacing:.04em; }
 .foot-addr{ font-size:.72rem; margin-top:.3em; }
 .foot-links{ font-size:.75rem; margin-top:.7em; }
-.foot-links a{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(200,168,107,.5); padding-bottom:1px; }
+.foot-links a{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(var(--gold-rgb),.5); padding-bottom:1px; }
 .foot-copy{ font-size:.64rem; color:#b3a894; margin-top:1em; letter-spacing:.06em; }
 
 /* ===== 出現アニメ（フレームイン） ===== */
@@ -285,7 +278,7 @@ body{
 
 @media (prefers-reduced-motion: reduce){
   .reveal{ transition:none; opacity:1; transform:none; }
-  .panel.light::before, .cue .arw{ animation:none; }
+  .cue .arw{ animation:none; }
   .panel.media.in img.bg-media{ animation:none; transform:scale(1.02); }
   .panel.in .emph{ animation:none; }
   .panel.in .fade5{ animation:none; }
