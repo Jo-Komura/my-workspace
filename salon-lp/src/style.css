@@ -147,6 +147,27 @@ body{
 .panel.media .cta{ display:block; width:fit-content; max-width:100%; margin-inline:auto; }
 .panel.media .cta-note{ text-align:center; }
 
+/* ===== 縦が短い画面（古いスマホ＝16:10寄り／通知バー・操作バーで実効高さが低い等）向けの詰め =====
+   下端固定のコピーが、低い画面ほど上へせり上がって人物の顔に被る問題への対処。
+   高い画面（PC・今どきの縦長スマホ）では発動しない＝そちらの見た目は不変。 */
+@media (max-height:720px){
+  .copy-bottom{ margin-bottom:1.4rem; }
+  .panel.media .line.hero{ line-height:1.32; font-size:clamp(1.45rem, 6.6vw, 1.9rem); }
+  .panel.media .line{ line-height:1.5; margin-bottom:.35em; }
+  .panel.media .line.sub{ font-size:clamp(1.12rem, 4.6vw, 1.5rem); }
+  .panel.media .lead{ line-height:1.65; margin-top:.9em; font-size:clamp(.92rem, 4.2vw, 1.08rem); }
+  .panel.media .cta{ margin-top:1.2em; padding:12px 28px; }
+  .panel.media .cta-note{ margin-top:.7em; }
+}
+/* さらに極端に低い画面（古い16:10＋各バー）＝より強く詰める＋スワイプ促しは隠して余白を稼ぐ */
+@media (max-height:560px){
+  .panel.media .line.hero{ font-size:1.34rem; line-height:1.26; }
+  .panel.media .line{ line-height:1.4; }
+  .panel.media .lead{ font-size:.9rem; line-height:1.5; margin-top:.6em; }
+  .copy-bottom{ margin-bottom:1rem; }
+  .panel.media .cue{ display:none; }
+}
+
 /* ===== ⑤ 資料請求フォーム（明るい安心ゾーン） ===== */
 .form-panel{
   background:
