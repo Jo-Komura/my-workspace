@@ -38,6 +38,7 @@ const io = new IntersectionObserver((entries) => {
       enterAt[i] = performance.now();
       track('beat_view', { beat });                  // 到達（ファネル用）
     } else {
+      e.target.classList.add('seen');                // 一度見て離れた印＝次に戻った時は消える文字を"出たまま"に
       if (enterAt[i] != null) {
         const sec = +((performance.now() - enterAt[i]) / 1000).toFixed(1);
         track('beat_dwell', { beat, seconds: sec }); // 滞在時間

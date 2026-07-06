@@ -262,6 +262,8 @@ body{
 /* ③グループA（問題提起）＝表示から約5秒でそっと上へ消える（4～6行は残す） */
 .panel.in .fade5{ animation:fadeaway 1s ease forwards; animation-delay:calc(var(--d,0s) + 5s); }
 @keyframes fadeaway{ from{ opacity:1; transform:translateY(0); } to{ opacity:0; transform:translateY(-16px); } }
+/* 一度見て離れたパネルに戻ってきた時（.seen）＝消える文字(fade5)は演出を再生せず"出たまま"表示（4→戻りで読み返せる。初回だけ消える演出） */
+.panel.seen .fade5{ animation:none; opacity:1; transform:none; }
 /* グループAの最後の行＝下に1行分あけて帰結（グループB）と分ける＝1～3行が少し上に上がって見える */
 .groupA-end{ margin-bottom:3rem; }
 
