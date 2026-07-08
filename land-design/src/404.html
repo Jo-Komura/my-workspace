@@ -14,7 +14,11 @@
   *{box-sizing:border-box}
   body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
        background:#0d1b3e;color:#fff;font-family:'Zen Kaku Gothic New',sans-serif;text-align:center;padding:2rem}
-  .nf-logo{width:260px;max-width:72%;margin-bottom:2.5rem}
+  .nf-logo{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:2.5rem;max-width:100%}
+  .nf-logo-icon{height:clamp(70px,18vw,100px);width:auto}
+  .nf-logo-text{display:flex;flex-direction:column;font-family:'Cormorant Garamond',serif;color:#fff;font-weight:600;line-height:1.04;white-space:nowrap}
+  .nf-l1{font-size:clamp(1.5rem,6vw,2.1rem);letter-spacing:0.66em;margin-right:-0.66em}
+  .nf-l2{font-size:clamp(1.5rem,6vw,2.1rem);letter-spacing:0.22em;margin-right:-0.22em}
   .nf-code{font-family:'Cormorant Garamond',serif;font-size:5.5rem;font-weight:600;color:#d4af6a;line-height:1;margin:0}
   .nf-rule{width:48px;height:2px;background:#b8964e;margin:1.2rem auto 1.4rem;opacity:.8}
   .nf-title{font-family:'Shippori Mincho B1',serif;font-size:1.5rem;font-weight:600;margin:0 0 1rem;letter-spacing:.06em}
@@ -23,9 +27,13 @@
           padding:.95rem 2.6rem;border-radius:4px;letter-spacing:.08em;transition:opacity .2s}
   .nf-btn:hover{opacity:.85}
 </style>
+<script defer src="https://jo-komura.github.io/my-workspace/land-design/src/analytics.js"></script>
 </head>
 <body>
-  <img class="nf-logo" src="https://jo-komura.github.io/my-workspace/land-design/src/images/logo.png" alt="株式会社ランドデザイン">
+  <div class="nf-logo">
+    <img class="nf-logo-icon" src="https://jo-komura.github.io/my-workspace/land-design/src/images/logo-icon.png" alt="株式会社ランドデザイン">
+    <span class="nf-logo-text"><span class="nf-l1">LAND</span><span class="nf-l2">DESIGN</span></span>
+  </div>
   <p class="nf-code">404</p>
   <div class="nf-rule"></div>
   <h1 class="nf-title">ページが見つかりません</h1>
