@@ -51,7 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'post'
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'apply') {
     check_csrf();
     $email = trim((string)($_POST['email'] ?? ''));
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $name  = mb_substr(trim((string)($_POST['name'] ?? '')), 0, 40);
+    if ($name === '') {
+        $err = 'お名前をご入力ください。';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $err = 'メールアドレスの形式をご確認ください。';
     } else {
         $existing = find_member_by_email($room['token'], $email);
@@ -63,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'apply
                 $applied = 'pending';                // 承認待ち
             }
         } else {
-            $m = add_member($room['token'], $email, 'pending', 'guest');
+            $m = add_member($room['token'], $email, $name, 'pending', 'guest');
             send_approval_request($room, $m);        // 原さんへ承認依頼
             $applied = 'new';
         }
@@ -80,7 +83,7 @@ if ($member) {
     $posts = get_posts($room['token']);
     echo '<div class="card">';
     echo '<h1>' . h($room['name']) . '</h1>';
-    echo '<p class="muted">あなた：' . h(($member['role'] === 'owner') ? cfg('brand_name') : mask_email($member['email'])) . ' として入室中</p>';
+    echo '<p class="muted">あなた：' . h(display_name($member)) . ' として入室中</p>';
     echo '</div>';
 
     if (!$posts) {
@@ -128,13 +131,16 @@ if ($member) {
         echo '<div class="card">'
            . '<h1>' . h($room['name']) . '</h1>'
            . '<p class="lead">この掲示板は、担当者が承認した方だけが閲覧・投稿できる非公開の場です。'
-           . 'ご参加には、下記にメールアドレスをご登録ください。</p>'
+           . 'ご参加には、下記にお名前とメールアドレスをご登録ください。</p>'
            . '<form method="post">'
            . csrf_field()
            . '<input type="hidden" name="action" value="apply">'
-           . '<label>メールアドレス</label>'
+           . '<label>お名前（板に表示されます）</label>'
+           . '<input type="text" name="name" maxlength="40" placeholder="例：田中" required>'
+           . '<label style="margin-top:14px;display:block">メールアドレス</label>'
            . '<input type="email" name="email" placeholder="you@example.com" required>'
-           . '<p class="muted" style="margin-top:8px">承認後、このアドレス宛に「あなた専用の入室リンク」が届きます。リンクをタップするだけで入室でき、パスワードは不要です。</p>'
+           . '<p class="muted" style="margin-top:8px">お名前は掲示板の投稿表示に使われます。メールアドレスは入室リンクの送付にのみ使用し、板には表示されません。'
+           . '承認後、このアドレス宛に「あなた専用の入室リンク」が届きます。リンクをタップするだけで入室でき、パスワードは不要です。</p>'
            . '<p style="margin-top:16px"><button class="btn" type="submit">参加を申請する</button></p>'
            . '</form></div>';
     }

@@ -67,6 +67,9 @@ input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 
 .btn-gold{background:var(--gold);color:var(--navy);}
 .btn-gold:hover{background:#c79f57;}
 .btn-sm{padding:7px 14px;font-size:.85rem;}
+.btn-danger{background:#c0272d;color:#fff;}
+.btn-danger:hover{background:#a21f24;}
+.danger-row{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);}
 
 /* 投稿 */
 .post{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fff;}

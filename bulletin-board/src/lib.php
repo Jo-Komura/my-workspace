@@ -107,9 +107,31 @@ function create_room(string $name): array {
     // 空のメンバー・投稿ファイルを用意
     write_json(members_path($token), []);
     write_json(posts_path($token), []);
-    // 原さん（オーナー）を承認済み会員として自動追加
-    add_member($token, (string)cfg('owner_email'), 'approved', 'owner');
+    // 原さん（オーナー）を承認済み会員として自動追加（表示名＝ブランド名）
+    add_member($token, (string)cfg('owner_email'), (string)cfg('brand_name'), 'approved', 'owner');
     return $rooms[$token];
+}
+
+// ルームを破棄（一覧から除去＋データ・投稿・アップPDFを完全削除）。取り消し不可。
+function delete_room($token): bool {
+    if (!valid_token($token)) return false;
+    $rooms = all_rooms();
+    if (!isset($rooms[$token])) return false;
+    unset($rooms[$token]);
+    write_json(rooms_index_path(), $rooms);
+    rrmdir(room_dir($token));    // data/rooms/<token>（members.json・posts.json）
+    rrmdir(storage_for($token)); // storage/<token>（アップされたPDF）
+    return true;
+}
+// 再帰的にディレクトリを削除（既知の data/ storage 配下のみを渡す）。
+function rrmdir(string $dir): void {
+    if (!is_dir($dir)) return;
+    foreach (scandir($dir) as $f) {
+        if ($f === '.' || $f === '..') continue;
+        $p = $dir . '/' . $f;
+        is_dir($p) ? rrmdir($p) : @unlink($p);
+    }
+    @rmdir($dir);
 }
 
 // ---- 会員 ----
@@ -130,11 +152,12 @@ function find_member_by_ptoken(string $token, string $k): ?array {
     foreach (get_members($token) as $m) if (hash_equals($m['ptoken'], $k)) return $m;
     return null;
 }
-function add_member(string $token, string $email, string $status = 'pending', string $role = 'guest'): array {
+function add_member(string $token, string $email, string $name = '', string $status = 'pending', string $role = 'guest'): array {
     $members = get_members($token);
     $m = [
         'id'         => gen_token(6),
         'email'      => $email,
+        'name'       => $name,   // 表示名（管理画面・板でメールの代わりに出す。メールは連絡用に裏で保持）
         'ptoken'     => gen_token(18),
         'status'     => $status,
         'role'       => $role,
@@ -166,6 +189,7 @@ function add_post(string $token, array $member, string $body, ?array $pdf): arra
         'id'          => gen_token(6),
         'member_id'   => $member['id'],
         'author_email'=> $member['email'],
+        'author_name' => (string)($member['name'] ?? ''),
         'author_role' => $member['role'] ?? 'guest',
         'body'        => $body,
         'pdf'         => $pdf, // ['stored'=>..,'orig'=>..,'size'=>..] または null
@@ -217,15 +241,26 @@ function mask_email(string $e): string {
     $keep = mb_substr($u, 0, 2);
     return $keep . str_repeat('*', max(1, mb_strlen($u) - 2)) . $d;
 }
+// 会員の表示名（メールの代わりに画面へ出す）。オーナー＝ブランド名／ゲスト＝登録名／未登録の旧データは「お客様」。
+function display_name(array $m): string {
+    if (($m['role'] ?? '') === 'owner') return (string)cfg('brand_name');
+    $n = trim((string)($m['name'] ?? ''));
+    return $n !== '' ? $n : 'お客様';
+}
 function author_label(array $post): string {
     if (($post['author_role'] ?? '') === 'owner') return (string)cfg('brand_name');
-    return 'お客様（' . mask_email($post['author_email']) . '）';
+    $n = trim((string)($post['author_name'] ?? ''));
+    if ($n !== '') return $n;
+    // 旧データ（表示名なし）はメールを伏せて表示
+    return 'お客様（' . mask_email((string)($post['author_email'] ?? '')) . '）';
 }
 
 // ---- 通知メール（組み立て）----
 function send_approval_request(array $room, array $member): void {
     $subject = '【' . cfg('brand_name') . '掲示板】参加申請：' . $room['name'];
-    $body = $member['email'] . " さんが掲示板「" . $room['name'] . "」への参加を申請しました。\n\n"
+    $who = trim((string)($member['name'] ?? ''));
+    $who = $who !== '' ? $who . '（' . $member['email'] . '）' : $member['email'];
+    $body = $who . " さんが掲示板「" . $room['name'] . "」への参加を申請しました。\n\n"
           . "承認する場合は管理画面から「許可」を押してください：\n" . admin_url() . "\n";
     send_mail((string)cfg('owner_email'), $subject, $body);
 }

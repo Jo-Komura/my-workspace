@@ -46,9 +46,18 @@ if (is_admin()) {
             $err = '定員（' . (int)cfg('max_members') . '名）に達しているため、これ以上承認できません。';
         } else {
             $m = approve_member($rt, $mid);
-            if ($m) { send_magic_link($room, $m); $msg = $m['email'] . ' さんを承認し、入室リンクを送信しました。'; }
+            if ($m) { send_magic_link($room, $m); $msg = display_name($m) . ' さんを承認し、入室リンクを送信しました。'; }
             else { $err = '承認できませんでした。'; }
         }
+    }
+    // ルームの破棄（取り消し不可）
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'delete') {
+        check_csrf();
+        $rt = (string)($_POST['room'] ?? '');
+        $room = get_room($rt);
+        if (!$room) { $err = 'ルームが見つかりません。'; }
+        elseif (delete_room($rt)) { $msg = 'ルーム「' . $room['name'] . '」を破棄しました。'; }
+        else { $err = '破棄できませんでした。'; }
     }
 }
 
@@ -116,7 +125,7 @@ if ($rooms) {
         foreach ($members as $m) {
             $status = $m['status'] ?? 'pending';
             $role = $m['role'] ?? 'guest';
-            echo '<div class="member-row"><span>' . h($m['email']);
+            echo '<div class="member-row"><span>' . h(display_name($m));
             if ($role === 'owner')      echo ' <span class="tag tag-owner">オーナー</span>';
             elseif ($status === 'approved') echo ' <span class="tag tag-approved">承認済み</span>';
             else                        echo ' <span class="tag tag-pending">承認待ち</span>';
@@ -130,6 +139,12 @@ if ($rooms) {
             }
             echo '</div>';
         }
+        // ルーム破棄（取り消し不可・確認ダイアログ＋CSRF）
+        echo '<form method="post" class="danger-row" onsubmit="return confirm(\'このルームを破棄します。投稿・PDF・メンバーもすべて削除され、元に戻せません。よろしいですか？\');">'
+           . csrf_field()
+           . '<input type="hidden" name="action" value="delete">'
+           . '<input type="hidden" name="room" value="' . h($t) . '">'
+           . '<button class="btn btn-sm btn-danger" type="submit">このルームを破棄</button></form>';
     }
     echo '</div>';
 }
