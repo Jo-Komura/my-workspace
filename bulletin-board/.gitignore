@@ -1,0 +1,14 @@
+# 公開するのは src だけ（狙い撃ちで add する運用）。以下は保険の二重ガード。
+docs/
+tools/
+deploy/
+
+# 秘密・実データは絶対に公開しない
+src/config.php
+src/data/
+src/storage/
+
+# 作業ゴミ
+*.tmp
+*.log
+.DS_Store

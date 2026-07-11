@@ -1,0 +1,17 @@
+# ルーム型掲示板 ― Apache(Xserver)用
+RewriteEngine On
+
+# http → https 強制
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 秘密フォルダへの直アクセスを拒否（PHP経由でしか触らせない）
+RewriteRule ^(data|storage)(/|$) - [F,L]
+
+# pretty URL: /r/<token> → index.php?r=<token>（?k= はそのまま引き継ぐ）
+RewriteRule ^r/([A-Za-z0-9_-]+)/?$ index.php?r=$1 [L,QSA]
+
+# ドットファイル（.htaccess 等）を隠す
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

@@ -1,0 +1,113 @@
+:root{
+  --navy:#0d1b3e;
+  --navy-soft:#16264f;
+  --gold:#d4af6a;
+  --gold-rgb:212,175,106;
+  --ink:#2a2f3a;
+  --muted:#6b7280;
+  --line:#e6e8ee;
+  --bg:#f6f7f9;
+  --card:#ffffff;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.8;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 64px;}
+
+/* ヘッダー */
+.site-head{
+  background:var(--navy);
+  color:#fff;
+  padding:18px 16px;
+  border-bottom:3px solid var(--gold);
+}
+.site-head .inner{max-width:720px;margin:0 auto;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.brand{
+  font-family:"Cormorant Garamond","Shippori Mincho B1",serif;
+  font-size:1.35rem;letter-spacing:.08em;color:var(--gold);font-weight:600;
+}
+.room-name{
+  font-family:"Shippori Mincho B1",serif;
+  color:#fff;font-weight:500;letter-spacing:.04em;
+}
+.tagline{color:rgba(255,255,255,.6);font-size:.8rem;letter-spacing:.06em;}
+
+/* カード */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:22px;margin:20px 0;
+}
+h1,h2{font-family:"Shippori Mincho B1",serif;color:var(--navy);font-weight:600;letter-spacing:.03em;}
+h1{font-size:1.25rem;margin:.2em 0 .6em;}
+h2{font-size:1.05rem;margin:1.4em 0 .5em;}
+p{margin:.5em 0;}
+.lead{color:var(--muted);}
+
+/* フォーム */
+label{display:block;font-size:.85rem;color:var(--muted);margin:14px 0 6px;letter-spacing:.03em;}
+input[type=text],input[type=email],input[type=password],textarea{
+  width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:9px;
+  font:inherit;color:var(--ink);background:#fff;
+}
+textarea{min-height:110px;resize:vertical;}
+input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(var(--gold-rgb),.18);}
+.file-row{margin:14px 0;font-size:.9rem;color:var(--muted);}
+.btn{
+  display:inline-block;background:var(--navy);color:#fff;border:none;border-radius:9px;
+  padding:12px 22px;font:inherit;font-weight:600;letter-spacing:.04em;cursor:pointer;
+  transition:background .15s;
+}
+.btn:hover{background:var(--navy-soft);}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:#c79f57;}
+.btn-sm{padding:7px 14px;font-size:.85rem;}
+
+/* 投稿 */
+.post{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fff;}
+.post.owner{border-left:4px solid var(--gold);}
+.post .meta{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+.post .who{font-weight:600;color:var(--navy);letter-spacing:.02em;}
+.post.owner .who{color:#a9812f;}
+.post .when{color:var(--muted);font-size:.78rem;}
+.post .body{white-space:pre-wrap;word-break:break-word;}
+.pdf-link{
+  display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:9px 14px;
+  background:rgba(var(--gold-rgb),.12);border:1px solid rgba(var(--gold-rgb),.4);border-radius:8px;
+  color:#8a6a24;text-decoration:none;font-size:.9rem;font-weight:600;
+}
+.pdf-link:hover{background:rgba(var(--gold-rgb),.2);}
+
+/* 注意書き・状態 */
+.notice{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:8px;padding:14px 16px;margin:16px 0;}
+.err{background:#fdecec;border:1px solid #f5b5b5;color:#a12626;border-radius:8px;padding:12px 14px;margin:14px 0;}
+.ok{background:#eaf6ee;border:1px solid #b6ddc2;color:#1f6b3a;border-radius:8px;padding:12px 14px;margin:14px 0;}
+.muted{color:var(--muted);font-size:.85rem;}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all;background:#f3f4f7;border:1px solid var(--line);border-radius:7px;padding:10px 12px;display:block;margin:8px 0;font-size:.85rem;}
+.empty{text-align:center;color:var(--muted);padding:26px 0;}
+
+/* QRコード（管理画面：お客様に渡すURLをカメラで読み取ってもらう） */
+.url-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.url-row .mono{flex:1 1 auto;min-width:0;margin:8px 0;}
+.qr-btn{flex:0 0 auto;white-space:nowrap;}
+.qr{display:none;width:200px;max-width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0;}
+.qr[data-url]:not([data-lazy]){display:block;}  /* 作成直後カードは最初から表示 */
+.qr.open{display:block;}
+.qr svg{display:block;width:100%;height:auto;}
+.qr-cap{margin-top:8px;}
+hr{border:none;border-top:1px solid var(--line);margin:24px 0;}
+.foot{text-align:center;color:var(--muted);font-size:.75rem;margin-top:30px;letter-spacing:.05em;}
+.roomlink{color:var(--navy);text-decoration:none;border-bottom:1px dashed rgba(var(--gold-rgb),.6);}
+.roomlink:hover{color:#a9812f;border-bottom-color:var(--gold);}
+.roomlink::after{content:"↗";font-size:.7em;margin-left:4px;color:var(--gold);vertical-align:super;}
+.member-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
+.member-row:last-child{border-bottom:none;}
+.tag{font-size:.72rem;padding:2px 8px;border-radius:20px;letter-spacing:.03em;}
+.tag-pending{background:#fff4e0;color:#9a6a12;}
+.tag-approved{background:#eaf6ee;color:#1f6b3a;}
+.tag-owner{background:rgba(var(--gold-rgb),.18);color:#8a6a24;}
